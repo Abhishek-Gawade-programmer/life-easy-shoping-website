@@ -1,11 +1,23 @@
 from django.shortcuts import render
+from django.views.generic import ListView,DetailView
 from .models import Item
+
+class HomeNameList(ListView):
+    model = Item
+    context_object_name = 'items'
+    template_name='home-page.html'
+
+
+
 
 def item_list(request):
     context={
         'items':Item.objects.all()
     }
     return render(request,'home-page.html',context)
+
+
+
 
 
 def check_out(request):
