@@ -70,7 +70,7 @@
         <!-- Left -->
         <ul class="navbar-nav mr-auto">
           <li class="nav-item active">
-            <a class="nav-link waves-effect" href="#">Home
+            <a class="nav-link waves-effect" href="/">Home
               <span class="sr-only">(current)</span>
             </a>
           </li>
@@ -78,7 +78,7 @@
             <a class="nav-link waves-effect" href="/check_out">CheckOut</a>
           </li>
           <li class="nav-item"> 
-            <a class="nav-link waves-effect" href="https://mdbootstrap.com/docs/jquery/getting-started/download/"
+            <a class="nav-link waves-effect" href="/product_view"
               >Products</a>
           </li>
         </ul>
@@ -114,6 +114,10 @@
 
     </div>
   </nav>
+  {% block content %}
+  
+ 
+
   <!-- Navbar -->
 
   <!--Carousel Wrapper-->
@@ -766,6 +770,7 @@
       <a href="https://mdbootstrap.com/education/bootstrap/" target="_blank"> MDBootstrap.com </a>
     </div>
     <!--/.Copyright-->
+   {% endblock content %}
 
   </footer>
   <!--/.Footer-->
