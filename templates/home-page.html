@@ -329,7 +329,7 @@
               <div class="view overlay">
                 <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/13.jpg" class="card-img-top"
                   alt="">
-                <a>
+                <a  href="{{ item.get_absolute_url }}">
                   <div class="mask rgba-white-slight"></div>
                 </a>
               </div>
@@ -343,7 +343,7 @@
                 </a>
                 <h5>
                   <strong>
-                    <a href="" class="dark-grey-text">{{item.title}}
+                    <a href="{{ item.get_absolute_url }}" class="dark-grey-text">{{item.title}}
                     <span class='badge badge-pill {{ item.get_label_display }}-color' >NEW</span>
                     
                     </a>
@@ -351,7 +351,14 @@
                 </h5>
 
                 <h4 class="font-weight-bold blue-text">
-                  <strong>{{item.price}}$</strong>
+                  <strong>$
+                  {% if item.discount_price %}
+                    {{item.discount_price }}
+              
+                  {% else %} {{item.price}}
+                  {% endif %}
+                  
+                 </strong>
                 </h4>
 
               </div>
