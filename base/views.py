@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.shortcuts import render,get_object_or_404,redirect
 from django.views.generic import ListView,DetailView
 from .models import Item,Order,OrderItem
@@ -34,15 +35,19 @@ def add_to_card(request,slug):
         if order.items.filter(item__slug=item.slug).exists():
             order_item.qauntity +=1
             order_item.save()
+            messages.info(request,f'This {item.title} quntity  was updated')
+            return redirect("base:product-view",slug=slug)
 
         else:
+            messages.info(request,f'This {item.title} already added to your cart')
             order.items.add(order_item)
+            return redirect("base:product-view",slug=slug)
     else:
         ordered_date=timezone.now()
         order = Order.objects.create(user=request.user,ordered_date=ordered_date)
         order.items.add(order_item)
-
-    return redirect("base:product-view",slug=slug)
+        messages.info(request,f'This {item.title} sucessfully added to your cart')
+        return redirect("base:product-view",slug=slug)
 
 
 
@@ -65,14 +70,18 @@ def remove_from_cart(request,slug):
                         user=request.user,
                         ordered=False)[0]
             order.items.remove(order_item) 
+            messages.info(request,f'This {item.title} removed from your cart')
+            return redirect("base:product-view",slug=slug)
 
         else:
             #order does not conatin eorder itwm
+            messages.info(request,f'This {item.title} not in your cart')
             return redirect("base:product-view",slug=slug)       
 
     else:
         #add a message saying nio have prercf
+        messages.info(request,f'You don"t have Active Order')
         return redirect("base:product-view",slug=slug)
-    return redirect("base:product-view",slug=slug)
+    
 
 
