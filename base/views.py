@@ -52,5 +52,27 @@ def check_out(request):
     return render(request,'checkout-page.html')
 
 
-# def remove_cart(req)
+def remove_from_cart(request,slug):
+    item=get_object_or_404(Item,slug=slug)
+    order_qs = Order.objects.filter(user=request.user,ordered=False)
+
+    if  order_qs.exists():
+        order=order_qs[0]
+        #check if order item in the otrder
+        if order.items.filter(item__slug=item.slug).exists():
+            order_item=OrderItem.objects.filter(
+                        item=item,
+                        user=request.user,
+                        ordered=False)[0]
+            order.items.remove(order_item) 
+
+        else:
+            #order does not conatin eorder itwm
+            return redirect("base:product-view",slug=slug)       
+
+    else:
+        #add a message saying nio have prercf
+        return redirect("base:product-view",slug=slug)
+    return redirect("base:product-view",slug=slug)
+
 
