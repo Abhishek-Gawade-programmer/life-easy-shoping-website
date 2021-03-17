@@ -7,7 +7,8 @@ from  django.utils import timezone
 class HomeNameList(ListView):
     model = Item
     context_object_name = 'items'
-    template_name='home-page.html'
+    paginate_by=10
+    template_name='home.html'
 
 
 
@@ -16,7 +17,7 @@ def item_list(request):
     context={
         'items':Item.objects.all()
     }
-    return render(request,'home-page.html',context)
+    return render(request,'home.html',context)
 
 
 class ItemDetailView(DetailView):
