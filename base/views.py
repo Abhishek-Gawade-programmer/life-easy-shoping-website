@@ -7,6 +7,7 @@ from django.views.generic import ListView,DetailView,View
 from .models import Item,Order,OrderItem
 from  django.utils import timezone
 
+from .forms import CheckoutForm
 
 class HomeNameList(ListView):
     model = Item
@@ -71,8 +72,22 @@ def add_to_card(request,slug):
 
 
 
-def check_out(request):
-    return render(request,'checkout-page.html')
+def check_out(View):
+    def get(self,*args,**kwargs):
+        #form
+        form=CheckoutForm()
+        context={
+            'form': form,
+        }
+
+
+        return render(request,'checkout-page.html',context)
+
+    def post(self,args,**kwargs):
+        form=CheckoutForm(self.request.POST or None)
+        if form.is_valid():
+            print('for is valid')
+            return redirect("base:check_out")
 
 @login_required
 def remove_single_item_cart(request,slug):
