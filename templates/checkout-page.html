@@ -1,6 +1,9 @@
 {% extends 'base.html' %}
+{% load  crispy_forms_tags %}
 
 {% block content %}
+
+  <!--Main layout-->
 
   <!--Main layout-->
   <main class="mt-5 pt-4">
@@ -17,81 +20,63 @@
 
           <!--Card-->
           <div class="card">
+          <form>  
+          {% csrf_token %}
+          {{ form|crispy }}
+          <button class="btn btn-primary " type="submit">Checkout
+          </button>
+
+          </form>  
 
             <!--Card content-->
             <form class="card-body">
 
-              <!--Grid row-->
-              <div class="row">
-
-                <!--Grid column-->
-                <div class="col-md-6 mb-2">
-
+              <!--Username-->
+              <div class="md-form input-group pl-0 mb-5">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="basic-addon1">+91 🇮🇳️ </span>
                 </div>
-                <!--Grid column-->
-
-                <!--Grid column-->
-                <div class="col-md-6 mb-2">
-
-                </div>
-                <!--Grid column-->
-
+                {{ form.phone_number }}
+                {% comment %} <input type="text" class="form-control py-0" placeholder="Phone Number" aria-describedby="basic-addon1"> {% endcomment %}
               </div>
 
+              <!--email-->
+              <div class="md-form mb-5">
+                {{ form.city }}
+                {% comment %} <input type="text" id="email" class="form-control" placeholder="youremail@example.com"> {% endcomment %}
+                <label for="city" class="">City or District Near to you </label>
+              </div>
 
 
               <!--address-->
               <div class="md-form mb-5">
-                <input type="text" id="address" class="form-control" placeholder="1234 Main St">
+              {{ form.street_address}}
+                {% comment %} <input type="text" id="address" class="form-control" placeholder="1234 Main St"> {% endcomment %}
                 <label for="address" class="">Address</label>
               </div>
 
               <!--address-2-->
               <div class="md-form mb-5">
-                <input type="text" id="address-2" class="form-control" placeholder="Apartment or suite">
+              {{ form.apartment_address}}
+
+                {% comment %} <input type="text" id="address-2" class="form-control" placeholder="Apartment or suite"> {% endcomment %}
                 <label for="address-2" class="">Address 2 (optional)</label>
               </div>
 
               <!--Grid row-->
               <div class="row">
-
-                <!--Grid column-->
-                <div class="col-lg-4 col-md-12 mb-4">
-
-                  <label for="country">Country</label>
-                  <select class="custom-select d-block w-100" id="country" required>
-                    <option value="">Choose...</option>
-                    <option>United States</option>
-                  </select>
-                  <div class="invalid-feedback">
-                    Please select a valid country.
-                  </div>
-
-                </div>
-                <!--Grid column-->
+ 
 
                 <!--Grid column-->
                 <div class="col-lg-4 col-md-6 mb-4">
 
-                  <label for="state">State</label>
-                  <select class="custom-select d-block w-100" id="state" required>
-                    <option value="">Choose...</option>
-                    <option>California</option>
-                  </select>
+                  <label for="zip">Pin Code</label>
+
+
+                {{ form.pin_code}}
+                  {% comment %} <input type="text" class="form-control" id="zip" placeholder="Mumbai Pin Code" > {% endcomment %}
                   <div class="invalid-feedback">
-                    Please provide a valid state.
-                  </div>
-
-                </div>
-                <!--Grid column-->
-
-                <!--Grid column-->
-                <div class="col-lg-4 col-md-6 mb-4">
-
-                  <label for="zip">Zip</label>
-                  <input type="text" class="form-control" id="zip" placeholder="" required>
-                  <div class="invalid-feedback">
-                    Zip code required.
+                    Pin code required.
                   </div>
 
                 </div>
@@ -103,11 +88,13 @@
               <hr>
 
               <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" id="same-address">
+                {% comment %} <input type="checkbox" class="custom-control-input" id="same-address"> {% endcomment %}
+                {{ form.same_billing_address}}
                 <label class="custom-control-label" for="same-address">Shipping address is the same as my billing address</label>
               </div>
               <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" id="save-info">
+              {{ form.save_info}}
+                {% comment %} <input type="checkbox" class="custom-control-input" id="save-info"> {% endcomment %}
                 <label class="custom-control-label" for="save-info">Save this information for next time</label>
               </div>
 
@@ -116,16 +103,19 @@
               <div class="d-block my-3">
                 <div class="custom-control custom-radio">
                   <input id="credit" name="paymentMethod" type="radio" class="custom-control-input" checked required>
-                  <label class="custom-control-label" for="credit">Stripe</label>
+                  <label class="custom-control-label" for="credit">Credit card</label>
                 </div>
-  
                 <div class="custom-control custom-radio">
-                  <input id="paypal" name="paymentMethod" type="radio" class="custom-control-input" required>
-                  <label class="custom-control-label" for="paypal">Paypal</label>
+                  <input id="debit" name="paymentMethod" type="radio" class="custom-control-input" required>
+                  <label class="custom-control-label" for="debit">Debit card</label>
+                </div>
+                <div class="custom-control custom-radio">
+                {{ form.payment_option }}
+                  
+                  {% comment %} <input id="paypal" name="paymentMethod" type="radio" class="custom-control-input" required>
+                  <label class="custom-control-label" for="paypal">Strip Payments</label> {% endcomment %}
                 </div>
               </div>
-
-
               <hr class="mb-4">
               <button class="btn btn-primary btn-lg btn-block" type="submit">Continue to checkout</button>
 
@@ -202,5 +192,6 @@
 
     </div>
   </main>
+
   <!--Main layout-->
 {% endblock content %}

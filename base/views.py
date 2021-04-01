@@ -72,9 +72,15 @@ def add_to_card(request,slug):
 
 
 
-def check_out(View):
-    def get(self,*args,**kwargs):
-        #form
+# def check_out(request):
+#     print('5656'*30,request.GET)
+#     return render(request,'checkout-page.html')
+
+
+
+class check_out(View):
+    def get(self,request,*args,**kwargs):
+        # form
         form=CheckoutForm()
         context={
             'form': form,

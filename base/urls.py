@@ -8,7 +8,7 @@ app_name='base'
 
 
 urlpatterns = [
-    path('check_out/',check_out,name ='check-out'),
+    path('check_out/',check_out.as_view(),name ='check-out'),
     path('product_view/<slug>/',ItemDetailView.as_view(),name ='product-view'),
     path('order-summary/',OrderSummaryView.as_view(),name ='order-summary'),
 
