@@ -29,18 +29,10 @@ class OrderSummaryView(LoginRequiredMixin,View):
 
             messages.error(self.request,f" { self.request.user.username } Don't have Any Item in The Cart")
             return redirect("/")
-        
-    # template_name=
 
 
 
 
-
-def item_list(request):
-    context={
-        'items':Item.objects.all()
-    }
-    return render(request,'home.html',context)
 
 
 
@@ -50,6 +42,9 @@ class ItemDetailView(DetailView):
 
 @login_required
 def add_to_card(request,slug):
+
+    #get the item (product if exists) from database
+
     item=get_object_or_404(Item,slug=slug)
     order_item,created=OrderItem.objects.get_or_create(item=item,
     user=request.user,
@@ -58,17 +53,21 @@ def add_to_card(request,slug):
     if  order_qs.exists():
         order=order_qs[0]
         if order.items.filter(item__slug=item.slug).exists():
+
+            #increase the quantity by 1 is product exists in order
             order_item.qauntity +=1
             order_item.save()
             messages.info(request,f'This {item.title} quntity  was updated')
             return redirect("base:order-summary")
 
         else:
+            #add the product in order
             messages.info(request,f'This {item.title} already added to your cart')
             order.items.add(order_item)
             return redirect("base:order-summary")
     else:
         ordered_date=timezone.now()
+        # create new order is not exists
         order = Order.objects.create(user=request.user,ordered_date=ordered_date)
         order.items.add(order_item)
         messages.info(request,f'This {item.title} sucessfully added to your cart')
@@ -79,8 +78,10 @@ def add_to_card(request,slug):
 
 
 class check_out(LoginRequiredMixin,View):
+
+    
     def get(self,*args,**kwargs):
-        # form
+        # get check out form
         form=CheckoutForm()
         context={
             'form': form,
@@ -88,13 +89,13 @@ class check_out(LoginRequiredMixin,View):
 
 
         return render(self.request,'checkout-page.html',context)
-
-
-        # {'city': 'SDHJ', 'phone_number': '435354', 'street_address': '345 sd csdufshd isduhyu', 'apartment_address': 'UDHFV IUHSDH', 'pin_code': '44100', 'same_billing_address': True, 'save_info': False, 'payment_option': 'C'}
+        
 
 
     def post(self,*args,**kwargs):
+        # valiad check out form 
         form=CheckoutForm(self.request.POST or None)
+
 
         try:
             order=Order.objects.get(user=self.request.user,ordered=False)
@@ -108,8 +109,8 @@ class check_out(LoginRequiredMixin,View):
                 apartment_address=form.cleaned_data.get('apartment_address')
                 pin_code=form.cleaned_data.get('pin_code')
 
-
-
+            
+                #saving the from data to database via model
                 billing_address=BillingAddress(
                     user=self.request.user,
                     city=city,
@@ -119,19 +120,20 @@ class check_out(LoginRequiredMixin,View):
                     pin_code=pin_code
                     
                     )
-                    
+                #saved to database
                 billing_address.save()
+
+                #aattact billing address to order
                 order.billing_address = billing_address
                 order.save()
 
                 # TODO: add redirect to slected paymennt option
 
 
-
-                print('for is valid',form.cleaned_data)
                 messages.success(self.request,f' Sucessfully Checkout !!')
                 return redirect("base:check-out")
 
+            #error in validation of from
             messages.warning(self.request,f'⚠️  Failed to checlout')
             
             return redirect("base:check-out")
@@ -139,6 +141,7 @@ class check_out(LoginRequiredMixin,View):
 
 
         except ObjectDoesNotExist:
+            #if order does not exist
             messages.error(self.request,f" { self.request.user.username } Don't have Any Item in The Cart")
             return redirect("base:order-summary")
 

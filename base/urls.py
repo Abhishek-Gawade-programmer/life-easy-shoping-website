@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import (item_list,check_out,ItemDetailView,
+from .views import (check_out,ItemDetailView,
                     HomeNameList,add_to_card,
                     remove_from_cart,OrderSummaryView,remove_single_item_cart
                     )
