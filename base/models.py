@@ -17,7 +17,6 @@ LABEL_CHOICES=(
 
 
 
-
 class Item(models.Model):
     title =models.CharField( max_length=100)
     price =models.FloatField()
@@ -77,6 +76,7 @@ class Order(models.Model):
     ordered = models.BooleanField(default=False)
     start_date =models.DateTimeField(auto_now_add=True)
     ordered_date = models.DateTimeField()
+    billing_address=models.ForeignKey('BillingAddress',on_delete=models.SET_NULL,blank=True,null=True)
     def __str__(self):
         return self.user.username
 
@@ -89,12 +89,13 @@ class Order(models.Model):
 
 
 class BillingAddress(models.Model):
-    user= models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
+    user=models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
     city=models.CharField(max_length=20)
     phone_number=models.CharField(max_length=20)
-    street_address-models.CharField(max_length=250)
-    apartment_address-models.CharField(max_length=250)
+    street_address=models.CharField(max_length=250)
+    apartment_address=models.CharField(max_length=250)
     pin_code=models.CharField(max_length=10)
+
 
 
 
@@ -103,11 +104,8 @@ class BillingAddress(models.Model):
     
 
     class Meta:
-        verbose_name = _("Billing Address")
-        verbose_name_plural = _("Billind Adresss")
-
-    def __str__(self):
-        return self.name
+        verbose_name = ("Billing Address")
+        verbose_name_plural = ("Billind Adresss")
 
     
 

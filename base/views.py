@@ -4,7 +4,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render,get_object_or_404,redirect
 from django.core.exceptions import ObjectDoesNotExist
 from django.views.generic import ListView,DetailView,View
-from .models import Item,Order,OrderItem
+from .models import Item,Order,OrderItem,BillingAddress
 from  django.utils import timezone
 
 from .forms import CheckoutForm
@@ -20,9 +20,13 @@ class OrderSummaryView(LoginRequiredMixin,View):
     # model = Order
     def get(self,*args,**kwargs):
         try:
+            # geting the order wich not checekouted yet
             order=Order.objects.get(user=self.request.user,ordered=False)
             return render(self.request,'order_summary.html',{'order':order})
         except ObjectDoesNotExist:
+            # try to geting order summary even if order does not exist
+
+
             messages.error(self.request,f" { self.request.user.username } Don't have Any Item in The Cart")
             return redirect("/")
         
@@ -72,13 +76,9 @@ def add_to_card(request,slug):
 
 
 
-# def check_out(request):
-#     print('5656'*30,request.GET)
-#     return render(request,'checkout-page.html')
 
 
-
-class check_out(View):
+class check_out(LoginRequiredMixin,View):
     def get(self,*args,**kwargs):
         # form
         form=CheckoutForm()
@@ -89,16 +89,61 @@ class check_out(View):
 
         return render(self.request,'checkout-page.html',context)
 
+
+        # {'city': 'SDHJ', 'phone_number': '435354', 'street_address': '345 sd csdufshd isduhyu', 'apartment_address': 'UDHFV IUHSDH', 'pin_code': '44100', 'same_billing_address': True, 'save_info': False, 'payment_option': 'C'}
+
+
     def post(self,*args,**kwargs):
         form=CheckoutForm(self.request.POST or None)
-        print(self.request.POST)
-        if form.is_valid():
-            print('for is valid',form.cleaned_data)
+
+        try:
+            order=Order.objects.get(user=self.request.user,ordered=False)
+
+            if form.is_valid():
+
+                user=form.cleaned_data.get('user')
+                city=form.cleaned_data.get('city')
+                phone_number=form.cleaned_data.get('phone_number')
+                street_address=form.cleaned_data.get('street_address')
+                apartment_address=form.cleaned_data.get('apartment_address')
+                pin_code=form.cleaned_data.get('pin_code')
+
+
+
+                billing_address=BillingAddress(
+                    user=self.request.user,
+                    city=city,
+                    phone_number=phone_number,
+                    street_address=street_address,
+                    apartment_address=apartment_address,
+                    pin_code=pin_code
+                    
+                    )
+                    
+                billing_address.save()
+                order.billing_address = billing_address
+                order.save()
+
+                # TODO: add redirect to slected paymennt option
+
+
+
+                print('for is valid',form.cleaned_data)
+                messages.success(self.request,f' Sucessfully Checkout !!')
+                return redirect("base:check-out")
+
+            messages.warning(self.request,f'⚠️  Failed to checlout')
+            
             return redirect("base:check-out")
 
-        messages.warning(self.request,f'⚠️  Failed to checlout')
-        
-        return redirect("base:check-out")
+
+
+        except ObjectDoesNotExist:
+            messages.error(self.request,f" { self.request.user.username } Don't have Any Item in The Cart")
+            return redirect("base:order-summary")
+
+
+
 
 @login_required
 def remove_single_item_cart(request,slug):
