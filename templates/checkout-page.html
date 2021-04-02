@@ -20,16 +20,10 @@
 
           <!--Card-->
           <div class="card">
-          <form>  
-          {% csrf_token %}
-          {{ form|crispy }}
-          <button class="btn btn-primary " type="submit">Checkout
-          </button>
-
-          </form>  
 
             <!--Card content-->
-            <form class="card-body">
+            <form class="card-body" method="post" action=''>
+                {% csrf_token %}
 
               <!--Username-->
               <div class="md-form input-group pl-0 mb-5">
@@ -90,34 +84,32 @@
               <div class="custom-control custom-checkbox">
                 {% comment %} <input type="checkbox" class="custom-control-input" id="same-address"> {% endcomment %}
                 {{ form.same_billing_address}}
-                <label class="custom-control-label" for="same-address">Shipping address is the same as my billing address</label>
+                <label class="" for="id_same_billing_address">Shipping address is the same as my billing address</label>
               </div>
               <div class="custom-control custom-checkbox">
               {{ form.save_info}}
                 {% comment %} <input type="checkbox" class="custom-control-input" id="save-info"> {% endcomment %}
-                <label class="custom-control-label" for="save-info">Save this information for next time</label>
+                <label class="" for="id_save_info">Save this information for next time</label>
               </div>
 
               <hr>
 
               <div class="d-block my-3">
+              {% for value,name in form.fields.payment_option.choices %}
+
+
+
                 <div class="custom-control custom-radio">
-                  <input id="credit" name="paymentMethod" type="radio" class="custom-control-input" checked required>
-                  <label class="custom-control-label" for="credit">Credit card</label>
+                  <input id="{{ value }}" name="payment_option" value="{{ value }}"type="radio" class="custom-control-input"  required>
+                  <label class="custom-control-label" for="{{ value }}">{{ name }}</label>
                 </div>
-                <div class="custom-control custom-radio">
-                  <input id="debit" name="paymentMethod" type="radio" class="custom-control-input" required>
-                  <label class="custom-control-label" for="debit">Debit card</label>
-                </div>
-                <div class="custom-control custom-radio">
-                {{ form.payment_option }}
-                  
-                  {% comment %} <input id="paypal" name="paymentMethod" type="radio" class="custom-control-input" required>
-                  <label class="custom-control-label" for="paypal">Strip Payments</label> {% endcomment %}
-                </div>
+              
+              {% endfor %}
+
+
               </div>
               <hr class="mb-4">
-              <button class="btn btn-primary btn-lg btn-block" type="submit">Continue to checkout</button>
+              <button class="btn btn-success btn-lg btn-block"  type="submit">Continue to checkout</button>
 
             </form>
 

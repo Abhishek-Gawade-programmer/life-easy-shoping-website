@@ -79,7 +79,7 @@ def add_to_card(request,slug):
 
 
 class check_out(View):
-    def get(self,request,*args,**kwargs):
+    def get(self,*args,**kwargs):
         # form
         form=CheckoutForm()
         context={
@@ -87,13 +87,18 @@ class check_out(View):
         }
 
 
-        return render(request,'checkout-page.html',context)
+        return render(self.request,'checkout-page.html',context)
 
-    def post(self,args,**kwargs):
+    def post(self,*args,**kwargs):
         form=CheckoutForm(self.request.POST or None)
+        print(self.request.POST)
         if form.is_valid():
-            print('for is valid')
-            return redirect("base:check_out")
+            print('for is valid',form.cleaned_data)
+            return redirect("base:check-out")
+
+        messages.warning(self.request,f'⚠️  Failed to checlout')
+        
+        return redirect("base:check-out")
 
 @login_required
 def remove_single_item_cart(request,slug):

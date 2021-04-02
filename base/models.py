@@ -86,5 +86,33 @@ class Order(models.Model):
             total +=order_item.get_final_price()
         return total
 
+
+
+class BillingAddress(models.Model):
+    user= models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
+    city=models.CharField(max_length=20)
+    phone_number=models.CharField(max_length=20)
+    street_address-models.CharField(max_length=250)
+    apartment_address-models.CharField(max_length=250)
+    pin_code=models.CharField(max_length=10)
+
+
+
+
+
+    
+
+    class Meta:
+        verbose_name = _("Billing Address")
+        verbose_name_plural = _("Billind Adresss")
+
+    def __str__(self):
+        return self.name
+
+    
+
+    # def get_absolute_url(self):
+    #     return reverse("BillingAdress_detail", kwargs={"pk": self.pk})
+
     
 
