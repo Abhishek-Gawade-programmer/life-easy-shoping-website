@@ -209,6 +209,12 @@ def remove_from_cart(request,slug):
         #add a message saying nio have prercf
         messages.info(request,f'You don"t have Active Order')
         return redirect("base:product-view",slug=slug)
+
+
+class PaymentView(View):
+    def get(self,*args, **kwargs):
+        return render(self.request,"payment.html")
+
     
 
 
