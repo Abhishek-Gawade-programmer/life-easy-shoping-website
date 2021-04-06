@@ -4,13 +4,17 @@ from django.conf import settings
 from .views import (check_out,item_detail_view,
                     HomeNameList,add_to_card,
                     remove_from_cart,OrderSummaryView,remove_single_item_cart,CreateCheckoutSessionView,
-                    SuccessView,CancelView,stripe_webhook
+                    SuccessView,CancelView,stripe_webhook,
+                    rate_comment_on_product
                     )
 
 app_name='base'
 
 
 urlpatterns = [
+
+    path('rate_comment_on_product/',rate_comment_on_product,name ='rate_comment_on_product'),
+
     path('check_out/',check_out.as_view(),name ='check-out'),
     path('product_view/<slug>/',item_detail_view,name ='product-view'),
     path('order-summary/',OrderSummaryView.as_view(),name ='order-summary'),

@@ -338,6 +338,17 @@ def stripe_webhook(request):
     return HttpResponse(status=200)
 
 
+def rate_comment_on_product(request):
+    if request.method=='POST' :
+        print('##',request.POST)
+
+
+        return JsonResponse({'success':'true','score':request.POST.get('num_rate')},safe=False)
+    return JsonResponse({'success':'false'})
+
+
+
+
 
 
 

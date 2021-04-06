@@ -170,7 +170,12 @@
         </button>
       </div>
       <div class="modal-body">
-        <form>
+        <div id="notification">  
+        </div>
+
+
+        <form method="POST" action="" class="rate-form" id="{{ object.slug }}">
+          {% csrf_token %}
             Rate this Product
 
             <span id='s1' class="fa fa-star fa-3x "></span>
