@@ -4,15 +4,23 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render,get_object_or_404,redirect
 from django.core.exceptions import ObjectDoesNotExist
 from django.views.generic import ListView,DetailView,View
-from .models import Item,Order,OrderItem,BillingAddress
+from .models import Item,Order,OrderItem,BillingAddress,Comment
 from  django.utils import timezone
+from django.conf import settings
+from django.http import JsonResponse, HttpResponse
+from django.views.generic import TemplateView
+from django.views.decorators.csrf import csrf_exempt
+
+import json
+import stripe
+
+stripe.api_key = settings.STRIPE_SECRET_KEY
 
 from .forms import CheckoutForm
 
 class HomeNameList(ListView):
     model = Item
     context_object_name = 'items'
-    paginate_by=10
     template_name='home.html'
 
 
@@ -22,6 +30,8 @@ class OrderSummaryView(LoginRequiredMixin,View):
         try:
             # geting the order wich not checekouted yet
             order=Order.objects.get(user=self.request.user,ordered=False)
+            
+            
             return render(self.request,'order_summary.html',{'order':order})
         except ObjectDoesNotExist:
             # try to geting order summary even if order does not exist
@@ -35,10 +45,19 @@ class OrderSummaryView(LoginRequiredMixin,View):
 
 
 
+def item_detail_view(request,slug):
+    item=Item.objects.get(slug=slug)
+    messages_item=Comment.objects.filter(product=item)
+    context={
+        'object':item,
+        'messages_item':messages_item,
+        'range': range(1,6)
 
-class ItemDetailView(DetailView):
-    model = Item
-    template_name = "product-page.html"
+
+    }
+    return render(request,'product-page.html',context)
+
+
 
 @login_required
 def add_to_card(request,slug):
@@ -62,7 +81,7 @@ def add_to_card(request,slug):
 
         else:
             #add the product in order
-            messages.info(request,f'This {item.title} already added to your cart')
+            messages.info(request,f'This {item.title} added to your cart')
             order.items.add(order_item)
             return redirect("base:order-summary")
     else:
@@ -83,13 +102,22 @@ class check_out(LoginRequiredMixin,View):
     def get(self,*args,**kwargs):
         # get check out form
         form=CheckoutForm()
-        context={
-            'form': form,
-        }
+
+        try:
+            order=Order.objects.get(user=self.request.user,ordered=False)
 
 
-        return render(self.request,'checkout-page.html',context)
-        
+
+            context={
+                'form': form,
+                'order':order,
+                 "STRIPE_PUBLIC_KEY": settings.STRIPE_PUBLIC_KEY
+            }
+            return render(self.request,'checkout-page.html',context)
+
+        except ObjectDoesNotExist:
+            messages.info(request,f'You don"t have Active Order')
+            return render(self.request,'checkout-page.html')
 
 
     def post(self,*args,**kwargs):
@@ -100,7 +128,12 @@ class check_out(LoginRequiredMixin,View):
         try:
             order=Order.objects.get(user=self.request.user,ordered=False)
 
+
+
+
+
             if form.is_valid():
+                
 
                 user=form.cleaned_data.get('user')
                 city=form.cleaned_data.get('city')
@@ -108,6 +141,10 @@ class check_out(LoginRequiredMixin,View):
                 street_address=form.cleaned_data.get('street_address')
                 apartment_address=form.cleaned_data.get('apartment_address')
                 pin_code=form.cleaned_data.get('pin_code')
+                payment_option=form.cleaned_data.get('payment_option')
+
+
+
 
             
                 #saving the from data to database via model
@@ -117,15 +154,25 @@ class check_out(LoginRequiredMixin,View):
                     phone_number=phone_number,
                     street_address=street_address,
                     apartment_address=apartment_address,
-                    pin_code=pin_code
+                    pin_code=pin_code,
+                    payment_option=payment_option
                     
                     )
                 #saved to database
                 billing_address.save()
-
+                
                 #aattact billing address to order
                 order.billing_address = billing_address
+                
+
+
                 order.save()
+                if billing_address.payment_option=='S':
+                    return redirect("base:create-checkout-session",pk=order.id)   
+                    
+
+
+
 
                 # TODO: add redirect to slected paymennt option
 
@@ -211,9 +258,105 @@ def remove_from_cart(request,slug):
         return redirect("base:product-view",slug=slug)
 
 
-class PaymentView(View):
-    def get(self,*args, **kwargs):
-        return render(self.request,"payment.html")
+
+
+
+class CreateCheckoutSessionView(LoginRequiredMixin,View):
+    def post(self, request, *args, **kwargs):
+        order=Order.objects.get(pk=self.kwargs['pk'])
+
+        all_product_info=[]
+        for order_item in order.items.all():
+            product_info={
+                'price_data': {
+                                'currency': 'inr',
+                                'unit_amount':int(order_item.item.discount_price)*100 if order_item.item.discount_price else int(order_item.item.price)*100 ,
+                                'product_data': {
+                                    'name':order_item.item.title,
+                                    'images': ['https://post.healthline.com/wp-content/uploads/2020/08/young-woman-wheelchair-disabled-732x549-thumbnail.jpg'],
+                                },
+                            },
+                            'quantity': order_item.qauntity,
+                        }
+            all_product_info.append(product_info)
+
+
+        YOUR_DOMAIN='http://127.0.0.1:8000'
+        x=f'Order No #{order.id}'
+        price=int(order.get_total())*100
+        checkout_session = stripe.checkout.Session.create(
+            payment_method_types=['card'],
+            
+
+            line_items=all_product_info,
+            mode='payment',
+            success_url=YOUR_DOMAIN + '/success/',
+            cancel_url=YOUR_DOMAIN + '/cancel/',
+        )
+
+        return JsonResponse({'id': checkout_session.id})
+
+
+class SuccessView(LoginRequiredMixin,TemplateView):
+    template_name = "success.html"
+
+
+class CancelView(LoginRequiredMixin,TemplateView):
+    template_name = "cancel.html"
+
+@login_required
+@csrf_exempt
+def stripe_webhook(request):
+    payload = request.body
+
+
+    sig_header = request.META['HTTP_STRIPE_SIGNATURE']
+    event = None
+
+    try:
+        event = stripe.Webhook.construct_event(
+            payload, sig_header, settings.STRIPE_WEBHOOK_SECRET
+        )
+    except ValueError as e:
+        # Invalid payload
+        return HttpResponse(status=400)
+    except stripe.error.SignatureVerificationError as e:
+        # Invalid signature
+        return HttpResponse(status=400)
+
+    # Handle the checkout.session.completed event
+    if event['type'] == 'checkout.session.completed':
+        session = event['data']['object']
+        print('##',session)
+
+
+        # customer_email = session["customer_details"]["email"]
+        # product_id = session["metadata"]["product_id"]
+
+        # product = Product.objects.get(id=product_id)
+
+    return HttpResponse(status=200)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     
 

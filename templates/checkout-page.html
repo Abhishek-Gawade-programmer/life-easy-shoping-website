@@ -7,6 +7,10 @@
 
 {% block content %}
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?version=3.52.1&features=fetch"></script>
+    <script src="https://js.stripe.com/v3/"></script>
+
+
   <!--Main layout-->
 
   <!--Main layout-->
@@ -14,7 +18,7 @@
     <div class="container wow fadeIn">
 
       <!-- Heading -->
-      <h2 class="my-5 h2 text-center">Checkout form</h2>
+      <h2 class="my-5 h2 text-center">Checkout form  {{order.item.list }}</h2>
 
       <!--Grid row-->
       <div class="row">
@@ -113,7 +117,7 @@
 
               </div>
               <hr class="mb-4">
-              <button class="btn btn-success btn-lg btn-block"  type="submit">Continue to checkout</button>
+              <button class="btn btn-success btn-lg btn-block" id='checkout-button' type="submit">Continue to checkout</button>
 
             </form>
 
@@ -129,56 +133,83 @@
           <!-- Heading -->
           <h4 class="d-flex justify-content-between align-items-center mb-3">
             <span class="text-muted">Your cart</span>
-            <span class="badge badge-secondary badge-pill">3</span>
+            <span class="badge badge-secondary badge-pill">{{ order.items.all|length }} Items</span>
           </h4>
 
           <!-- Cart -->
           <ul class="list-group mb-3 z-depth-1">
+
             <li class="list-group-item d-flex justify-content-between lh-condensed">
               <div>
-                <h6 class="my-0">Product name</h6>
-                <small class="text-muted">Brief description</small>
+              <b>
+                <h6 style="text-align:center;">Order ID Number  #{{ order.id }}</h6>
+                </b>
               </div>
-              <span class="text-muted">$12</span>
             </li>
+
+            {% for order_item in order.items.all %}    
+
+
+
             <li class="list-group-item d-flex justify-content-between lh-condensed">
               <div>
-                <h6 class="my-0">Second product</h6>
-                <small class="text-muted">Brief description</small>
+                <h6 class="my-0">Item  No : @{{ forloop.counter }}</h6>
+                <br>
+              <small class="text-muted"><b>Name : </b>{{ order_item.item.title|truncatechars:30  }}</small>
+              <br>
+              <small class="text-muted"><b>Quantiy :  </b>{{ order_item.qauntity }}</small>
+
+              <br>
+              <small class="text-muted"><b>Cost Per Item =</b>  ₹ &nbsp;{{ order_item.item.price }}
+
+
+
+              
+              </small>
+            <br> <br>
+
+                <small class="text-muted">
+                
+                {% if order_item.item.discount_price %}
+
+                    <span class="badge rounded-pill bg-success" style="font-size:120%">
+                            Saving ₹ &nbsp;{{ order_item.get_amount_saved }}
+                     </span>
+                      
+                       {% endif %}
+
+
+              
+              </small>
+              
+
+           
+              
               </div>
-              <span class="text-muted">$8</span>
+              <span class="text-muted">
+                                  {% if order_item.item.discount_price %}
+
+                                      ₹&nbsp;{{ order_item.get_total_discount_price }}
+                                 {% else %}
+                                      ₹{{ order_item.get_total_item_price }}
+
+
+
+            
+                    {% endif %}
+              
+              </span>
             </li>
-            <li class="list-group-item d-flex justify-content-between lh-condensed">
-              <div>
-                <h6 class="my-0">Third item</h6>
-                <small class="text-muted">Brief description</small>
-              </div>
-              <span class="text-muted">$5</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between bg-light">
-              <div class="text-success">
-                <h6 class="my-0">Promo code</h6>
-                <small>EXAMPLECODE</small>
-              </div>
-              <span class="text-success">-$5</span>
-            </li>
+             {% endfor %}
+
             <li class="list-group-item d-flex justify-content-between">
-              <span>Total (USD)</span>
-              <strong>$20</strong>
+              <span>Total (INR )  :</span>
+              <strong>₹{{ order.get_total }}</strong>
             </li>
+            
           </ul>
           <!-- Cart -->
 
-          <!-- Promo code -->
-          <form class="card p-2">
-            <div class="input-group">
-              <input type="text" class="form-control" placeholder="Promo code" aria-label="Recipient's username" aria-describedby="basic-addon2">
-              <div class="input-group-append">
-                <button class="btn btn-secondary btn-md waves-effect m-0" type="button">Redeem</button>
-              </div>
-            </div>
-          </form>
-          <!-- Promo code -->
 
         </div>
         <!--Grid column-->
@@ -190,4 +221,45 @@
   </main>
 
   <!--Main layout-->
+  <script type="text/javascript">
+    // Create an instance of the Stripe object with your publishable API key
+    var stripe = Stripe("{{ STRIPE_PUBLIC_KEY }}");
+    var checkoutButton = document.getElementById("checkout-button");
+    const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+    checkoutButton.addEventListener("click", function () {
+      fetch("{% url 'base:create-checkout-session' order.id %}", {
+        method: "POST",
+
+        headers:{
+          'X-CSRFToken':csrftoken
+        }
+      })
+        .then(function (response) {
+          return response.json();
+        })
+        .then(function (session) {
+          return stripe.redirectToCheckout({ sessionId: session.id });
+        })
+        .then(function (result) {
+          // If redirectToCheckout fails due to a browser or network
+          // error, you should display the localized error message to your
+          // customer using error.message.
+          if (result.error) {
+            alert(result.error.message);
+          }
+        })
+        .catch(function (error) {
+          console.error("Error:", error);
+        });
+    });
+
+          // The items the customer wants to buy
+
+
+  </script>
+
+
+
+
 {% endblock content %}

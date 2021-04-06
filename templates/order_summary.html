@@ -6,7 +6,7 @@
     <h4 class='display-5'>Order Summary</h4>
 
         <table class="table">
-            <thead>
+            <thead  class="table-dark">
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">Item Title</th>
@@ -21,7 +21,7 @@
         
                 <tr>
                         <th scope="row">{{ forloop.counter }}</th>
-                        <td>{{ order_item.item.title }}</td>
+                        <td>{{ order_item.item.title|truncatechars:25  }}</td>
                         <td>{{ order_item.item.price }}</td>
                         <td>
                         <a href="{% url 'base:remove-single-item-from-cart'  order_item.item.slug %}">
@@ -34,12 +34,12 @@
                         <td>
 
                         {% if order_item.item.discount_price %}
-                            ${{ order_item.get_total_discount_price }}
-                            <span class="badge rounded-pill bg-primary">Saving ${{ order_item.get_amount_saved }}</span>
+                            ₹{{ order_item.get_total_discount_price }}
+                            <span class="badge rounded-pill bg-primary ml-3">Saving ₹{{ order_item.get_amount_saved }}</span>
                             
                         
                         {% else %}
-                            ${{ order_item.get_total_item_price }}
+                            ₹{{ order_item.get_total_item_price }}
                         {% endif %}
                             <a style='color:red' href="{% url 'base:remove-from-cart'  order_item.item.slug %}">
                                 <i class="far fa-trash-alt float-right"></i>
@@ -66,20 +66,20 @@
                 <tr>
                     <b></b>
                     <td colspan="4">Order Total</td>
-                    <td ><b>${{ order.get_total }}</b></td>
+                    <td ><b>₹{{ order.get_total }}</b></td>
                 </tr>
 
                 <tr>
                     
                     <td colspan="5">
-                    <a  class='btn btn-success float-right btn-block' href='/'>Contiune Shoping </a>
+                    <a  class='btn btn-success float-left' href='/'>Contiune Shoping </a>
 
                 </tr>
 
                 <tr>
                     
                     <td colspan="5">
-                    <a  class='btn btn-warning float-right btn-block' href='/check_out'>Proceed To CheckOut</a></td>
+                    <a  class='btn btn-warning float-left' href='/check_out'>Proceed To CheckOut</a></td>
 
                 </tr>
              {% endif %}

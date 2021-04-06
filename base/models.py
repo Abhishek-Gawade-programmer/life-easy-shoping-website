@@ -1,6 +1,9 @@
 from django.db import models
 from django.conf import settings
 from  django.shortcuts import reverse
+from django.core.validators import MaxValueValidator,MinValueValidator
+
+
 CATEGORY_CHOICES=(
     ('S','Shirt'),
     ('SW','Sport wear'),
@@ -11,6 +14,15 @@ LABEL_CHOICES=(
     ('P','primary'),
     ('S','secondary'),
     ('D','danger'),
+)
+
+
+PAYMENTS_CHOICES =(
+
+    ('S','Stripe'),
+    ('C','Cash On Delivier '),
+     ('P','PayPal'),
+
 )
 
 
@@ -96,13 +108,10 @@ class BillingAddress(models.Model):
     street_address=models.CharField(max_length=250)
     apartment_address=models.CharField(max_length=250)
     pin_code=models.CharField(max_length=10)
+    payment_option = models.CharField(choices=PAYMENTS_CHOICES,max_length=1,default='S')
 
 
 
-
-
-
-    
 
     class Meta:
         verbose_name = ("Billing Address")
@@ -110,8 +119,19 @@ class BillingAddress(models.Model):
 
     
 
-    # def get_absolute_url(self):
-    #     return reverse("BillingAdress_detail", kwargs={"pk": self.pk})
+class Comment(models.Model):
+    user=models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
+    product = models.ForeignKey(Item,on_delete=models.CASCADE)
+    # as we can rate [1-5] so 0 means no rate yet
+    rating = models.IntegerField(default=0,validators=[ 
+                MaxValueValidator(5),MinValueValidator(0)
+            ])
+    body = models.TextField(blank=True,null=True)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return str(self.pk)
 
     
 

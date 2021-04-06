@@ -25,17 +25,13 @@
 
         <!-- Left -->
         <ul class="navbar-nav mr-auto">
-          {% comment %} <li class="nav-item active">
-            <a class="nav-link waves-effect" href="/">Home
-              <span class="sr-only">(current)</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link waves-effect" href="/check_out">CheckOut</a>
-          </li> {% endcomment %}
+
         </ul>
 
         <!-- Right -->
+
+
+
         {% if request.user.is_authenticated %}
         <ul class="navbar-nav nav-flex-icons">
           <li class="nav-item">
@@ -72,6 +68,9 @@
           </li>
           </ul>
           {% endif %}
+
+
+
         
 
       </div>

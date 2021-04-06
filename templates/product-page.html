@@ -1,6 +1,13 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
+  <style type="text/css">
+    .checked {
+        color: red;
+      }
+  </style>
+
 
   <!--Main layout-->
   <main class="mt-5 pt-4">
@@ -12,7 +19,7 @@
         <!--Grid column-->
         <div class="col-md-6 mb-4">
 
-          <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Products/14.jpg" class="img-fluid" alt="">
+          <img src="{{ object.image.url }}"   alt="" class="img-fluid">
 
         </div>
         <!--Grid column-->
@@ -29,21 +36,43 @@
               </a>
             </div>
 
+
          <p class="lead">
-         {% if item.discount_price %}
+         {% if object.discount_price %}
               <span class="mr-1">
-                <del>${{item.price}}</del>
+                <del>${{object.price}}</del>
               </span>
                   
-            <span>${{item.discount_price }}</span>     
+            <span>${{object.discount_price }}</span>     
           {% else %} 
             <span>${{ object.price }}</span>
           {% endif %}     
             </p>
 
-            <p class="lead font-weight-bold">{{object.title}}</p>
 
-            <p>{{ object.description }}</p>
+
+            <p class="lead font-weight-bold">{{object.title}}</p>
+                              <a href="{{ object.get_add_to_cart_url }}" class="btn btn-primary btn-md my-0 p  " >Add to cart
+                <i class="fas fa-shopping-cart ml-1"></i>
+              </a>
+      
+
+              <a href="{{ object.get_remove_to_cart_url }}" class="btn btn-danger btn-md my-0 p  " >Remove from Cart
+              </a>
+              </div>
+
+            </div>
+
+              
+            <div class="jumbotron btn-light col-md-12 ">
+            <h1 class="display-5">Description</h1>
+            <hr>
+            <br>
+
+
+              {{ object.description|linebreaks }}
+            
+            </div>
 {% comment %} 
             <form class="d-flex justify-content-left">
               <!-- Default input -->
@@ -53,15 +82,9 @@
               </button>
 
             </form> {% endcomment %}
-             <a href="{{ object.get_add_to_cart_url }}" class="btn btn-primary btn-md my-0 p" >Add to cart
-                <i class="fas fa-shopping-cart ml-1"></i>
-              </a>
+       
 
-              <a href="{{ object.get_remove_to_cart_url }}" class="btn btn-danger btn-md my-0 p" >Remove from Cart
-              </a>
-
-
-          </div>
+          
           <!--Content-->
 
         </div>
@@ -74,48 +97,115 @@
 
       <!--Grid row-->
       <div class="row d-flex justify-content-center wow fadeIn">
+        <h4 class="my-4 h4 text-center">Comments and Reviews</h4>
+
 
         <!--Grid column-->
-        <div class="col-md-6 text-center">
+        <div class="col-md-12 ">
+          <div class="card-deck">
 
-          <h4 class="my-4 h4">Additional information</h4>
+        {% for review in messages_item %}
+            <div class="col-sm-6">
 
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus suscipit modi sapiente illo soluta odit
-            voluptates,
-            quibusdam officia. Neque quibusdam quas a quis porro? Molestias illo neque eum in laborum.</p>
+                  <div class="card text-center border border-primary shadow-3 " >
+                        <div class="card-body">
+                            <h5 class="card-title">{{review.user}}</h5>
+                            <p class="card-text">
+                              {{review.body}}
+                            </p>
+                            <p class="rating_button"  id="{{review.rating}}">
+
+                            {% if review.rating != 0 %}
+                                {% for i in range %}
+                                    {% if  i <= review.rating %}
+                                       <span id='sd{{i}}' class="fa fa-star fa-3x checked"></span>
+
+                                    {% else %}
+                                      <span id='sd{{i}}' class="fa fa-star fa-3x"></span>
+
+
+                                      
+                                    {% endif %}
+                                  
+
+
+                                {% endfor %}
+                          {% endif %}
+
+
+
+      
+                                
+
+                            </p>
+                            {{review.rating}}
+
+
+
+                        </div>
+
+                        <div class="card-footer">{{review.updated}}</div>
+                    </div>
+              </div>
+
+
+
+
+
+        {% endfor %}
+        <!--Grid column-->
+        <!-- Button trigger modal -->
+          
+
+    
+      <!--Grid row-->
+
+      <!--Grid row-->
 
         </div>
-        <!--Grid column-->
 
+      <div class="row d-flex justify-content-center wow fadeIn">
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Write Your Feeling</button>
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">{{request.user.username}} write View on this product</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
       </div>
-      <!--Grid row-->
+      <div class="modal-body">
+        <form>
+            Rate this Product
 
-      <!--Grid row-->
-      <div class="row wow fadeIn">
+            <span id='s1' class="fa fa-star fa-3x "></span>
+            <span id='s2' class="fa fa-star fa-3x "></span>
+            <span id='s3' class="fa fa-star fa-3x "></span>
+            <span id='s4' class="fa fa-star fa-3x "></span>
+            <span id='s5' class="fa fa-star fa-3x "></span>
+
+          <div class="form-group">
+            <label for="message-text" class="col-form-label">Message:</label>
+            <textarea class="form-control" id="message-text"></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Send message</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
 
         <!--Grid column-->
-        <div class="col-lg-4 col-md-12 mb-4">
 
-          <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Products/11.jpg" class="img-fluid" alt="">
-
-        </div>
-        <!--Grid column-->
-
-        <!--Grid column-->
-        <div class="col-lg-4 col-md-6 mb-4">
-
-          <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Products/12.jpg" class="img-fluid" alt="">
-
-        </div>
-        <!--Grid column-->
-
-        <!--Grid column-->
-        <div class="col-lg-4 col-md-6 mb-4">
-
-          <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Products/13.jpg" class="img-fluid" alt="">
-
-        </div>
-        <!--Grid column-->
 
       </div>
       <!--Grid row-->
@@ -123,5 +213,9 @@
     </div>
   </main>
   <!--Main layout-->
+
+  <script type="text/javascript" src="{% static 'js/main.js' %}"></script>
+
+
 
   {% endblock content %}

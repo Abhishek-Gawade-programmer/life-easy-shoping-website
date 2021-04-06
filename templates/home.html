@@ -2,7 +2,7 @@
 {% load static %}
   {% block content %}
   
-  <!--Carousel Wrapper-->
+  {% comment %} <!--Carousel Wrapper-->
   <div id="carousel-example-1z" class="carousel slide carousel-fade pt-4" data-ride="carousel">
 
     <!--Indicators-->
@@ -133,7 +133,7 @@
     <!--/.Controls-->
 
   </div>
-  <!--/.Carousel Wrapper-->
+  <!--/.Carousel Wrapper--> {% endcomment %}
 
   <!--Main layout-->
   <main>
@@ -223,7 +223,7 @@
                 </h5>
 
                 <h4 class="font-weight-bold blue-text">
-                  <strong>$
+                  <strong>₹
                   {% if item.discount_price %}
                     {{item.discount_price }}
               
