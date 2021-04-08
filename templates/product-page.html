@@ -4,7 +4,7 @@
 {% block content %}
   <style type="text/css">
     .checked {
-        color: red;
+        color: #DAA520;
       }
   </style>
 
@@ -73,19 +73,6 @@
               {{ object.description|linebreaks }}
             
             </div>
-{% comment %} 
-            <form class="d-flex justify-content-left">
-              <!-- Default input -->
-              <input type="number" value="1" aria-label="Search" class="form-control" style="width: 100px">
-              <button class="btn btn-primary btn-md my-0 p" type="submit">Add to cart
-                <i class="fas fa-shopping-cart ml-1"></i>
-              </button>
-
-            </form> {% endcomment %}
-       
-
-          
-          <!--Content-->
 
         </div>
         <!--Grid column-->
@@ -104,47 +91,46 @@
         <div class="col-md-12 ">
           <div class="card-deck">
         {% for review in messages_item %}
-            <div class="col-sm-6">
+          {% if review.rating != 0 %}
 
-                  <div class="card text-center border border-primary shadow-3 " >
-                        <div class="card-body">
-                            <h5 class="card-title">{{review.user}}</h5>
-                            <p class="card-text">
-                              {{review.body}}
-                            </p>
-                            <p class="rating_button"  id="{{review.rating}}">
+                 <div class="col-sm-6">
 
-                            {% if review.rating != 0 %}
-                                {% for i in range %}
-                                    {% if  i <= review.rating %}
-                                       <span id='sd{{i}}' class="fa fa-star fa-3x checked"></span>
+                        <div class="card text-center border border-primary shadow-3 " >
+                              <div class="card-body">
+                                  <h5 class="card-title">{{review.user}}</h5>
+                                  <p class="card-text">
+                                    {{review.body}}
+                                  </p>
+                                  <p class="rating_button"  id="{{review.rating}}">
 
-                                    {% else %}
-                                      <span id='sd{{i}}' class="fa fa-star fa-3x"></span>
-
-
-                                      
-                                    {% endif %}
                                   
+                                      {% for i in range %}
+                                            {% if  i <= review.rating %}
+                                               <span id='sd{{i}}' class="fa fa-star fa-3x checked"></span>
+
+                                            {% else %}
+                                              <span id='sd{{i}}' class="fa fa-star fa-3x"></span>
 
 
-                                {% endfor %}
-                          {% endif %}   
-
-                            </p>
-                            {{review.rating}}
+                                              
+                                            {% endif %}
+                                        
 
 
+                                      {% endfor %}
+                                
 
-                        </div>
 
-                        <div class="card-footer">{{review.updated}}</div>
+
+                              </div>
+
+                              <div class="card-footer">{{review.updated}}</div>
+                          </div>
                     </div>
-              </div>
 
 
 
-
+                {% endif %}   
 
         {% endfor %}
         <!--Grid column-->
@@ -171,12 +157,19 @@
       </div>
       <div class="modal-body">
         <div id="notification">  
+<div class="alert alert-primary" role="alert">
+  Click or Tab the Star to save your review.
+</div>
         </div>
 
 
         <form method="POST" action="" class="rate-form" id="{{ object.slug }}">
           {% csrf_token %}
             Rate this Product
+
+            <div class="container">
+                  <span id="rateMe3"  class="rating-faces"></span>
+                </div>
 
             <span id='s1' class="fa fa-star fa-3x "></span>
             <span id='s2' class="fa fa-star fa-3x "></span>
@@ -192,7 +185,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Send message</button>
+        <button type="button" class="btn btn-primary"  id='save-post'>Submit Reviews</button>
       </div>
     </div>
   </div>

@@ -14,6 +14,10 @@ from django.views.decorators.csrf import csrf_exempt
 import json
 import stripe
 
+
+
+
+
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
 from .forms import CheckoutForm
@@ -47,7 +51,7 @@ class OrderSummaryView(LoginRequiredMixin,View):
 
 def item_detail_view(request,slug):
     item=Item.objects.get(slug=slug)
-    messages_item=Comment.objects.filter(product=item)
+    messages_item=Comment.objects.filter(product=item)[::-1]
     context={
         'object':item,
         'messages_item':messages_item,
@@ -327,22 +331,29 @@ def stripe_webhook(request):
     # Handle the checkout.session.completed event
     if event['type'] == 'checkout.session.completed':
         session = event['data']['object']
-        print('##',session)
 
-
-        # customer_email = session["customer_details"]["email"]
-        # product_id = session["metadata"]["product_id"]
-
-        # product = Product.objects.get(id=product_id)
+        # RO DO :seND EMAIL
 
     return HttpResponse(status=200)
 
 
+
+
+# {'csrfmiddlewaretoken': ['tzilebk3rjsK1WtUBPfvPd66JdnSJzJ04tPtZPwmSWGGLbNKL4kf0XDms72d6u4y'],
+# 'slug': ['test-product-4'], 'num_rate': ['4'], 'message': ['']}
+
+
 def rate_comment_on_product(request):
     if request.method=='POST' :
-        print('##',request.POST)
+        item=get_object_or_404(Item,slug=request.POST.get('slug'))
 
+        x=Comment.objects.create(user=request.user,product=item,
+                        rating=int(request.POST.get('num_rate')),
+                        body=request.POST.get('message'))
 
+        x.save()
+
+        print('asjkfhausfbubyu',x)
         return JsonResponse({'success':'true','score':request.POST.get('num_rate')},safe=False)
     return JsonResponse({'success':'false'})
 
