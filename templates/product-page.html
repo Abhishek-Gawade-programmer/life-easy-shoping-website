@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load date_tag %}
 {% load static %}
 
 {% block content %}
@@ -124,7 +125,7 @@
 
                               </div>
 
-                              <div class="card-footer">{{review.updated}}</div>
+                              <div class="card-footer">{{ review|date_str_output }}</div>
                           </div>
                     </div>
 
