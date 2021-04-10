@@ -127,14 +127,8 @@ class check_out(LoginRequiredMixin,View):
     def post(self,*args,**kwargs):
         # valiad check out form 
         form=CheckoutForm(self.request.POST or None)
-
-
         try:
             order=Order.objects.get(user=self.request.user,ordered=False)
-
-
-
-
 
             if form.is_valid():
                 
@@ -146,9 +140,6 @@ class check_out(LoginRequiredMixin,View):
                 apartment_address=form.cleaned_data.get('apartment_address')
                 pin_code=form.cleaned_data.get('pin_code')
                 payment_option=form.cleaned_data.get('payment_option')
-
-
-
 
             
                 #saving the from data to database via model
@@ -337,23 +328,29 @@ def stripe_webhook(request):
     return HttpResponse(status=200)
 
 
-
-
-# {'csrfmiddlewaretoken': ['tzilebk3rjsK1WtUBPfvPd66JdnSJzJ04tPtZPwmSWGGLbNKL4kf0XDms72d6u4y'],
-# 'slug': ['test-product-4'], 'num_rate': ['4'], 'message': ['']}
-
-
+@login_required
 def rate_comment_on_product(request):
     if request.method=='POST' :
         item=get_object_or_404(Item,slug=request.POST.get('slug'))
 
-        x=Comment.objects.create(user=request.user,product=item,
-                        rating=int(request.POST.get('num_rate')),
-                        body=request.POST.get('message'))
 
-        x.save()
+        update_comment = Comment.objects.filter(user=request.user,product=item)
+        if  update_comment.exists():
+            #update a comment is eixits
 
-        print('asjkfhausfbubyu',x)
+
+            user_comment=update_comment[0]
+            user_comment.body=request.POST.get('message')
+            user_comment.rating=int(request.POST.get('num_rate'))
+            user_comment.save()
+        else:
+            #create a new comment
+            user_comment=Comment.objects.create(user=request.user,product=item,
+                            rating=int(request.POST.get('num_rate')),
+                            body=request.POST.get('message'))
+            user_comment.save()
+
+        # print('asjkfhausfbubyu',x)
         return JsonResponse({'success':'true','score':request.POST.get('num_rate')},safe=False)
     return JsonResponse({'success':'false'})
 

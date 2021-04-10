@@ -10,3 +10,9 @@ def cart_item_count(user):
             return qs[0].items.count()
         return 0
 
+
+# @register.filter
+# def get_str_na_a(short_str):
+# 	if short_str == ''
+
+

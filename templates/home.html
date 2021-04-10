@@ -203,7 +203,7 @@
             <div class="card">
 
               <!--Card image-->
-              <div class="view overlay">
+              <div class="view overlay">  
 
                 <img src="{{ item.image.url }}" class="card-img-top" alt="">
                 <a  href="{{ item.get_absolute_url }}">
@@ -215,16 +215,39 @@
               <div class="card-body text-center">
                 <!--Category & Title-->
                 <a href="" class="grey-text">
-                  <h5>{{ item.get_category_display }}</h5>
+                     <h3>
+
+                      {% if item.get_category_display == 'Available' %}
+                          <span class="badge rounded-pill bg-success text-dark">Available &nbsp;&nbsp;<i class="far fa-thumbs-up"></i></span>
+
+                      {% else %}
+                          <span class="badge rounded-pill bg-danger">Not Available &nbsp;&nbsp;<i class="far fa-thumbs-down"></i></span>
+                      {% endif %}
+
+
+
+
+                   </h3>
+                   <br>
                 </a>
-                <h5>
-                  <strong>
-                    <a href="{{ item.get_absolute_url }}" class="dark-grey-text">{{item.title}}
-                    <span class='badge badge-pill {{ item.get_label_display }}-color' >NEW</span>
-                    
-                    </a>
-                  </strong>
-                </h5>
+                  <h5>
+                    <strong>
+                      <a href="{{ item.get_absolute_url }}" class="dark-grey-text">{{item.title}}
+                        {% if item.label_name %}
+                          <br>
+                            <span class='badge badge-pill {{ item.get_label_display }}-color' >{{item.label_name}} </span>
+                          <hr>
+
+                        {% endif %}
+                        
+                      </a>
+                    </strong>
+                  </h5>
+                  
+
+                  
+
+
 
                 <h4 class="font-weight-bold blue-text">
                   <strong>₹

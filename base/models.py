@@ -2,12 +2,12 @@ from django.db import models
 from django.conf import settings
 from  django.shortcuts import reverse
 from django.core.validators import MaxValueValidator,MinValueValidator
+from django.utils.text import slugify
 
 
 CATEGORY_CHOICES=(
-    ('S','Shirt'),
-    ('SW','Sport wear'),
-    ('OW','Outwear'),
+    ('A','Available'),
+    ('NA','Not Available'),
 
 )
 LABEL_CHOICES=(
@@ -27,18 +27,23 @@ PAYMENTS_CHOICES =(
 
 
 
-
-
 class Item(models.Model):
     title =models.CharField( max_length=100)
     price =models.FloatField()
     discount_price =models.FloatField(blank=True,null=True)
     category = models.CharField(choices=CATEGORY_CHOICES,max_length=2)
+    label_name= models.CharField(max_length=14,verbose_name='The Word Inside a label',blank=True,null=True)
     label = models.CharField(choices=LABEL_CHOICES,max_length=1)
-    slug=models.SlugField()
+    slug=models.SlugField(max_length=100,blank=True)
     description=models.TextField()
     image=models.ImageField()
-    
+
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.title)
+        super().save(*args, **kwargs)
+
+
 
     def __str__(self):
         return self.title
