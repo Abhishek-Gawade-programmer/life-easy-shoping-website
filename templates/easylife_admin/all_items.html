@@ -1,0 +1,87 @@
+{% extends "easylife_admin/admin_base.html" %}
+{% block content %}
+  
+
+      <!--Section: Products v.3-->
+      <section class="text-center mb-4">
+
+        <!--Grid row-->
+        <div class="row wow fadeIn">
+        {% for item in items %}
+
+
+<div class="col-md-4 mb-4">
+
+
+            <!-- Section: Live preview -->
+            <section>
+
+              <!-- Card -->
+              <div class="card card-cascade">
+
+                <!-- Card image -->
+                <div class="view view-cascade overlay">
+                  <img src="{{ item.image.url }}" class="card-img-top" alt="">
+                  <a>
+                    <div class="mask flex-center rgba-red-slight">
+                        <p class="white-text" style="font-size:140%">{{item.title}}</p>
+                      </div>
+                  </a>
+                </div>
+
+                <div class="card-body card-body-cascade text-center">
+                  <!-- Title -->
+                  <h4 class="card-title">{{item.title|truncatechars:20}}<br> <strong style="color:red">ID : {{item.id}}</strong></h4>
+
+
+
+
+                  <h5 class="font-weight-bold blue-text">₹{% if item.discount_price %} {{item.discount_price }} {% else %} {{item.price}}{% endif %}</h5>
+
+                  <p class="card-text">{{ item.description|truncatechars:100 }}
+                  </p>
+
+       
+                    <a type="button" class="btn-floating btn-small btn-tw waves-effect waves-light">           
+                        <i class="fas fa-envelope fa-lg"></i>
+
+                      </a>
+                       <span class="counter ">{{ item.get_no_of_comments }}</span>
+
+
+
+                  <!-- Twitter -->
+                  <a type="button" class="btn-floating btn-small btn-tw waves-effect waves-light"><i class="fas fa-cart-arrow-down"></i></a>
+                   <span class="counter ">{{ item.get_no_of_items }}</span>
+                  <!-- Google + -->
+
+
+
+                  <a type="button" class="btn-floating btn-small btn-dribbble waves-effect waves-light"><i class="fas fa-info"></i></a>
+
+                </div>
+                <!-- Card content -->
+
+              </div>
+              <!-- Card -->
+
+            </section>
+            <!-- Section: Live preview -->
+
+          </div>
+
+            {% endfor %}
+          </div>
+          <!--Grid column-->
+
+      </section>
+      <!--Section: Products v.3-->
+
+
+
+
+
+{% endblock content %}
+
+
+

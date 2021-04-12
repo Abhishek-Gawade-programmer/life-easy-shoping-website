@@ -45,10 +45,9 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'crispy_forms',
 
-
-
-
-    'base'
+    #apps
+    'base',
+    'easylife_admin'
 ]
 
 
@@ -181,6 +180,10 @@ EMAIL_HOST_PASSWORD =os.environ.get('EMAIL_HOST_PASSWORD')
 ACCOUNT_EMAIL_REQUIRED=True
 ACCOUNT_EMAIL_VERIFICATION="mandatory"
 ACCOUNT_UNIQUE_EMAIL = True
+
+ACCOUNT_FORMS = {
+'signup': 'base.forms.CustomSignupForm',
+}
 
 
 LOGIN_REDIRECT_URL="/"

@@ -51,8 +51,23 @@ class Item(models.Model):
     def get_absolute_url(self):
         return reverse("base:product-view", kwargs={"slug": self.slug})
 
+        
+
+    def get_absolute_admin_url(self):
+        return reverse("base:product-view", kwargs={"slug": self.slug})
+
     def get_add_to_cart_url(self):
         return reverse("base:add-to-cart", kwargs={"slug": self.slug})
+
+
+    def get_no_of_comments(self):
+        return Comment.objects.filter(product=self).count()
+
+    def get_no_of_items(self):
+        total_quantity =0
+        for product in OrderItem.objects.filter(item=self):
+            total_quantity+=product.qauntity
+        return total_quantity
 
     def get_remove_to_cart_url(self):
         return reverse("base:remove-from-cart", kwargs={"slug": self.slug})
@@ -77,6 +92,12 @@ class OrderItem(models.Model):
 
     def get_amount_saved(self):
         return self.get_total_item_price()-self.get_total_discount_price()
+
+
+    def get_final_price(self):
+        if self.item.discount_price:
+            return self.get_total_discount_price()
+        return self.get_total_item_price()
 
 
     def get_final_price(self):
