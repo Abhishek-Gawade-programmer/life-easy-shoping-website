@@ -1,0 +1,161 @@
+{% extends "easylife_admin/admin_base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+
+      <!-- Section: Inputs -->
+      <section class="section card mb-5 col-md-12">
+
+        <div class="card-body">
+
+          <!-- Section heading -->
+          <h1 class="text-center my-5 h1">Create A New New Product </h1>
+
+
+          <!-- Grid row  -->
+                  <form>
+
+          <div class="row">
+
+    
+
+            <div class="col-md-12">
+
+              <div class="md-form md-outline">
+                <input type="text" id="f2 input-char-counter" class="form-control" length="100">
+                <label for="f2" class="">Product Title</label>
+              </div>
+
+            </div>
+
+
+
+            <div class="col-md-6">
+            	<center>
+
+              <div class="md-form md-outline">
+                <input type="text" id="f2" class="form-control" >
+                <label for="f2" class="">Orginal Price</label>
+              </div></center>	
+
+            </div>
+
+
+            <div class="col-md-6 ">
+
+              <div class="md-form md-outline">
+                <input type="text" id="f3" class="form-control" >
+                <label for="f3" class="">Discount Price</label>
+              </div>
+
+            </div>
+
+
+
+            <div class="col-md-6 mb-4">
+            	<label for="" class="">Product Available</label>
+
+					<div class="switch">
+			                <label>
+			                  NOT Available
+			                  <input type="checkbox" checked="checked">
+			                  <span class="lever"></span> YES Available
+			                </label>
+			              </div>
+            </div>
+
+            <div class="col-md-6 mb-4">
+
+              <div class="md-form md-outline">
+                <input type="text" id="f4 input-char-counter" class="form-control" length="14" maxlength="14">
+                <label for="f4" class="">The Word Inside a label</label>
+              </div>
+
+            </div>
+
+
+                <div class="col-md-6 mb-4">
+
+              <div class="md-form md-outline">
+
+  
+           			 <select class="form-control">
+
+				  			<option>Default select</option>
+					</select>
+
+				         </div>
+
+            </div>  
+
+
+
+
+
+
+
+
+
+
+         <div class="col-md-6 mb-4">
+                <div class="md-form">
+                  <div class="file-field">
+                    <div class="btn btn-primary btn-sm float-left">
+                      <span>Choose files</span>
+                      <input type="file" multiple>
+                    </div>
+                    <div class="file-path-wrapper">
+                      <input class="file-path validate" type="text" placeholder="Upload one or more files">
+                    </div>
+                  </div>
+                </div>
+
+
+            </div>
+
+
+
+
+         <div class="col-md-12">
+         	<label for="" class="">Product Discrption</label>
+                                <div class="card mb-4">
+              <textarea name="" id="post_content"></textarea>
+            </div>      
+
+           </div>
+
+
+
+</div>
+          <!-- Grid row -->
+
+        </div>
+      <hr class="my-5">
+
+        <button class="btn btn-success btn-lg btn-block" id='checkout-button' type="submit">Create A New New Product <i class="fas fa-plus-circle"></i></button>
+
+
+
+      </section>
+          </form>
+      <!-- Section: Inputs -->
+
+
+
+
+
+
+
+<script type="text/javascript" src="{% static 'easylife_admin_static/js/vendor/tinymce/tinymce.min.js' %}"></script>
+
+  <script type="text/javascript">
+  tinymce.init({ selector:'#post_content', menubar: false, height : "294" });
+
+  </script>
+
+{% endblock content %}
+
+
+
