@@ -5,6 +5,9 @@ from django.views.generic import ListView,DetailView,View,CreateView
 from base.models import Item,Order,OrderItem,BillingAddress,Comment
 
 
+from .forms import CreateNewForm
+
+
 
 
 
@@ -19,8 +22,6 @@ class All_product_list(ListView):
 
 
 
-class ItemCreateView(CreateView):
-    model = Item
 
 
 
@@ -31,15 +32,66 @@ class ItemCreateView(CreateView):
 
 
 
-    fields =('title',
-				'price',
-				'discount_price',
-				'category',
-				'label_name',
-				'label',
-				'description',
-				'image')
-    template_name = "easylife_admin/create_new_item.html"
+def ItemCreateView(request):
+
+	
+
+	if request.method == 'POST':
+		form=CreateNewForm(request.POST , request.FILES)
+		if form.is_valid():
+
+	        title=form.cleaned_data.get('title')
+	        price=form.cleaned_data.get('price')
+	        discount_price=form.cleaned_data.get('discount_price')
+	        category=form.cleaned_data.get('category')
+	        label_name=form.cleaned_data.get('label_name')
+	        label=form.cleaned_data.get('label')
+	        description=form.cleaned_data.get('description')
+	        image=form.cleaned_data.get('image')
+
+	        new_item=Item.Item.objects.create(
+
+       			title=title,
+				price=price,
+				discount_price=discount_price,
+				category=category,
+				label_name=label_name,
+				label=label,
+				description=description,
+				image=image,
+
+
+	        	)
+
+	        new_item.save()
+
+
+
+
+            
+
+
+
+			print("losdhisudnfuisnduifi")
+			print(request.POST)
+		else:
+			print('not get',form.errors,request.FILES)
+			print(request.POST)
+
+	else:
+		form=CreateNewForm()
+		return render(request,'easylife_admin/create_new_item.html',{'form':form})
+
+
+
+
+
+
+
+
+
+
+
 
 
 

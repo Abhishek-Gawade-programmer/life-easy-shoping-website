@@ -34,9 +34,12 @@ class Item(models.Model):
     category = models.CharField(choices=CATEGORY_CHOICES,max_length=2)
     label_name= models.CharField(max_length=14,verbose_name='The Word Inside a label',blank=True,null=True)
     label = models.CharField(choices=LABEL_CHOICES,max_length=1)
-    slug=models.SlugField(max_length=100,blank=True)
+    slug=models.SlugField(max_length=150,blank=True)
     description=models.TextField()
     image=models.ImageField()
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+
 
 
     def save(self, *args, **kwargs):

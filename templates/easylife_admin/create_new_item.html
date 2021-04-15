@@ -2,10 +2,23 @@
 {% load static %}
 {% load crispy_forms_tags %}
 
+
+  
+
 {% block content %}
 
+  {% comment %}
 
-      <!-- Section: Inputs -->
+
+  <form method="post" action=''  enctype="multipart/form-data">
+{% csrf_token %}
+{{form}}
+
+    <input type="submit" name="" value="asiohdfsab" novalidate>
+
+  </form>   
+
+  {% endcomment %}   <!-- Section: Inputs -->
       <section class="section card mb-5 col-md-12">
 
         <div class="card-body">
@@ -15,7 +28,8 @@
 
 
           <!-- Grid row  -->
-                  <form>
+                  <form method="post" action='' enctype="multipart/form-data">
+                    {% csrf_token %}
 
           <div class="row">
 
@@ -24,7 +38,9 @@
             <div class="col-md-12">
 
               <div class="md-form md-outline">
-                <input type="text" id="f2 input-char-counter" class="form-control" length="100">
+  
+
+                {{form.title}}
                 <label for="f2" class="">Product Title</label>
               </div>
 
@@ -36,7 +52,7 @@
             	<center>
 
               <div class="md-form md-outline">
-                <input type="text" id="f2" class="form-control" >
+                {{form.price}}
                 <label for="f2" class="">Orginal Price</label>
               </div></center>	
 
@@ -46,7 +62,7 @@
             <div class="col-md-6 ">
 
               <div class="md-form md-outline">
-                <input type="text" id="f3" class="form-control" >
+              {{form.discount_price}}
                 <label for="f3" class="">Discount Price</label>
               </div>
 
@@ -60,7 +76,7 @@
 					<div class="switch">
 			                <label>
 			                  NOT Available
-			                  <input type="checkbox" checked="checked">
+                        {{ form.category}}
 			                  <span class="lever"></span> YES Available
 			                </label>
 			              </div>
@@ -69,22 +85,24 @@
             <div class="col-md-6 mb-4">
 
               <div class="md-form md-outline">
-                <input type="text" id="f4 input-char-counter" class="form-control" length="14" maxlength="14">
+                {{form.label_name}}
                 <label for="f4" class="">The Word Inside a label</label>
               </div>
 
             </div>
 
 
+
+
                 <div class="col-md-6 mb-4">
 
+                <label>Choose Your Label Color</label>
               <div class="md-form md-outline">
+                {{form.label}}
 
-  
-           			 <select class="form-control">
 
-				  			<option>Default select</option>
-					</select>
+
+       
 
 				         </div>
 
@@ -97,20 +115,13 @@
 
 
 
+                     
 
 
          <div class="col-md-6 mb-4">
-                <div class="md-form">
-                  <div class="file-field">
-                    <div class="btn btn-primary btn-sm float-left">
-                      <span>Choose files</span>
-                      <input type="file" multiple>
-                    </div>
-                    <div class="file-path-wrapper">
-                      <input class="file-path validate" type="text" placeholder="Upload one or more files">
-                    </div>
-                  </div>
-                </div>
+          <h4>Choose a Product Image</h4><br>
+                       {{form.image}}
+        
 
 
             </div>
@@ -120,8 +131,8 @@
 
          <div class="col-md-12">
          	<label for="" class="">Product Discrption</label>
-                                <div class="card mb-4">
-              <textarea name="" id="post_content"></textarea>
+           <div class="card mb-4">
+            {{form.description}}
             </div>      
 
            </div>
