@@ -28,13 +28,13 @@ PAYMENTS_CHOICES =(
 
 
 class Item(models.Model):
-    title =models.CharField( max_length=100)
+    title =models.CharField( max_length=100,unique=True)
     price =models.FloatField()
     discount_price =models.FloatField(blank=True,null=True)
     category = models.CharField(choices=CATEGORY_CHOICES,max_length=2)
     label_name= models.CharField(max_length=14,verbose_name='The Word Inside a label',blank=True,null=True)
     label = models.CharField(choices=LABEL_CHOICES,max_length=1)
-    slug=models.SlugField(max_length=150,blank=True)
+    slug=models.SlugField(max_length=150,blank=True,unique=True)
     description=models.TextField()
     image=models.ImageField()
     created = models.DateTimeField(auto_now_add=True)
@@ -76,7 +76,7 @@ class Item(models.Model):
         return reverse("base:remove-from-cart", kwargs={"slug": self.slug})
 
     
-
+ 
 
 
 class OrderItem(models.Model):
@@ -162,5 +162,30 @@ class Comment(models.Model):
     def __str__(self):
         return str(self.pk)
 
+
+class ShippmentOrder(models.Model):
+    order=models.ForeignKey('Order',on_delete=models.SET_NULL)
+
+
+
+
+
+
+
+    class Meta:
+        verbose_name = "ShippmentOrder"
+        verbose_name_plural = "ShippmentOrders"
+
+    def __str__(self):
+        pass
+
+    def save(self):
+        pass
+
+
+
+    # TODO: Define custom methods here
+
+    
     
 

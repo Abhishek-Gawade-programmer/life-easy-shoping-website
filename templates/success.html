@@ -17,7 +17,7 @@
   z-index: 1;
   top: 0;
   width:100%;
-  height:100%;
+  height:300%;
   object-fit: cover;
   opacity:0.5;
 }
@@ -34,19 +34,17 @@
 <div class="jumbotron jumbotron-fluid">
 
   <picture >
-  <source media="(min-width:800px)" srcset="{% static 'img/success.gif' %}">
-  <img src="{% static 'img/success.gif' %}" alt="Bootstrap 4 jumbotron with Image Tag Background vs CSS background image for SEO" class="jumbotron__background">
+  <source media="(min-width:800px)" srcset="{% static 'suucess.gif' %}">
+  <img src="{% static 'suucess.gif' %}" alt="Bootstrap 4 jumbotron with Image Tag Background vs CSS background image for SEO" class="jumbotron__background">
 </picture>
   
 
 
-
-
   <div class="container text-white">
-    <h1 class="display-4">Hello, world!</h1>
-    <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+    <h1 class="display-4">Congrulation {{request.user.get_full_name}} !!</h1>
+    <p class="lead">You have been sucessfully Ordered your Item your <b>Order No is {{pk}} </b></p>
     <hr class="my-4">
-    <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+    <p>Click Button to Download your recipt</p>
     <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
 
   </div>

@@ -14,6 +14,10 @@ from django.views.decorators.csrf import csrf_exempt
 import json
 import stripe
 
+from django.utils import timezone
+
+
+
 
 
 
@@ -158,22 +162,25 @@ class check_out(LoginRequiredMixin,View):
                 
                 #aattact billing address to order
                 order.billing_address = billing_address
-                
 
 
-                order.save()
+                order.ordered_date=timezone.now()
+
+                order.ordered=True
+
                 if billing_address.payment_option=='S':
                     return redirect("base:create-checkout-session",pk=order.id)   
                     
 
 
 
-
                 # TODO: add redirect to slected paymennt option
 
 
+
+                order.save()
                 messages.success(self.request,f' Sucessfully Checkout !!')
-                return redirect("base:check-out")
+                return redirect("base:success",pk=order.id)
 
             #error in validation of from
             messages.warning(self.request,f'⚠️  Failed to checlout')

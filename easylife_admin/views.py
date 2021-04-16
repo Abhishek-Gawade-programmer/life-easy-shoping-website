@@ -1,11 +1,13 @@
 from django.shortcuts import render
 from django.views.generic import TemplateView
 
+from django.contrib import messages
+
 from django.views.generic import ListView,DetailView,View,CreateView
 from base.models import Item,Order,OrderItem,BillingAddress,Comment
 
 
-from .forms import CreateNewForm
+from .forms import CreateNewItemForm
 
 
 
@@ -37,19 +39,19 @@ def ItemCreateView(request):
 	
 
 	if request.method == 'POST':
-		form=CreateNewForm(request.POST , request.FILES)
+		form=CreateNewItemForm(request.POST , request.FILES)
 		if form.is_valid():
+			title=form.cleaned_data.get('title')
+			price=form.cleaned_data.get('price')
+			discount_price=form.cleaned_data.get('discount_price')
+			category= 'A' if form.cleaned_data.get('category') else 'NA'
+			print('asfjkansf',category,form.cleaned_data.get('category'),form.cleaned_data.get('category')=='on')
+			label_name=form.cleaned_data.get('label_name')
+			label=form.cleaned_data.get('label')
+			description=form.cleaned_data.get('description')
+			image=form.cleaned_data.get('image')
 
-	        title=form.cleaned_data.get('title')
-	        price=form.cleaned_data.get('price')
-	        discount_price=form.cleaned_data.get('discount_price')
-	        category=form.cleaned_data.get('category')
-	        label_name=form.cleaned_data.get('label_name')
-	        label=form.cleaned_data.get('label')
-	        description=form.cleaned_data.get('description')
-	        image=form.cleaned_data.get('image')
-
-	        new_item=Item.Item.objects.create(
+			new_item=Item.objects.create(
 
        			title=title,
 				price=price,
@@ -63,23 +65,17 @@ def ItemCreateView(request):
 
 	        	)
 
-	        new_item.save()
-
-
-
-
-            
-
+			new_item.save()
 
 
 			print("losdhisudnfuisnduifi")
 			print(request.POST)
 		else:
-			print('not get',form.errors,request.FILES)
-			print(request.POST)
+			print("losdhisudnfuisnduifi",form.errors)
+			return render(request,'easylife_admin/create_new_item.html',{'form':form})
 
 	else:
-		form=CreateNewForm()
+		form=CreateNewItemForm()
 		return render(request,'easylife_admin/create_new_item.html',{'form':form})
 
 

@@ -7,6 +7,33 @@
 
 {% block content %}
 
+      
+            {% for field in form %}
+
+              {% if field.errors %}
+                   <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                
+                  {{ field.errors }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+
+                  </div>
+                
+              {% endif %}
+
+            {% endfor %}
+        
+
+
+
+
+
+
+
+
+
+
   {% comment %}
 
 
@@ -24,7 +51,7 @@
         <div class="card-body">
 
           <!-- Section heading -->
-          <h1 class="text-center my-5 h1">Create A New New Product </h1>
+          <h1 class="text-center my-5 h1">Create A New Product </h1>
 
 
           <!-- Grid row  -->

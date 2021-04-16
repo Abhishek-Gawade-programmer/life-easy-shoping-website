@@ -22,3 +22,8 @@ if __name__ == '__main__':
     main()
 
 
+'''
+virtualenv life_easy_env && source life_easy_env/bin/activate
+'''
+
+

@@ -28,7 +28,7 @@ urlpatterns = [
 
     path('webhooks/stripe/', stripe_webhook, name='stripe-webhook'),
     path('cancel/', CancelView.as_view(), name='cancel'),
-    path('success/', SuccessView.as_view(), name='success'),
+    path('success/<pk>/', SuccessView.as_view(), name='success'),
 
     # path('payment/<payment_option>/',PaymentView.as_view(),name ='payment'),
     path('',HomeNameList.as_view(),name ='item-list'),
