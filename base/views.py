@@ -4,7 +4,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render,get_object_or_404,redirect
 from django.core.exceptions import ObjectDoesNotExist
 from django.views.generic import ListView,DetailView,View
-from .models import Item,Order,OrderItem,BillingAddress,Comment
+from .models import Item,Order,OrderItem,BillingAddress,Comment,ShippmentOrder
 from  django.utils import timezone
 from django.conf import settings
 from django.http import JsonResponse, HttpResponse
@@ -123,9 +123,9 @@ class check_out(LoginRequiredMixin,View):
             }
             return render(self.request,'checkout-page.html',context)
 
-        except ObjectDoesNotExist:
-            messages.info(request,f'You don"t have Active Order')
-            return render(self.request,'checkout-page.html')
+        except:
+            messages.info(self.request,f'You don"t have Active Order')
+            return redirect("base:item-list")   
 
 
     def post(self,*args,**kwargs):
@@ -299,8 +299,19 @@ class CreateCheckoutSessionView(LoginRequiredMixin,View):
         return JsonResponse({'id': checkout_session.id})
 
 
-class SuccessView(LoginRequiredMixin,TemplateView):
-    template_name = "success.html"
+
+@login_required
+def SuccessView(request,pk):
+    order_by_user=get_object_or_404(Order,pk=pk,user=request.user,ordered=True)
+    new_shipping_by_user=ShippmentOrder.objects.create(
+            user=request.user,
+            order=order_by_user,
+    )
+    new_shipping_by_user.save()
+
+
+    return render(request,'success.html',{'order':order_by_user})
+
 
 
 class CancelView(LoginRequiredMixin,TemplateView):

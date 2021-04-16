@@ -144,7 +144,7 @@ class BillingAddress(models.Model):
 
     class Meta:
         verbose_name = ("Billing Address")
-        verbose_name_plural = ("Billind Adresss")
+        verbose_name_plural = ("Billing Adresss")
 
     
 
@@ -164,23 +164,17 @@ class Comment(models.Model):
 
 
 class ShippmentOrder(models.Model):
-    order=models.ForeignKey('Order',on_delete=models.SET_NULL)
-
-
-
-
-
-
+    user=models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
+    order=models.ForeignKey('Order',on_delete=models.CASCADE)
+    delivered= models.DateTimeField(blank=True,null=True)
+    verify_order = models.BooleanField(default=False,blank=True)
+    payment_done=models.BooleanField(default=False,blank=True)
+    payment_done_date= models.DateTimeField(blank=True,null=True)
 
     class Meta:
         verbose_name = "ShippmentOrder"
         verbose_name_plural = "ShippmentOrders"
 
-    def __str__(self):
-        pass
-
-    def save(self):
-        pass
 
 
 

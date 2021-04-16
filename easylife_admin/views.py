@@ -27,13 +27,6 @@ class All_product_list(ListView):
 
 
 
-
-
-
-
-
-
-
 def ItemCreateView(request):
 
 	

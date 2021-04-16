@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Item,OrderItem,Order,Comment,BillingAddress
+from .models import Item,OrderItem,Order,Comment,BillingAddress,ShippmentOrder
 
 
 class OrderAdmin(admin.ModelAdmin):
@@ -20,6 +20,7 @@ class CommentAdmin(admin.ModelAdmin):
 admin.site.register(Order, OrderAdmin)
 
 
+admin.site.register(ShippmentOrder)
 admin.site.register(Item)
 admin.site.register(OrderItem)
 # admin.site.register(Order)
