@@ -20,7 +20,10 @@
         <!--Grid column-->
         <div class="col-md-6 mb-4">
 
+          {% if  object.image.url %}
           <img src="{{ object.image.url }}"   alt="" class="img-fluid">
+            
+          {% endif %}
 
         </div>
         <!--Grid column-->
@@ -69,9 +72,12 @@
             <h1 class="display-5">Description</h1>
             <hr>
             <br>
+          {% autoescape off %}
+              
 
 
               {{ object.description|linebreaks }}
+            {% endautoescape %} 
             
             </div>
 

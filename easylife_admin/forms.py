@@ -33,7 +33,7 @@ class CreateNewItemForm(forms.Form):
     label =forms.ChoiceField(choices=LABEL_CHOICES,widget=forms.Select(attrs={'class':"form-control"}))
 
     
-    description = forms.CharField(max_length=250,widget=forms.Textarea(attrs={'name':"description",'id':"post_content"}),required=False)
+    description = forms.CharField(max_length=1500,widget=forms.Textarea(attrs={'name':"description",'id':"post_content"}),required=False)
     image = forms.ImageField()
 
 
@@ -50,7 +50,7 @@ class CreateNewItemForm(forms.Form):
     def clean_discount_price(self,*args,**kwargs):
         discount_price=self.cleaned_data.get('discount_price')
         price=self.cleaned_data.get('price')
-        if discount_price < price or int(discount_price) == int(price):
+        if (discount_price > price) or int(discount_price) == int(price):
             raise forms.ValidationError('Discount price must be less than Original Price')
         return discount_price
 

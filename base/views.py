@@ -18,7 +18,7 @@ from django.utils import timezone
 
 
 
-#X-HTML TO PDF
+#HTML TO PDF
 import os
 from django.template.loader import get_template
 from xhtml2pdf import pisa
@@ -29,11 +29,16 @@ from django.contrib.staticfiles import finders
 
 
 
-
-
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
 from .forms import CheckoutForm
+
+
+
+
+
+
+
 
 class HomeNameList(ListView):
     model = Item

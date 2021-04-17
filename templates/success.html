@@ -41,10 +41,10 @@
 
   <div class="container text-white">
     <h1 class="display-4">Congrulation {{request.user.get_full_name}} !!</h1>
-    <p class="lead">You have been sucessfully Ordered your Item your <b>Order No is {{order.ordered}} </b></p>
+    <p class="lead">You have been sucessfully Ordered your Item your <b>Order No is {{order.id}} </b></p>
     <hr class="my-4">
     <p>Click Button to Download your recipt</p>
-    <a class="btn btn-primary btn-lg" href="{% url 'base:invoice-generate' order.id shipping.id %}" role="button">Learn more</a>
+    <a class="btn btn-primary btn-lg" href="{% url 'base:invoice-generate' order.id shipping.id %}" role="button">View Invoice</a>
 
   </div>
   <!-- /.container -->

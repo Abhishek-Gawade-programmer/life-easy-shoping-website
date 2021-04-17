@@ -35,8 +35,15 @@ class Item(models.Model):
     label_name= models.CharField(max_length=14,verbose_name='The Word Inside a label',blank=True,null=True)
     label = models.CharField(choices=LABEL_CHOICES,max_length=1)
     slug=models.SlugField(max_length=150,blank=True,unique=True)
-    description=models.TextField()
+    description=models.TextField(max_length=1000)
     image=models.ImageField()
+    image2=models.ImageField(blank=True)
+    image3=models.ImageField(blank=True)
+    image4=models.ImageField(blank=True)
+    image5=models.ImageField(blank=True)
+    image6=models.ImageField(blank=True)
+
+
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 

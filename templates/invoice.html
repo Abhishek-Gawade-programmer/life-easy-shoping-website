@@ -19,7 +19,7 @@
             <h4 class="h4-responsive mt-3 blue-text">Invoice #{{order.id}}</h4>
 
             <div>
-              <a href="#" class="btn btn-primary"><i class="fas fa-print left"></i> Print</a>
+              <a href="{% url 'base:invoice-pdf-view' order.id shipping.id %}" class="btn btn-primary"><i class="fas fa-print left" target="_blank"></i> Print</a>
             </div>
 
           </div>
@@ -81,8 +81,10 @@
 
                 <p><small>To:</small></p>
                 <p><strong>{{ request.user.get_full_name }}</strong></p>
-                <p>{{ order.billing_address.street_address }}</p>
+                <p>{{ order.billing_address.street_address }} </p>
                 <p>{{ order.billing_address.apartment_address }}</p>
+                <p><strong>Pin Code: {{ order.billing_address.pin_codeq }}</strong></p>
+                 <p><strong>Phone Number : {{ order.billing_address.phone_number }}</strong></p>
  
 
               </div>
@@ -101,13 +103,13 @@
       <section class="mb-5">
 
         <div class="card">
-          <div class="card-body">
             <div class="card-header white-text primary-color">
                 <h5 class="font-weight-500 my-1">Your Purchased Products</h5>
               </div>
+          <div class="card-body">
 
             <div class="table-responsive">
-              <table class="table">
+              <table class="table" style="border:3px">
                 <thead>
                   <tr>
                     <td>##</td>
