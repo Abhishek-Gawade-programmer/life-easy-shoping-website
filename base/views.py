@@ -18,6 +18,15 @@ from django.utils import timezone
 
 
 
+#X-HTML TO PDF
+import os
+from django.template.loader import get_template
+from xhtml2pdf import pisa
+from django.contrib.staticfiles import finders
+
+
+
+
 
 
 
@@ -382,6 +391,32 @@ def rate_comment_on_product(request):
         # print('asjkfhausfbubyu',x)
         return JsonResponse({'success':'true','score':request.POST.get('num_rate')},safe=False)
     return JsonResponse({'success':'false'})
+
+
+
+@login_required
+def render_pdf_view(request,order_id,shipping_id):
+
+    order_by_user=get_object_or_404(Order,id=order_id,user=request.user)
+    new_shipping_by_user=get_object_or_404(ShippmentOrder,id=shipping_id,order=order_by_user,user=request.user)
+
+
+    template_path = 'invoice_pdf.html'
+    context = {'order':order_by_user,'shipping':new_shipping_by_user,'request':request}
+    # Create a Django response object, and specify content_type as pdf
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = f'filename="{request.user.get_full_name()}_invioce_number_{order_id}.pdf"'
+    # find the template and render it.
+    template = get_template(template_path)
+    html = template.render(context)
+
+    # create a pdf
+    pisa_status = pisa.CreatePDF(
+       html, dest=response)
+    # if error then show some funy view
+    if pisa_status.err:
+       return HttpResponse('We had some errors <pre>' + html + '</pre>')
+    return response
 
 
 
