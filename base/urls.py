@@ -5,7 +5,7 @@ from .views import (check_out,item_detail_view,
                     HomeNameList,add_to_card,
                     remove_from_cart,OrderSummaryView,remove_single_item_cart,CreateCheckoutSessionView,
                     SuccessView,CancelView,stripe_webhook,
-                    rate_comment_on_product
+                    rate_comment_on_product,invoice_generate
                     )
 
 app_name='base'
@@ -29,9 +29,11 @@ urlpatterns = [
     path('webhooks/stripe/', stripe_webhook, name='stripe-webhook'),
     path('cancel/', CancelView.as_view(), name='cancel'),
     path('success/<pk>/', SuccessView, name='success'),
-
+    path('invoice-generate/<int:order_id>/<int:shipping_id>', invoice_generate, name='invoice-generate'),
     # path('payment/<payment_option>/',PaymentView.as_view(),name ='payment'),
     path('',HomeNameList.as_view(),name ='item-list'),
+    
+
     
     
 

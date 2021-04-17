@@ -29,7 +29,6 @@
 
   <!--Main layout-->
 
-  <main class="mt-5 pt-4">
 
 <div class="jumbotron jumbotron-fluid">
 
@@ -45,13 +44,12 @@
     <p class="lead">You have been sucessfully Ordered your Item your <b>Order No is {{order.ordered}} </b></p>
     <hr class="my-4">
     <p>Click Button to Download your recipt</p>
-    <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+    <a class="btn btn-primary btn-lg" href="{% url 'base:invoice-generate' order.id shipping.id %}" role="button">Learn more</a>
 
   </div>
   <!-- /.container -->
 </div>
-<!-- /.jumbotron -->
-  </main>
+
 
 
   <!--Main layout-->

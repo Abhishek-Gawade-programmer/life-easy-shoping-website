@@ -1,0 +1,182 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+
+{% block content %}
+
+
+  <!--Main layout-->
+  <main>
+
+    <div class="container-fluid">
+
+      <!-- Section: Heading -->
+      <section class="mb-4">
+
+        <div class="card">
+          <div class="card-body d-flex justify-content-between">
+            <h4 class="h4-responsive mt-3 blue-text">Invoice #{{order.id}}</h4>
+
+            <div>
+              <a href="#" class="btn btn-primary"><i class="fas fa-print left"></i> Print</a>
+            </div>
+
+          </div>
+        </div>
+
+      </section>
+      <!-- Section: Heading -->
+
+
+
+
+            <!-- Section: Heading -->
+      <section class="mb-4">
+
+        <div class="card">
+                      <div class="card-header white-text danger-color">
+                <h5 class="font-weight-500 my-1">Other Taxes Details</h5>
+              </div>
+
+          <div class="card-body d-flex justify-content-between">
+            <h4 class="h4-responsive mt-3 red-text">Other Taxes like shhipings , Packaging, Transporting Cost may be include in the during cash on Devliver so actual bill may vary</h4>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- Section: Invoice details -->
+      <section class="mb-4 pr-4">
+
+        <div class="card">
+                     <div class="card-header white-text secondary-color">
+                <h5 class="font-weight-500 my-1">Billing Addresss Details</h5>
+              </div>
+
+          <div class="card-body">
+
+            <!-- Grid row -->
+            <div class="row">
+
+              <!-- Grid column -->
+              <div class="col-md-6 text-left">
+
+                <p><small>From:</small></p>
+                <p><strong>EaseLife Inc</strong></p>
+                <p>134 Richardson Ave</p>
+                <p>San Francisco, CA 94123</p>
+                <p><strong>Invoice date :</strong>  {{order.ordered_date}} </p>
+                <p><strong>Verified :</strong> {% if  shipping.verify_order %} YES{% else %}NO ( you will receive the notification when it verified
+
+                  by adminster){% endif %}</p>
+
+              </div>
+              <!-- Grid column -->
+
+              <!-- Grid column -->
+              <div class="col-md-6 text-right">
+
+                <h4 class="h4-responsive"><small>Invoice No.</small><br /><strong><span class="blue-text">#{{order.id}}</span></strong></h4>
+
+                <p><small>To:</small></p>
+                <p><strong>{{ request.user.get_full_name }}</strong></p>
+                <p>{{ order.billing_address.street_address }}</p>
+                <p>{{ order.billing_address.apartment_address }}</p>
+ 
+
+              </div>
+              <!-- Grid column -->
+
+            </div>
+            <!-- Grid row -->
+
+          </div>
+        </div>
+
+      </section>
+      <!-- Section: Invoice details -->
+
+      <!-- Section: Invoice table -->
+      <section class="mb-5">
+
+        <div class="card">
+          <div class="card-body">
+            <div class="card-header white-text primary-color">
+                <h5 class="font-weight-500 my-1">Your Purchased Products</h5>
+              </div>
+
+            <div class="table-responsive">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <td>##</td>
+                    <th>Product Name </th>
+                    <th>Quantity</th>
+                    <th>Unit Price</th>
+                    <th>Total price</th>
+                  </tr>
+                </thead>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <tbody>
+                   {% for order_item in order.items.all %} 
+
+                  <tr>  
+                     <td>{{ forloop.counter }}</td>
+
+                    <td>{{ order_item.item.title|truncatechars:40  }}</td>
+                    <td>{{ order_item.qauntity }}</td>
+                    <td>₹ &nbsp; {% if  order_item.item.discount_price %}{{order_item.item.discount_price}} {% else %} {{order_item.item.price }} {% endif %}
+
+
+
+
+                    </td>
+                    <td>             {% if order_item.item.discount_price %}
+
+                                      ₹&nbsp;{{ order_item.get_total_discount_price }}
+                                 {% else %}
+                                      ₹{{ order_item.get_total_item_price }}
+                                       {% endif %}
+                      </td>
+                  </tr>
+
+                  {% endfor %}
+
+                </tbody>
+              </table>
+            </div>
+
+            <ul class="list-unstyled text-left">
+              <li><strong>GRAND TOTAL ( INR ):</strong><span class="ml-3 red-text">₹ &nbsp;{{ order.get_total }}</span></li>
+            </ul>
+
+          </div>
+        </div>
+
+      </section>
+      <!-- Section: Invoice table -->
+
+    </div>
+
+  </main>
+
+  <!--Main layout-->
+
+  {% endblock content %}

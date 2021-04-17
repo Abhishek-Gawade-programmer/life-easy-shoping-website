@@ -309,8 +309,19 @@ def SuccessView(request,pk):
     )
     new_shipping_by_user.save()
 
+    return render(request,'success.html',{'order':order_by_user,'shipping':new_shipping_by_user})
 
-    return render(request,'success.html',{'order':order_by_user})
+
+
+
+@login_required
+def invoice_generate(request,order_id,shipping_id):
+    order_by_user=get_object_or_404(Order,id=order_id,user=request.user)
+    new_shipping_by_user=get_object_or_404(ShippmentOrder,id=shipping_id,order=order_by_user,user=request.user)
+
+
+
+    return render(request,'invoice.html',{'order':order_by_user,'shipping':new_shipping_by_user})
 
 
 
