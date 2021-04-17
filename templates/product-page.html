@@ -18,12 +18,82 @@
       <div class="row wow fadeIn">
 
         <!--Grid column-->
-        <div class="col-md-6 mb-4">
+        <!-- Carousel wrapper -->
 
-          {% if  object.image.url %}
-          <img src="{{ object.image.url }}"   alt="" class="img-fluid">
+
+
+
+
+
+
+
+<div id="carouselExampleInterval" class="carousel slide" data-mdb-ride="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item active" data-mdb-interval="10000">
+      <img
+        src="https://mdbootstrap.com/img/new/slides/041.jpg"
+        class="d-block w-100"
+        alt="..."
+      />
+    </div>
+    <div class="carousel-item">
+      <img
+        src="https://mdbootstrap.com/img/new/slides/043.jpg"
+        class="d-block w-100"
+        alt="..."
+      />
+    </div>
+  </div>
+  <button
+    class="carousel-control-prev"
+    data-mdb-target="#carouselExampleInterval"
+    type="button"
+    data-mdb-slide="prev"
+  >
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button
+    class="carousel-control-next"
+    data-mdb-target="#carouselExampleInterval"
+    type="button"
+    data-mdb-slide="next"
+  >
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+        <div class="col-md-12 mb-4">
+
+          {% for image_url in  images_list %}
             
-          {% endif %}
+          <img src="{{ image_url }}"   alt="" class="img-fluid">
+          {% endfor %}
+
+
+
 
         </div>
         <!--Grid column-->

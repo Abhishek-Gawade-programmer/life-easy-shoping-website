@@ -70,9 +70,34 @@ class OrderSummaryView(LoginRequiredMixin,View):
 def item_detail_view(request,slug):
     item=Item.objects.get(slug=slug)
     messages_item=Comment.objects.filter(product=item)[::-1]
+
+    images_list=[]
+    if item.image:
+        images_list.append(item.image.url)
+
+        if item.image2:
+            images_list.append(item.image2.url)
+
+            if item.image3:
+                images_list.append(item.image3.url)
+
+                if item.image4:
+                    images_list.append(item.image4.url)
+
+                    if item.image5:
+                        images_list.append(item.image5.url)
+                        if item.image6:
+                            images_list.append(item.image6.url)
+
+
+    print('^^^^^^^^^^^^^^^^^^^^^^^^^^666',images_list)
+
     context={
         'object':item,
         'messages_item':messages_item,
+        'images_list':images_list,
+
+
         'range': range(1,6)
 
 
