@@ -17,8 +17,16 @@
       <!--Grid row-->
       <div class="row wow fadeIn">
 
-        <!--Grid column-->
-        <!-- Carousel wrapper -->
+
+
+          <div class="col-md-6 mb-4">
+
+
+
+              <img src="{{ object.image.url }}" 
+              alt="Lightbox image 1" class="img-fluid">
+
+        
 
 
 
@@ -27,37 +35,13 @@
 
 
 
-
-
-
-
-
-
-
-
-
-  {% comment %}
-    
-
-
-
-        <div class="col-md-12 mb-4">
-
-          {% for image_url in  images_list %}
-            
-          <img src="{{ image_url }}"   alt="" class="img-fluid">
-          {% endfor %}
-
-
-  {% endcomment %}
-          <div class="col-md-8 mb-4">
-  <img src="{{ object.image.url }}"   alt="" class="img-fluid">
+  {# <img src="{{ object.image.url }}"   alt="" class="img-fluid"> #}
 
         </div>
         <!--Grid column-->
 
         <!--Grid column-->
-        <div class="col-md-4 mb-4">
+        <div class="col-md-6 mb-4">
 
           <!--Content-->
           <div class="p-4">
@@ -88,7 +72,7 @@
                 <i class="fas fa-shopping-cart ml-1"></i>
               </a>
       
-
+              <p></p>
               <a href="{{ object.get_remove_to_cart_url }}" class="btn btn-danger btn-md my-0 p  " >Remove from Cart
               </a>
               </div>
