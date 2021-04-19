@@ -33,7 +33,7 @@
 
                 {% for  image_url in  images_list %}
 
-                <li id='image{{forloop.counter}}' class="page-item {% if  forloop.counter == 1%}active{% endif %}"><a class="page-link waves-effect waves-effect" data='{{image_url}}'>{{forloop.counter }}</a></li>
+                <li id='image{{forloop.counter}}' class="page-item {% if  forloop.counter == 1%}active{% endif %}" data='{{image_url}}'><a class="page-link waves-effect waves-effect" >{{forloop.counter }}</a></li>
                 {% endfor %}
    
 
@@ -246,6 +246,7 @@
   <!--Main layout-->
 
   <script type="text/javascript" src="{% static 'js/main.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/product_image_viewer.js' %}"></script>
 
 
 
