@@ -24,7 +24,23 @@
 
 
               <img src="{{ object.image.url }}" 
-              alt="Lightbox image 1" class="img-fluid">
+              alt="Lightbox image 1" class="img-fluid w-100" id='product_image'>
+
+              <nav>
+              <ul class="pagination pg-blue">
+
+                <!-- Numbers -->
+
+                {% for  image_url in  images_list %}
+
+                <li id='image{{forloop.counter}}' class="page-item {% if  forloop.counter == 1%}active{% endif %}"><a class="page-link waves-effect waves-effect" data='{{image_url}}'>{{forloop.counter }}</a></li>
+                {% endfor %}
+   
+
+        
+   
+              </ul>
+            </nav>
 
         
 
