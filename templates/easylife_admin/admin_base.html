@@ -17,35 +17,6 @@
   <style>
 
   </style>
-</head>
-
-<body class="fixed-sn white-skin">
-
-  <!-- Main Navigation -->
-  <header>
-    {% include "easylife_admin/admin_side_navi.html" %}
-    {% include "easylife_admin/admin_navi.html" %}
-
-  </header>
-  <!-- Main Navigation -->
-
-  <!-- Main layout -->
-  <main>
-     <div class="container-fluid">
-      {% block content %}
-      {% endblock content %}
-
-     </div>
-
-  </main>
-  <!-- Main layout -->
-
-  <!-- Footer -->
-  {% include "easylife_admin/admin_footer.html" %}
-  <!-- Footer -->
-
-  <!-- SCRIPTS -->
-  <!-- JQuery -->
   <script src="{% static 'easylife_admin_static/js/jquery-3.4.1.min.js' %}"></script>
   <!-- Bootstrap tooltips -->
   <script type="text/javascript" src="{% static 'easylife_admin_static/js/popper.min.js' %}"></script>
@@ -158,6 +129,36 @@
     });
 
   </script>
+</head>
+
+<body class="fixed-sn white-skin">
+
+  <!-- Main Navigation -->
+  <header>
+    {% include "easylife_admin/admin_side_navi.html" %}
+    {% include "easylife_admin/admin_navi.html" %}
+
+  </header>
+  <!-- Main Navigation -->
+
+  <!-- Main layout -->
+  <main>
+     <div class="container-fluid">
+      {% block content %}
+      {% endblock content %}
+
+     </div>
+
+  </main>
+  
+  <!-- Main layout -->
+
+  <!-- Footer -->
+  {% include "easylife_admin/admin_footer.html" %}
+  <!-- Footer -->
+
+  <!-- SCRIPTS -->
+  <!-- JQuery -->
 
 </body>
 

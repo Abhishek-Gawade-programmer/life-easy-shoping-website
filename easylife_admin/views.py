@@ -72,6 +72,10 @@ def ItemCreateView(request):
 		return render(request,'easylife_admin/create_new_item.html',{'form':form})
 
 
+def all_user_details(request):
+	return render(request,'easylife_admin/all_user_list.html')
+
+
 
 
 
@@ -149,9 +153,6 @@ def ItemCreateView(request):
 
 
 
-
-class SuccessView(TemplateView):
-    template_name = "easylife_admin/container.html"
 
 
 
