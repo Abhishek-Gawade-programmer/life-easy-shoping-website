@@ -9,6 +9,8 @@ from base.models import Item,Order,OrderItem,BillingAddress,Comment
 
 from .forms import CreateNewItemForm
 
+from django.contrib.auth.models import User
+
 
 
 
@@ -60,11 +62,8 @@ def ItemCreateView(request):
 
 			new_item.save()
 
-
-			print("losdhisudnfuisnduifi")
 			print(request.POST)
 		else:
-			print("losdhisudnfuisnduifi",form.errors)
 			return render(request,'easylife_admin/create_new_item.html',{'form':form})
 
 	else:
@@ -73,7 +72,8 @@ def ItemCreateView(request):
 
 
 def all_user_details(request):
-	return render(request,'easylife_admin/all_user_list.html')
+	all_user =User.objects.all()
+	return render(request,'easylife_admin/all_user_list.html',{'all_user':all_user})
 
 
 
