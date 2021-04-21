@@ -92,6 +92,7 @@ def all_user_details(request):
 
 def user_details(request,pk):
 	user=get_object_or_404(User,pk=pk)
+	
 	return render(request,'easylife_admin/user_detail_view.html',{'user':user})
 
 
