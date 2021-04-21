@@ -1,5 +1,5 @@
-from django.shortcuts import render
-from django.views.generic import TemplateView
+from django.shortcuts import render,get_object_or_404,redirect
+
 
 from django.contrib import messages
 
@@ -10,6 +10,7 @@ from base.models import Item,Order,OrderItem,BillingAddress,Comment
 from .forms import CreateNewItemForm
 
 from django.contrib.auth.models import User
+from base.models import Order
 
 
 
@@ -73,7 +74,26 @@ def ItemCreateView(request):
 
 def all_user_details(request):
 	all_user =User.objects.all()
+	for i in all_user:
+		i.pending_orders=Order.objects.filter(user=i,ordered=True).count()
+
 	return render(request,'easylife_admin/all_user_list.html',{'all_user':all_user})
+
+
+
+
+
+
+
+
+
+
+
+
+def user_details(request,pk):
+	user=get_object_or_404(User,pk=pk)
+	return render(request,'easylife_admin/user_detail_view.html',{'user':user})
+
 
 
 

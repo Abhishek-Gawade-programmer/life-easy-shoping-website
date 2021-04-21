@@ -18,8 +18,8 @@
 
           <div class="card">
             <div class="card-body">
-              <table id="dtMaterialDesignExample" class="table table-striped" cellspacing="0" width="100%">
-                <thead>
+              <table id="dtMaterialDesignExample" class="table table-striped " cellspacing="0" width="100%">
+                <thead class="table-dark">
                   <tr>
                     <th>ID
                     </th>
@@ -31,29 +31,35 @@
                     </th>
                     <th>Join Date
                     </th>
-                    <th>Phone Number
-                    </th>
                   </tr>
                 </thead>
-               <tbody>
+               <tbody class="table table-hover">
 
                 {% for user in all_user %}
                   
 
 
                   <tr>
-                    <td>{{ user.id }}</td>
+                    <td>
+                            <button type="button" class="btn btn-danger btn-sm px-3">
+                              <b>
+          {{ user.id }}</b>
+        </button>
+
+
+                    </td>
                     <td>{{ user.get_full_name }}</td>
                     <td>{{ user.email }}</td>
-                    <td>61</td>
+                    <td>{{user.pending_orders}}</td>
                     <td>{{ user.date_joined|date:"d/m/y" }}</td>
-                    <td>$320,800</td>
                   </tr>
                 {% endfor %}
                 </tbody>
-                <tfoot>
+                <tfoot class="table-dark">
                   <tr>
-                    <th>ID
+                    <th>
+
+                      ID
                     </th>
                     <th>Name
                     </th>
@@ -62,8 +68,6 @@
                     <th>No. Order Placed
                     </th>
                     <th>Join Date
-                    </th>
-                    <th>Phone Number
                     </th>
                   </tr>
                 </tfoot>
