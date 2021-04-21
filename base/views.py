@@ -90,7 +90,6 @@ def item_detail_view(request,slug):
                             images_list.append(item.image6.url)
 
 
-    print('^^^^^^^^^^^^^^^^^^^^^^^^^^666',images_list)
 
     context={
         'object':item,
