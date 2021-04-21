@@ -135,6 +135,10 @@ class Order(models.Model):
             total +=order_item.get_final_price()
         return total
 
+    def __str__(self):
+        return '# Order No'+str(self.pk)
+
+
 
 
 class BillingAddress(models.Model):
@@ -183,9 +187,7 @@ class ShippmentOrder(models.Model):
         verbose_name_plural = "ShippmentOrders"
 
 
-
-
-    # TODO: Define custom methods here
+        
 
     
     

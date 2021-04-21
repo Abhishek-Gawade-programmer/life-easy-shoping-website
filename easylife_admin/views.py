@@ -10,7 +10,7 @@ from base.models import Item,Order,OrderItem,BillingAddress,Comment
 from .forms import CreateNewItemForm
 
 from django.contrib.auth.models import User
-from base.models import Order
+from base.models import Order,ShippmentOrder
 
 
 
@@ -31,9 +31,6 @@ class All_product_list(ListView):
 
 
 def ItemCreateView(request):
-
-	
-
 	if request.method == 'POST':
 		form=CreateNewItemForm(request.POST , request.FILES)
 		if form.is_valid():
@@ -81,19 +78,24 @@ def all_user_details(request):
 
 
 
-
-
-
-
-
-
-
-
-
 def user_details(request,pk):
 	user=get_object_or_404(User,pk=pk)
-	
-	return render(request,'easylife_admin/user_detail_view.html',{'user':user})
+	shippment_order_user= ShippmentOrder.objects.filter(user=user,verify_order=True,payment_done=True)
+	earn_money=0
+	item_purchased=0
+	no_verified=ShippmentOrder.objects.filter(user=user,verify_order=False).count()
+
+	for shippment_order in shippment_order_user:
+		earn_money+=shippment_order.order.get_total()
+		item_purchased+=shippment_order.order.items.count()
+
+
+
+
+
+	return render(request,'easylife_admin/user_detail_view.html',{
+		'shippment_order_user':shippment_order_user,
+		'user':user,'earn_money':earn_money,'item_purchased':item_purchased,'no_verified':no_verified})
 
 
 
