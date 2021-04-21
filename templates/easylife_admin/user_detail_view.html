@@ -1,8 +1,6 @@
 {% extends "easylife_admin/admin_base.html" %}
 {% load static %}
 {% block content %}
-{{user.username}}
-{{shippment_order_user}}
     <div class="container-fluid">
 
       <!-- Section: Intro -->
@@ -119,7 +117,7 @@
                 class="view view-cascade gradient-card-header blue-gradient narrower py-2 mx-4 mb-3 d-flex justify-content-between align-items-center">
 
 
-                <a href="" class="white-text mx-3">Table name</a>
+                <a href="" class="white-text mx-3">Orders By {{ user.get_full_name }}</a>
 
               </div>
 
@@ -145,46 +143,84 @@
 
                     <!-- Table body -->
                     <tbody>
+                      {% for row in shippment_order_user %}
+                
                       <tr>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                        <td>markotto@gmail.com</td>
-                        <td>USA</td>
-                        <td>USA</td>
+                        <td>
+
+                       <a href='' style="color:white">
+                            <button type="button" class="btn btn-info btn-sm px-3">
+                              <b>{{row.order.id}}</b>
+                            </button>
+                      </a>
+
+
+                        
+
+                      </td>
+                        <td>
+        <a href='' style="color:white">
+                            <button type="button" class="btn btn-brown waves-effect waves-light btn-sm px-3">
+                              <b>{{row.id}}</b>
+                            </button>
+                      </a>
+
+
+
+
+
+
+
+
+                        
+
+                      </td>
+                        <td>{{row.delivered}}</td>
+                        <td>
+
+                          {% if  row.verify_order %}
+                          <button type="button" class="btn btn-success btn-sm px-3">
+                              <i class="far fa-check-circle fa-2x"></i>
+                            
+                          {% else %}
+                                <button type="button" class="btn btn-danger btn-sm px-3">
+                             <i class="far fa-times-circle fa-2x"></i>
+                            
+                          {% endif %}
+                          </button>  
+
+         
+
+                      </td>
+                        <td>
+                                               {% if  row.payment_done %}
+                          <button type="button" class="btn btn-success btn-sm px-3">
+                              <i class="far fa-check-circle fa-2x"></i>
+                            
+                          {% else %}
+                                <button type="button" class="btn btn-danger btn-sm px-3">
+                             <i class="far fa-times-circle fa-2x"></i>
+                            
+                          {% endif %}
+
+                        </td>
+                        <td>{{row.payment_done_date}}</td>
                       </tr>
-                      <tr>
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                        <td>@fat</td>
-                        <td>jacobt@gmail.com</td>
-                        <td>France</td>
-                        <td>USA</td>
-                      </tr>
-                      <tr>
-                        <td>Larry</td>
-                        <td>the Bird</td>
-                        <td>@twitter</td>
-                        <td>larrybird@gmail.com</td>
-                        <td>Germany</td>
-                        <td>USA</td>
-                      </tr>
-                      <tr>
-                        <td>Paul</td>
-                        <td>Topolski</td>
-                        <td>@P_Topolski</td>
-                        <td>ptopolski@gmail.com</td>
-                        <td>Poland</td>
-                        <td>USA</td>
-                      </tr>
-                      <tr>
-                        <td>Anna</td>
-                        <td>Doe</td>
-                        <td>@andy</td>
-                        <td>annadoe@gmail.com</td>
-                        <td>Spain</td>
-                        <td>USA</td>
-                      </tr>
+
+
+                      {% empty %}
+                                   <tfoot class="table-dark">
+                                      <tr>
+                                        <th colspan="5">
+
+                                          {{user.get_full_name}} Not have active Orders Yet
+                                        </th>
+                          
+                                      </tr>
+                                    </tfoot>
+
+                      {% endfor %}
+ 
                     </tbody>
                     <!-- Table body -->
 
@@ -215,37 +251,29 @@
         <div class="row">
 
           <!-- Grid column -->
-          <div class="col-lg-4 col-md-12 mb-lg-0 mb-4">
+          <div class="col-lg-6 col-md-12 mb-lg-0 mb-4">
 
             <!-- Panel -->
             <div class="card">
 
               <div class="card-header white-text primary-color">
-                Things to improve
+                Other  Personal Details 
               </div>
 
               <div class="card-body text-center px-4 mb-3">
                 <div class="list-group list-panel">
-                  <a href="#" class="list-group-item d-flex justify-content-between dark-grey-text">Cras justo odio
-                    <i class="fas fa-wrench ml-auto" data-toggle="tooltip" data-placement="top"
-                      title="Click to fix"></i>
-                  </a>
-                  <a href="#" class="list-group-item d-flex justify-content-between dark-grey-text">Dapibus ac facilisi
-                    <i class="fas fa-wrench ml-auto" data-toggle="tooltip" data-placement="top"
-                      title="Click to fix"></i>
-                  </a>
-                  <a href="#" class="list-group-item d-flex justify-content-between dark-grey-text">Morbi leo risus
-                    <i class="fas fa-wrench ml-auto" data-toggle="tooltip" data-placement="top"
-                      title="Click to fix"></i>
-                  </a>
-                  <a href="#" class="list-group-item d-flex justify-content-between dark-grey-text">Porta ac consectet
-                    <i class="fas fa-wrench ml-auto" data-toggle="tooltip" data-placement="top"
-                      title="Click to fix"></i>
-                  </a>
-                  <a href="#" class="list-group-item d-flex justify-content-between dark-grey-text">Vestibulum at eros
-                    <i class="fas fa-wrench ml-auto" data-toggle="tooltip" data-placement="top"
-                      title="Click to fix"></i>
-                  </a>
+                  <span  class="list-group-item d-flex justify-content-between dark-grey-text">
+                    <span class="float-left" style="font-weight: bold">Name :</span>{{user.get_full_name}}
+                  </span>
+                  <span  class="list-group-item d-flex justify-content-between dark-grey-text">
+                    <span class="float-left" style="font-weight: bold">Contact Number:</span>{{last_order.order.billing_address.phone_number}}
+                  </span>
+                  <span  class="list-group-item d-flex justify-content-between dark-grey-text">
+                    <span class="float-left" style="font-weight: bold">Email:</span>{{user.email}}
+                  </span>
+                  <span  class="list-group-item d-flex justify-content-between dark-grey-text">
+                    <span class="float-left" style="font-weight: bold">Payment Method :</span>{{last_order.order.billing_address.get_payment_option_display}}
+                  </span>
                 </div>
               </div>
 
@@ -254,78 +282,35 @@
 
           </div>
           <!-- Grid column -->
-
-          <!-- Grid column -->
-          <div class="col-lg-4 col-md-6 mb-md-0 mb-4">
+          <div class="col-lg-6 col-md-12 mb-lg-0 mb-4">
 
             <!-- Panel -->
             <div class="card">
 
               <div class="card-header white-text primary-color">
-                Tasks to do
+                Address Details 
               </div>
 
               <div class="card-body text-center px-4 mb-3">
                 <div class="list-group list-panel">
-                  <a href="#" class="list-group-item d-flex justify-content-between dark-grey-text">Cras justo odio
-                    <i class="fas fa-wrench ml-auto" data-toggle="tooltip" data-placement="top"
-                      title="Click to fix"></i></a>
-                  <a href="#" class="list-group-item d-flex justify-content-between dark-grey-text">Dapibus ac facilisi
-                    <i class="fas fa-wrench ml-auto" data-toggle="tooltip" data-placement="top"
-                      title="Click to fix"></i></a>
-                  <a href="#" class="list-group-item d-flex justify-content-between dark-grey-text">Morbi leo risus
-                    <i class="fas fa-wrench ml-auto" data-toggle="tooltip" data-placement="top"
-                      title="Click to fix"></i></a>
-                  <a href="#" class="list-group-item d-flex justify-content-between dark-grey-text">Porta ac consectet
-                    <i class="fas fa-wrench ml-auto" data-toggle="tooltip" data-placement="top"
-                      title="Click to fix"></i></a>
-                  <a href="#" class="list-group-item d-flex justify-content-between dark-grey-text">Vestibulum at eros
-                    <i class="fas fa-wrench ml-auto" data-toggle="tooltip" data-placement="top"
-                      title="Click to fix"></i></a>
+                  <span  class="list-group-item d-flex justify-content-between dark-grey-text">
+                    {{last_order.order.billing_address.street_address}}
+                  </span>
+                     <span  class="list-group-item d-flex justify-content-between dark-grey-text">
+                    {{last_order.order.billing_address.apartment_address}}
+                  </span>
+
+                    <span  class="list-group-item d-flex justify-content-between dark-grey-text">
+                    <span class="float-left" style="font-weight: bold">PIN CODE  : {{last_order.order.billing_address.pin_code}}</span>
+                  </span>
                 </div>
               </div>
 
             </div>
             <!-- Panel -->
 
-          </div>
-          <!-- Grid column -->
+          </div>>
 
-          <!-- Grid column -->
-          <div class="col-lg-4 col-md-6 mb-0">
-
-            <!-- Panel -->
-            <div class="card">
-
-              <div class="card-header white-text primary-color">
-                Statistics
-              </div>
-
-              <div class="card-body text-center px-4 mb-3">
-                <div class="list-group list-panel">
-                  <a href="#" class="list-group-item d-flex justify-content-between dark-grey-text">Cras justo odio
-                    <i class="fas fa-wrench ml-auto" data-toggle="tooltip" data-placement="top"
-                      title="Click to fix"></i></a>
-                  <a href="#" class="list-group-item d-flex justify-content-between dark-grey-text">Dapibus ac facilisi
-                    <i class="fas fa-wrench ml-auto" data-toggle="tooltip" data-placement="top"
-                      title="Click to fix"></i></a>
-                  <a href="#" class="list-group-item d-flex justify-content-between dark-grey-text">Morbi leo risus
-                    <i class="fas fa-wrench ml-auto" data-toggle="tooltip" data-placement="top"
-                      title="Click to fix"></i></a>
-                  <a href="#" class="list-group-item d-flex justify-content-between dark-grey-text">Porta ac consectet
-                    <i class="fas fa-wrench ml-auto" data-toggle="tooltip" data-placement="top"
-                      title="Click to fix"></i></a>
-                  <a href="#" class="list-group-item d-flex justify-content-between dark-grey-text">Vestibulum at eros
-                    <i class="fas fa-wrench ml-auto" data-toggle="tooltip" data-placement="top"
-                      title="Click to fix"></i></a>
-                </div>
-              </div>
-
-            </div>
-            <!-- Panel -->
-
-          </div>
-          <!-- Grid column -->
 
         </div>
         <!-- Grid row -->
@@ -333,117 +318,7 @@
       </section>
       <!--Section: Cascading panels-->
 
-      <!-- Section: Classic admin cards -->
-      <section class="pb-3">
 
-        <!-- Grid row -->
-        <div class="row">
-
-          <!-- Grid column -->
-          <div class="col-xl-3 col-md-6 mb-xl-0 mb-4">
-
-            <!-- Card Primary -->
-            <div class="card classic-admin-card primary-color">
-              <div class="card-body">
-                <div class="pull-right">
-                  <i class="far fa-money-bill-alt"></i>
-                </div>
-                <p class="white-text">SALES</p>
-                <h4 class="check">2000$</h4>
-              </div>
-              <div class="progress">
-                <div class="progress-bar bg grey darken-3" role="progressbar" style="width: 25%" aria-valuenow="25"
-                  aria-valuemin="0" aria-valuemax="100"></div>
-              </div>
-              <div class="card-body">
-                <p>Better than last week (25%)</p>
-              </div>
-            </div>
-            <!-- Card Primary -->
-
-          </div>
-          <!-- Grid column -->
-
-          <!-- Grid column -->
-          <div class="col-xl-3 col-md-6 mb-xl-0 mb-4">
-
-            <!-- Card Yellow -->
-            <div class="card classic-admin-card warning-color">
-              <div class="card-body">
-                <div class="pull-right">
-                  <i class="fas fa-chart-line"></i>
-                </div>
-                <p>SUBSCRIPTIONS</p>
-                <h4 class="check">200</h4>
-              </div>
-              <div class="progress">
-                <div class="progress-bar bg grey darken-3" role="progressbar" style="width: 25%" aria-valuenow="25"
-                  aria-valuemin="0" aria-valuemax="100"></div>
-              </div>
-              <div class="card-body">
-                <p>Worse than last week (25%)</p>
-              </div>
-            </div>
-            <!-- Card Yellow -->
-
-          </div>
-          <!-- Grid column -->
-
-          <!-- Grid column -->
-          <div class="col-xl-3 col-md-6 mb-md-0 mb-4">
-
-            <!-- Card Blue -->
-            <div class="card classic-admin-card light-blue lighten-1">
-              <div class="card-body">
-                <div class="pull-right">
-                  <i class="fas fa-chart-pie"></i>
-                </div>
-                <p>TRAFFIC</p>
-                <h4 class="check">20000</h4>
-              </div>
-              <div class="progress">
-                <div class="progress-bar bg grey darken-4" role="progressbar" style="width: 75%" aria-valuenow="75"
-                  aria-valuemin="0" aria-valuemax="100"></div>
-              </div>
-              <div class="card-body">
-                <p>Better than last week (75%)</p>
-              </div>
-            </div>
-            <!-- Card Blue -->
-
-          </div>
-          <!-- Grid column -->
-
-          <!-- Grid column -->
-          <div class="col-xl-3 col-md-6 mb-0">
-
-            <!-- Card Red -->
-            <div class="card classic-admin-card red accent-2">
-              <div class="card-body">
-                <div class="pull-right">
-                  <i class="fas fa-chart-bar"></i>
-                </div>
-                <p>ORGANIC TRAFFIC</p>
-                <h4 class="check">2000</h4>
-              </div>
-              <div class="progress">
-                <div class="progress-bar bg grey darken-4" role="progressbar" style="width: 25%" aria-valuenow="25"
-                  aria-valuemin="0" aria-valuemax="100"></div>
-              </div>
-              <div class="card-body">
-                <p>Better than last week (25%)</p>
-              </div>
-            </div>
-            <!-- Card Red -->
-
-          </div>
-          <!-- Grid column -->
-
-        </div>
-        <!-- Grid row -->
-
-      </section>
-      <!-- Section: Classic admin cards -->
 
     </div>
 {% endblock content %}
