@@ -89,18 +89,6 @@
 
               <hr>
 
-              <div class="custom-control custom-checkbox">
-                {% comment %} <input type="checkbox" class="custom-control-input" id="same-address"> {% endcomment %}
-                {{ form.same_billing_address}}
-                <label class="" for="id_same_billing_address">Shipping address is the same as my billing address</label>
-              </div>
-              <div class="custom-control custom-checkbox">
-              {{ form.save_info}}
-                {% comment %} <input type="checkbox" class="custom-control-input" id="save-info"> {% endcomment %}
-                <label class="" for="id_save_info">Save this information for next time</label>
-              </div>
-
-              <hr>
 
               <div class="d-block my-3">
               {% for value,name in form.fields.payment_option.choices %}

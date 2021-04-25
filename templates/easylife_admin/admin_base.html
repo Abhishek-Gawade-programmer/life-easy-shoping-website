@@ -13,10 +13,10 @@
   <link rel="stylesheet" href="{% static 'easylife_admin_static/css/bootstrap.min.css' %}">
   <!-- Material Design Bootstrap -->
   <link rel="stylesheet" href="{% static 'easylife_admin_static/css/mdb.min.css' %}">
-  <!-- Your custom styles (optional) -->
-  <style>
 
-  </style>
+
+
+  
   <script src="{% static 'easylife_admin_static/js/jquery-3.4.1.min.js' %}"></script>
   <!-- Bootstrap tooltips -->
   <script type="text/javascript" src="{% static 'easylife_admin_static/js/popper.min.js' %}"></script>
@@ -24,6 +24,37 @@
   <script type="text/javascript" src="{% static 'easylife_admin_static/js/bootstrap.js' %}"></script>
   <!-- MDB core JavaScript --> 
   <script type="text/javascript" src="{% static 'easylife_admin_static/js/mdb.min.js' %}"></script>
+
+</head>
+
+<body class="fixed-sn white-skin">
+
+  <!-- Main Navigation -->
+  <header>
+    {% include "easylife_admin/admin_side_navi.html" %} 
+    {% include "easylife_admin/admin_navi.html" %}
+
+  </header>
+  <!-- Main Navigation -->
+
+  <!-- Main layout -->
+  <main style="padding-top: 0.5rem;">
+     <div class="container-fluid">
+      {% block content %}
+      {% endblock content %}
+
+     </div>
+
+  </main>
+  
+  <!-- Main layout -->
+
+  <!-- Footer -->
+  {% include "easylife_admin/admin_footer.html" %}
+  <!-- Footer -->
+
+  <!-- SCRIPTS -->
+  <!-- JQuery -->
 
   <!-- Initializations -->
   <script>
@@ -127,37 +158,6 @@
     });
 
   </script>
-</head>
-
-<body class="fixed-sn white-skin">
-
-  <!-- Main Navigation -->
-  <header>
-    {% include "easylife_admin/admin_side_navi.html" %} 
-    {% include "easylife_admin/admin_navi.html" %}
-
-  </header>
-  <!-- Main Navigation -->
-
-  <!-- Main layout -->
-  <main style="padding-top: 0.5rem;">
-     <div class="container-fluid">
-      {% block content %}
-      {% endblock content %}
-
-     </div>
-
-  </main>
-  
-  <!-- Main layout -->
-
-  <!-- Footer -->
-  {% include "easylife_admin/admin_footer.html" %}
-  <!-- Footer -->
-
-  <!-- SCRIPTS -->
-  <!-- JQuery -->
-
 </body>
 
 </html>

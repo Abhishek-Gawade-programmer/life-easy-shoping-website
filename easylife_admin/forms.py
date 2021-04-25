@@ -34,7 +34,7 @@ class CreateNewItemForm(forms.Form):
 
     
     description = forms.CharField(max_length=1500,widget=forms.Textarea(attrs={'name':"description",'id':"post_content"}),required=False)
-    image = forms.ImageField()
+    image = forms.ImageField(widget=forms.ClearableFileInput(attrs={'multiple':'multiple'}))
 
 
     def clean_title(self,*args,**kwargs):
@@ -47,12 +47,12 @@ class CreateNewItemForm(forms.Form):
         return self.cleaned_data.get('title')
 
 
-    def clean_discount_price(self,*args,**kwargs):
-        discount_price=self.cleaned_data.get('discount_price')
-        price=self.cleaned_data.get('price')
-        if (discount_price > price) or int(discount_price) == int(price):
-            raise forms.ValidationError('Discount price must be less than Original Price')
-        return discount_price
+    # def clean_discount_price(self,*args,**kwargs):
+    #     discount_price=self.cleaned_data.get('discount_price')
+    #     price=self.cleaned_data.get('price')
+    #     if (discount_price > price) or (int(discount_price) == int(price)):
+    #         raise forms.ValidationError('Discount price must be less than Original Price')
+    #     return self.cleaned_data.get('discount_price')
 
 
     def clean_description(self,*args,**kwargs):
@@ -60,6 +60,11 @@ class CreateNewItemForm(forms.Form):
             raise forms.ValidationError('Description Cannot be empty')
 
         return self.cleaned_data.get('description')
+
+
+
+
+
 
 
 

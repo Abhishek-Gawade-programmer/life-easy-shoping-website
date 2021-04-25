@@ -1,5 +1,5 @@
 from django.shortcuts import render,get_object_or_404,redirect
-
+from django import forms
 
 from django.contrib import messages
 
@@ -11,6 +11,9 @@ from .forms import CreateNewItemForm
 
 from django.contrib.auth.models import User
 from base.models import Order,ShippmentOrder
+
+
+
 
 
 
@@ -32,6 +35,7 @@ class All_product_list(ListView):
 
 def ItemCreateView(request):
 	if request.method == 'POST':
+
 		form=CreateNewItemForm(request.POST , request.FILES)
 		if form.is_valid():
 			title=form.cleaned_data.get('title')
@@ -42,25 +46,30 @@ def ItemCreateView(request):
 			label_name=form.cleaned_data.get('label_name')
 			label=form.cleaned_data.get('label')
 			description=form.cleaned_data.get('description')
-			image=form.cleaned_data.get('image')
+
+			if len(dict(request.FILES)['image']) > 6:
+				##messagse 
+				return redirect("easylife_admin:add_items")
+
+
 
 			new_item=Item.objects.create(
 
        			title=title,
 				price=price,
-				discount_price=discount_price,
+				discount_price=discount_price,SS
 				category=category,
 				label_name=label_name,
 				label=label,
 				description=description,
-				image=image,
+				image=dict(request.FILES)['image'][0],
 
 
 	        	)
 
 			new_item.save()
 
-			print(request.POST)
+			# print('ddddddddddd', dict(request.FILES))
 		else:
 			return render(request,'easylife_admin/create_new_item.html',{'form':form})
 
@@ -93,10 +102,6 @@ def user_details(request,pk):
 	return render(request,'easylife_admin/user_detail_view.html',{
 		'shippment_order_user':shippment_order_user,
 		'user':user,'earn_money':earn_money,'item_purchased':item_purchased,'no_verified':no_verified,'last_order':shippment_order_user.last()})
-
-
-
-
 
 
 

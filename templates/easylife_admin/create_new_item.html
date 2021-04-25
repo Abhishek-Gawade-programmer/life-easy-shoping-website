@@ -2,9 +2,10 @@
 {% load static %}
 
 
-  
+
 
 {% block content %}
+
 
       
             {% for field in form %}
@@ -23,28 +24,6 @@
 
             {% endfor %}
         
-
-
-
-
-
-
-
-
-
-
-  {% comment %}
-
-
-  <form method="post" action=''  enctype="multipart/form-data">
-{% csrf_token %}
-{{form}}
-
-    <input type="submit" name="" value="asiohdfsab" novalidate>
-
-  </form>   
-
-  {% endcomment %}   <!-- Section: Inputs -->
       <section class="section card mb-5 col-md-12">
 
         <div class="card-body">
@@ -54,7 +33,7 @@
 
 
           <!-- Grid row  -->
-                  <form method="post" action='' enctype="multipart/form-data">
+    <form method="post" action='' enctype="multipart/form-data" >
                     {% csrf_token %}
 
           <div class="row">
@@ -127,7 +106,6 @@
                 {{form.label}}
 
 
-
        
 
 				         </div>
@@ -137,16 +115,10 @@
 
 
 
-
-
-
-
-                     
-
-
          <div class="col-md-6 mb-4">
-          <h4>Choose a Product Image</h4><br>
-                       {{form.image}}
+            <h4>Choose a Product Image</h4><br>
+                         {{form.image}}
+
         
 
 
@@ -171,7 +143,7 @@
         </div>
       <hr class="my-5">
 
-        <button class="btn btn-success btn-lg btn-block" id='checkout-button' type="submit">Create A New New Product <i class="fas fa-plus-circle"></i></button>
+        <button class="btn btn-success btn-lg btn-block" id='checkout-button' type="submit">Create A New Product <i class="fas fa-plus-circle"></i></button>
 
 
 
@@ -184,9 +156,7 @@
 
 
 
-
 <script type="text/javascript" src="{% static 'easylife_admin_static/js/vendor/tinymce/tinymce.min.js' %}"></script>
-
   <script type="text/javascript">
   tinymce.init({ selector:'#post_content', menubar: false, height : "294" });
 
