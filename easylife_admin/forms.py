@@ -34,7 +34,12 @@ class CreateNewItemForm(forms.Form):
 
     
     description = forms.CharField(max_length=1500,widget=forms.Textarea(attrs={'name':"description",'id':"post_content"}),required=False)
-    image = forms.ImageField(widget=forms.ClearableFileInput(attrs={'multiple':'multiple'}))
+    image = forms.ImageField(widget=forms.FileInput(),required=False)
+    image2 = forms.ImageField(widget=forms.FileInput(),required=False)
+    image3 = forms.ImageField(widget=forms.FileInput(),required=False)
+    image4 = forms.ImageField(widget=forms.FileInput(),required=False)
+    image5 = forms.ImageField(widget=forms.FileInput(),required=False)
+    image6 = forms.ImageField(widget=forms.FileInput(),required=False)
 
 
     def clean_title(self,*args,**kwargs):

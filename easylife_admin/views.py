@@ -42,34 +42,34 @@ def ItemCreateView(request):
 			price=form.cleaned_data.get('price')
 			discount_price=form.cleaned_data.get('discount_price')
 			category= 'A' if form.cleaned_data.get('category') else 'NA'
-			print('asfjkansf',category,form.cleaned_data.get('category'),form.cleaned_data.get('category')=='on')
 			label_name=form.cleaned_data.get('label_name')
 			label=form.cleaned_data.get('label')
 			description=form.cleaned_data.get('description')
-
-			if len(dict(request.FILES)['image']) > 6:
-				##messagse 
-				return redirect("easylife_admin:add_items")
-
-
-
+			image=form.cleaned_data.get('image')
+			image2=form.cleaned_data.get('image2')
+			image3=form.cleaned_data.get('image3')
+			image4=form.cleaned_data.get('image4')
+			image5=form.cleaned_data.get('image5')
+			image6=form.cleaned_data.get('image6')
 			new_item=Item.objects.create(
 
        			title=title,
 				price=price,
-				discount_price=discount_price,SS
+				discount_price=discount_price,
 				category=category,
 				label_name=label_name,
 				label=label,
 				description=description,
-				image=dict(request.FILES)['image'][0],
-
+				image=image,
+				image2=image2,
+				image3=image3,
+				image4=image4,
+				image5=image5,
+				image6=image6,
 
 	        	)
 
 			new_item.save()
-
-			# print('ddddddddddd', dict(request.FILES))
 		else:
 			return render(request,'easylife_admin/create_new_item.html',{'form':form})
 

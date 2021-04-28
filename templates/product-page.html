@@ -27,10 +27,10 @@
               alt="Lightbox image 1" class="img-fluid w-100" id='product_image' height="225" width="225">
 
               <nav>
+                <p></p>
               <ul class="pagination pg-blue">
 
                 <!-- Numbers -->
-
                 {% for  image_url in  images_list %}
 
                 <li id='image{{forloop.counter}}' class="page-item {% if  forloop.counter == 1%}active{% endif %}" data='{{image_url}}'><a class="page-link waves-effect waves-effect" >{{forloop.counter }}</a></li>
@@ -75,9 +75,9 @@
                 <del>₹{{object.price}}</del>
               </span>
                   
-            <span>${{object.discount_price }}</span>     
+            <span>₹{{object.discount_price }}</span>     
           {% else %} 
-            <span>${{ object.price }}</span>
+            <span>₹{{ object.price }}</span>
           {% endif %}     
             </p>
 
