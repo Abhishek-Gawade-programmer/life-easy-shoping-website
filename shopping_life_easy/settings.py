@@ -156,7 +156,7 @@ MESSAGE_TAGS = {
  }
 
 
-SITE_ID = 1
+
 
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
@@ -185,5 +185,7 @@ ACCOUNT_FORMS = {
 'signup': 'base.forms.CustomSignupForm',
 }
 
+SITE_ID = 1
+DEFAULT_AUTO_FIELD='django.db.models.AutoField' 
 
 LOGIN_REDIRECT_URL="/"

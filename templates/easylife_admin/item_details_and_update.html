@@ -1,0 +1,73 @@
+{% extends "easylife_admin/admin_base.html" %}
+{% load static %}
+
+{% load crispy_forms_tags %}
+
+
+{% block content %}
+
+
+
+
+      
+            {% for field in form %}
+
+              {% if field.errors %}
+                   <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                
+                  {{ field.errors }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+
+                  </div>
+                
+              {% endif %}
+
+            {% endfor %}
+        
+      <section class="section card mb-5 col-md-12">
+
+        <div class="card-body">
+
+          <!-- Section heading -->
+          <h1 class="text-center my-5 h1">Update Product </h1>
+
+
+          <!-- Grid row  -->
+    <form method="post" action='' enctype="multipart/form-data" >
+    {% csrf_token %}
+     {{ form|crispy }}
+
+
+
+
+      <hr class="my-5">
+
+        <button class="btn btn-danger btn-lg btn-block" id='checkout-button' type="submit">Save Changes Product <i class="fas fa-pen-fancy"></i></button>
+</div>
+          <!-- Grid row -->
+
+        </div>
+
+
+
+      </section>
+          </form>
+      <!-- Section: Inputs -->
+
+
+
+
+
+
+<script type="text/javascript" src="{% static 'easylife_admin_static/js/vendor/tinymce/tinymce.min.js' %}"></script>
+  <script type="text/javascript">
+  tinymce.init({ selector:'#post_content', menubar: false, height : "294" });
+
+  </script>
+
+{% endblock content %}
+
+
+

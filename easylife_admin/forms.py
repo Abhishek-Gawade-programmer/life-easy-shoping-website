@@ -15,10 +15,6 @@ LABEL_CHOICES=(
 
 
 
-
-
-
-
 class CreateNewItemForm(forms.Form):
     title = forms.CharField(max_length=100,widget=forms.TextInput(attrs={'id':"f2 input-char-counter",'class':"form-control",'length':"100",'maxlength':'100'}))
 
@@ -51,20 +47,27 @@ class CreateNewItemForm(forms.Form):
 
         return self.cleaned_data.get('title')
 
-
-    # def clean_discount_price(self,*args,**kwargs):
-    #     discount_price=self.cleaned_data.get('discount_price')
-    #     price=self.cleaned_data.get('price')
-    #     if (discount_price > price) or (int(discount_price) == int(price)):
-    #         raise forms.ValidationError('Discount price must be less than Original Price')
-    #     return self.cleaned_data.get('discount_price')
-
-
     def clean_description(self,*args,**kwargs):
         if not self.cleaned_data.get('description'):
             raise forms.ValidationError('Description Cannot be empty')
 
         return self.cleaned_data.get('description')
+
+
+  
+class GeeksForm(forms.ModelForm):
+    class Meta:
+        model = Item
+        fields = "__all__"
+
+
+
+
+
+
+
+
+
 
 
 
