@@ -2,6 +2,8 @@
 {% load date_tag %}
 {% load static %}
 {% block content %}
+<h4 class="font-weight-bold"><strong>{{item.title}}</strong></h4>
+<hr class="red title-hr">
     <div class="container-fluid">
 
       <!-- Section: Analytical panel -->
@@ -157,7 +159,7 @@
 
               </div>
 
-            </div>
+          </div>
             <!-- Panel -->
 
             <!-- Panel -->
@@ -169,7 +171,7 @@
           <div class="card mb-lg-0 mb-2">
 
               <div class="card-header white-text secondary-color">
-                <h5 class="font-weight-500 my-1">Issues</h5>
+                <h5 class="font-weight-500 my-1">Quantity Sold</h5>
               </div>
 
               <div class="card-body">
@@ -178,12 +180,10 @@
               </div>
 
             </div>
-            <!-- Panel -->
+
 
           </div>
-          <!-- Grid column -->
 
-          <!-- Grid column -->
           <div class="col-lg-3 col-md-12">
 
 
@@ -198,7 +198,7 @@
             <div class="row">
 
               <!-- Grid column -->
-              <div class="col-md-6 mb-md-0 mb-4">
+              <div class="col-md-12 mb-md-0 mb-4">
 
                 <!-- Panel -->
                 <div class="card">
@@ -213,32 +213,6 @@
                   <div class="card-body">
                     <div class="progress">
                       <div class="progress-bar bg-primary" role="progressbar" style="width: 45%" aria-valuenow="25"
-                        aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                    <p class="font-small grey-text mt-3 mb-0">Better than last week (25%)</p>
-                  </div>
-
-                </div>
-                <!-- Panel -->
-
-              </div>
-              <!-- Grid column -->
-
-              <!-- Grid column -->
-              <div class="col-md-6 mb-0">
-
-                <!-- Panel -->
-                <div class="card">
-                  <div class="card-header white-text warning-color">
-                    <h5 class="font-weight-500 my-1">Monthly sales</h5>
-                  </div>
-
-                  <h6 class="ml-4 mb-0 pt-4  font-weight-bold"><i class="fas fa-arrow-up blue-text mr-3"
-                      aria-hidden="true"></i> $ 2000</h6>
-
-                  <div class="card-body">
-                    <div class="progress">
-                      <div class="progress-bar bg-primary" role="progressbar" style="width: 65%" aria-valuenow="65"
                         aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
                     <p class="font-small grey-text mt-3 mb-0">Better than last week (25%)</p>
