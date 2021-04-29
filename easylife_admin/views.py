@@ -110,20 +110,33 @@ def itemupdateview(request,pk):
 
 
 def item_details(request,pk):
-	user=get_object_or_404(User,pk=pk)
-	shippment_order_user= ShippmentOrder.objects.filter(user=user)
-	earn_money=0
-	item_purchased=0
-	no_verified=ShippmentOrder.objects.filter(user=user,verify_order=False).count()
+	item=get_object_or_404(Item,pk=pk)
+	all_orders=Order.objects.filter(ordered=True)
+	total_money=0
+
+	for order in  all_orders:
+		total_money+=order.get_total()
 
 
-	for shippment_order in shippment_order_user.filter(verify_order=True,payment_done=True):
-		earn_money+=shippment_order.order.get_total()
-		item_purchased+=shippment_order.order.items.count()
 
-	return render(request,'easylife_admin/item_detail.html',{
-		'shippment_order_user':shippment_order_user,
-		'user':user,'earn_money':earn_money,'item_purchased':item_purchased,'no_verified':no_verified,'last_order':shippment_order_user.last()})
+
+	if item.discount_price:
+		earn_from_item=item.get_no_of_items()*item.discount_price
+	else:
+		earn_from_item=item.get_no_of_items()*item.price
+
+
+
+	messages_item=Comment.objects.filter(product=item)[::-1]
+
+	return render(request,'easylife_admin/item_detail.html',
+		{'item':item,'earn_from_item':earn_from_item,
+		'percentage': round(earn_from_item/total_money*100),
+		'messages_item':messages_item,
+
+
+
+		})
 
 
 

@@ -22,7 +22,7 @@
                 <!-- Card image -->
                 <div class="view view-cascade overlay">
                   <img src="{{ item.image.url }}" class="card-img-top" alt="">
-                  <a>
+                  <a href="{% url 'easylife_admin:itemdetailsview' item.id %}">
                     <div class="mask flex-center rgba-red-slight">
                         <p class="white-text" style="font-size:140%">{{item.title}}</p>
                       </div>

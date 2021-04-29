@@ -75,8 +75,11 @@ class Item(models.Model):
 
     def get_no_of_items(self):
         total_quantity =0
-        for product in OrderItem.objects.filter(item=self):
-            total_quantity+=product.qauntity
+        for order in  Order.objects.filter(ordered=True):
+            print(order)
+            for order_item in order.items.all():
+                if order_item.item == self:
+                    total_quantity+= order_item.qauntity
         return total_quantity
 
     def get_remove_to_cart_url(self):

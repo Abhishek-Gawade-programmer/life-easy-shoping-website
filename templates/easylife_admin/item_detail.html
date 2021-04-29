@@ -1,4 +1,5 @@
 {% extends "easylife_admin/admin_base.html" %}
+{% load date_tag %}
 {% load static %}
 {% block content %}
     <div class="container-fluid">
@@ -20,17 +21,17 @@
                  <i class="fas fa-rupee-sign success-color mr-3 z-depth-2"></i>
                 <div class="data">
                   <p class="text-uppercase">Sales</p>
-                  <h4 class="font-weight-bold ">4 571 $</h4>
+                  <h4 class="font-weight-bold "> ₹  {{earn_from_item}}</h4>
                 </div>
               </div>
 
               <!-- Card content -->
               <div class="card-body card-body-cascade">
                 <div class="progress mb-3">
-                  <div class="progress-bar bg-primary" role="progressbar" style="width: 25%" aria-valuenow="25"
+                  <div class="progress-bar bg-primary" role="progressbar" style="width: {{percentage}}%" aria-valuenow="{{percentage}}"
                     aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
-                <p class="card-text">Better than last week (25%)</p>
+                <p class="card-text">Share from Total Earning ({{percentage}}%)</p>
               </div>
 
             </div>
@@ -168,98 +169,16 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>
-                        <div class="avatar-placeholder green darken-3">A</div> Abby Barret
-                      </td>
-                      <td>Can't create a modal</td>
-                      <td>5</td>
-                      <td><span class="grey-text"><small><i class="far fa-clock-o"></i> 5 min</small></span></td>
-                    </tr>
-                    <tr>
-                      <td><img src="https://mdbootstrap.com/wp-content/uploads/2015/10/avatar-1.jpg" alt="Danny Collins"
-                          class="avatar-32"> Danny Collins</td>
-                      <td>Account changes won't save</td>
-                      <td>5</td>
-                      <td><span class="grey-text"><small><i class="far fa-clock-o"></i> 1 hour</small></span></td>
-                    </tr>
-                    <tr>
-                      <td><img src="https://mdbootstrap.com/wp-content/uploads/2015/10/avatar-3.jpg" alt="Danny Collins"
-                          class="avatar-32"> Clara Ericson</td>
-                      <td>How to import my campaign from Business Manager?</td>
-                      <td>5</td>
-                      <td><span class="grey-text"><small><i class="far fa-clock-o"></i> 1 hour</small></span></td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div class="avatar-placeholder green darken-3">A</div> Abby Barret
-                      </td>
-                      <td>Can't create a modal</td>
-                      <td>5</td>
-                      <td><span class="grey-text"><small><i class="far fa-clock-o"></i> 5 min</small></span></td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div class="avatar-placeholder yellow darken-2">D</div> Danny Collins
-                      </td>
-                      <td>Account changes won't save</td>
-                      <td>5</td>
-                      <td><span class="grey-text"><small><i class="far fa-clock-o"></i> 1 hour</small></span></td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div class="avatar-placeholder red darken-2">C</div> Clara Ericson
-                      </td>
-                      <td>How to import my campaign from Business Manager?</td>
-                      <td>5</td>
-                      <td><span class="grey-text"><small><i class="far fa-clock-o"></i> 1 hour</small></span></td>
-                    </tr>
-                    <tr>
-                      <td><img src="https://mdbootstrap.com/wp-content/uploads/2015/10/avatar-2.jpg" alt="Danny Collins"
-                          class="avatar-32"> Abby Barret</td>
-                      <td>Can't create a modal</td>
-                      <td>5</td>
-                      <td><span class="grey-text"><small><i class="far fa-clock-o"></i> 5 min</small></span></td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div class="avatar-placeholder yellow darken-2">D</div> Danny Collins
-                      </td>
-                      <td>Account changes won't save</td>
-                      <td>5</td>
-                      <td><span class="grey-text"><small><i class="far fa-clock-o"></i> 1 hour</small></span></td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div class="avatar-placeholder red darken-2">C</div> Clara Ericson
-                      </td>
-                      <td>How to import my campaign from Business Manager?</td>
-                      <td>5</td>
-                      <td><span class="grey-text"><small><i class="far fa-clock-o"></i> 1 hour</small></span></td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div class="avatar-placeholder green darken-3">A</div> Abby Barret
-                      </td>
-                      <td>Can't create a modal</td>
-                      <td>5</td>
-                      <td><span class="grey-text"><small><i class="far fa-clock-o"></i> 5 min</small></span></td>
-                    </tr>
-                    <tr>
-                      <td><img src="https://mdbootstrap.com/wp-content/uploads/2015/10/avatar-1.jpg" alt="Danny Collins"
-                          class="avatar-32"> Danny Collins</td>
-                      <td>Account changes won't save</td>
-                      <td>5</td>
-                      <td><span class="grey-text"><small><i class="far fa-clock-o"></i> 1 hour</small></span></td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div class="avatar-placeholder red darken-2">C</div> Clara Ericson
-                      </td>
-                      <td>How to import my campaign from Business Manager?</td>
-                      <td>5</td>
-                      <td><span class="grey-text"><small><i class="far fa-clock-o"></i> 1 hour</small></span></td>
-                    </tr>
+                    {% for review in messages_item %}
+                          <tr>
+                            <td>
+                              <div class="avatar-placeholder blue darken-3">{{review.user.get_full_name|slice:":1"}}</div> {{review.user.get_full_name}}
+                            </td>
+                            <td>{{review.body}}</td>
+                            <td>{{review.rating}}</td>
+                            <td><span class="grey-text"><small><i class="far fa-clock-o"></i> {{ review|date_str_output }}</small></span></td>
+                          </tr>
+                    {% endfor %}
                   </tbody>
                 </table>
               </div>

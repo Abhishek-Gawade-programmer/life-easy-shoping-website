@@ -12,7 +12,7 @@ app_name='easylife_admin'
 
 
 urlpatterns = [
-	path('item-details/<pk>/', item_details, name='itemupdateview'),
+	path('item-details/<pk>/', item_details, name='itemdetailsview'),
 	path('item-update/<pk>/', itemupdateview, name='itemupdateview'),
 	path('all-user-details/', all_user_details, name='all_user_details'),
 	path('user-details/<pk>/', user_details, name='user_details'),
