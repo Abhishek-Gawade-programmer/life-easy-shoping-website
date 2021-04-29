@@ -51,7 +51,7 @@
                 <i class="fas fa-chart-line warning-color mr-3 z-depth-2"></i>
                 <div class="data">
                   <p class="text-uppercase">Subscriptions</p>
-                  <h4 class="font-weight-bold ">375</h4>
+                  <h4 class="font-weight-bold ">{{user_purchased}}</h4>
                 </div>
               </div>
 
@@ -81,17 +81,17 @@
                 <i class="fas fa-star light-blue lighten-1 mr-3 z-depth-2"></i>
                 <div class="data">
                   <p class="text-uppercase">Ratings</p>
-                  <h4 class="font-weight-bold ">21 479</h4>
+                  <h4 class="font-weight-bold ">{{avrage_rating}}</h4>
                 </div>
               </div>
 
               <!-- Card content -->
               <div class="card-body card-body-cascade">
                 <div class="progress mb-3">
-                  <div class="progress-bar red accent-2" role="progressbar" style="width: 75%" aria-valuenow="75"
+                  <div class="progress-bar green accent-2" role="progressbar" style="width: {{avrage_rating_percentage}}%" aria-valuenow="{{avrage_rating_percentage}}"
                     aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
-                <p class="card-text">Worse than last week (75%)</p>
+                <p class="card-text">Ratings ({{avrage_rating_percentage}}%)</p>
               </div>
 
             </div>

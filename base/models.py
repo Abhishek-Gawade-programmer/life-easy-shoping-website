@@ -76,11 +76,18 @@ class Item(models.Model):
     def get_no_of_items(self):
         total_quantity =0
         for order in  Order.objects.filter(ordered=True):
-            print(order)
             for order_item in order.items.all():
                 if order_item.item == self:
                     total_quantity+= order_item.qauntity
         return total_quantity
+
+    def get_no_of_users_buy(self):
+        user_list=[]
+        for item in OrderItem.objects.filter(item=self):
+            if item.user not in user_list:
+                user_list.append(item.user)
+        return len(user_list)
+
 
     def get_remove_to_cart_url(self):
         return reverse("base:remove-from-cart", kwargs={"slug": self.slug})
@@ -111,6 +118,10 @@ class OrderItem(models.Model):
         if self.item.discount_price:
             return self.get_total_discount_price()
         return self.get_total_item_price()
+
+
+    
+
 
 
     def get_final_price(self):

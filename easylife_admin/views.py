@@ -128,11 +128,21 @@ def item_details(request,pk):
 
 
 	messages_item=Comment.objects.filter(product=item)[::-1]
+	x=[]
+	for user_rating in messages_item:
+		if user_rating.rating !=0:
+			x.append(user_rating.rating)
+
+
+
 
 	return render(request,'easylife_admin/item_detail.html',
 		{'item':item,'earn_from_item':earn_from_item,
-		'percentage': round(earn_from_item/total_money*100),
+		'percentage': round(earn_from_item/total_money*100,2),
 		'messages_item':messages_item,
+		'user_purchased':item.get_no_of_users_buy(),
+		'avrage_rating':round(sum(x)/(len(x) or 1),2),
+		'avrage_rating_percentage':  round(((sum(x)/ (len(x) or 1))/5)*100,2),
 
 
 
