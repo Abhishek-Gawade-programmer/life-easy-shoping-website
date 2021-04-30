@@ -55,7 +55,7 @@ class CreateNewItemForm(forms.Form):
 
 
   
-class GeeksForm(forms.ModelForm):
+class ItemUpdateFrom(forms.ModelForm):
     class Meta:
         model = Item
         fields = "__all__"

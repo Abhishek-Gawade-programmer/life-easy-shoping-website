@@ -150,7 +150,7 @@
 
                        <a href='' style="color:white">
                             <button type="button" class="btn btn-info btn-sm px-3">
-                              <b>{{row.order.id}}</b>
+                              <b style="font-size:170%">{{row.order.id}}</b>
                             </button>
                       </a>
 
@@ -161,7 +161,7 @@
                         <td>
                         <a href='' style="color:white">
                             <button type="button" class="btn btn-brown waves-effect waves-light btn-sm px-3">
-                              <b>{{row.id}}</b>
+                              <b style="font-size:170%">{{row.id}}</b>
                             </button>
                       </a>
 
@@ -169,7 +169,19 @@
                         
 
                       </td>
-                        <td>{{row.delivered}}</td>
+                        <td>
+
+
+                                               {% if  row.delivered %}
+                          <button type="button" class="btn btn-success btn-sm px-3">
+                              <i class="far fa-check-circle fa-2x"></i>
+                            
+                          {% else %}
+                                <button type="button" class="btn btn-danger btn-sm px-3">
+                             <i class="far fa-times-circle fa-2x"></i>
+                            
+                          {% endif %}
+</td>
                         <td>
 
                           {% if  row.verify_order %}

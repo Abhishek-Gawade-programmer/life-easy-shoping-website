@@ -7,7 +7,7 @@ from django.views.generic import ListView,DetailView,View,CreateView,UpdateView
 from base.models import Item,Order,OrderItem,BillingAddress,Comment,ShippmentOrder
 
 
-from .forms import CreateNewItemForm,GeeksForm
+from .forms import CreateNewItemForm,ItemUpdateFrom
 
 from django.contrib.auth.models import User
 
@@ -99,14 +99,14 @@ def user_details(request,pk):
 def itemupdateview(request,pk):
 	obj = get_object_or_404(Item, id = pk)
 
-	form = GeeksForm(request.POST or None,instance=obj)
+	form = ItemUpdateFrom(request.POST or None,instance=obj)
 
 	if form.is_valid(): #send form
 		cd=form.cleaned_data
 		form.save()
 
 	else:
-		return render(request,'easylife_admin/item_details_and_update.html',{'form':form,'object':obj})	
+		return render(request,'easylife_admin/item_update.html',{'form':form,'object':obj})	
 
 
 def item_details(request,pk):
@@ -126,16 +126,23 @@ def item_details(request,pk):
 		earn_from_item=item.get_no_of_items()*item.price
 
 	list_count_month=[34,56,12,65,23,45,35,78,34,34,23]
-	# for i in range(8):
-	# 	for order_item in all_orders.filter(start_date__week_day=i).items.all():
-	# 		if order_item.item == item:
-	# 			list_count_month.append(order_item.qauntity)
+
+
+
+
 
 	messages_item=Comment.objects.filter(product=item)[::-1]
-	x=[]
+	rate_list=[]
 	for user_rating in messages_item:
 		if user_rating.rating !=0:
-			x.append(user_rating.rating)
+			rate_list.append(user_rating.rating)
+
+	required_items=0
+	for sp in  ShippmentOrder.objects.filter(verify_order=True):
+		for order_item in sp.order.items.all():
+			if order_item.item == item:
+				required_items+= order_item.qauntity
+
 
 
 
@@ -145,15 +152,21 @@ def item_details(request,pk):
 		'percentage': round(earn_from_item/total_money*100,2),
 		'messages_item':messages_item,
 		'user_purchased':item.get_no_of_users_buy(),
-		'avrage_rating':round(sum(x)/(len(x) or 1),2),
-		'avrage_rating_percentage':  round(((sum(x)/ (len(x) or 1))/5)*100,2),
-		'list_count_month':list_count_month
-
-
+		'avrage_rating':round(sum(rate_list)/(len(rate_list) or 1),2),
+		'avrage_rating_percentage':  round(((sum(rate_list)/ (len(rate_list) or 1))/5)*100,2),
+		'list_count_month':list_count_month,
+		'required_items':required_items
 
 		})
 
+def order_review(request,order_id,shipping_id,user_id):
+	user=get_object_or_404(User,pk=user_id)
+	print('hhhhhhhhh',user.username)
+	order_by_user=get_object_or_404(Order,id=order_id,user=user)
+	new_shipping_by_user=get_object_or_404(ShippmentOrder,id=shipping_id,order=order_by_user,user=user)
+	return render(request,'invoice.html',{'order':order_by_user,'shipping':new_shipping_by_user})
 
+	# return render(request,'easylife_admin/item_update.html',)	
 
 
 

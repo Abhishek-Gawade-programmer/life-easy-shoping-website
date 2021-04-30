@@ -192,8 +192,10 @@ class Comment(models.Model):
 class ShippmentOrder(models.Model):
     user=models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
     order=models.ForeignKey('Order',on_delete=models.CASCADE)
-    delivered= models.DateTimeField(blank=True,null=True)
     verify_order = models.BooleanField(default=False,blank=True)
+    verify_done_date= models.DateTimeField(blank=True,null=True)
+    delivered= models.BooleanField(default=False,blank=True)
+    delivered_done_date= models.DateTimeField(blank=True,null=True)
     payment_done=models.BooleanField(default=False,blank=True)
     payment_done_date= models.DateTimeField(blank=True,null=True)
 
