@@ -125,7 +125,11 @@ def item_details(request,pk):
 	else:
 		earn_from_item=item.get_no_of_items()*item.price
 
-
+	list_count_month=[34,56,12,65,23,45,35,78,34,34,23]
+	# for i in range(8):
+	# 	for order_item in all_orders.filter(start_date__week_day=i).items.all():
+	# 		if order_item.item == item:
+	# 			list_count_month.append(order_item.qauntity)
 
 	messages_item=Comment.objects.filter(product=item)[::-1]
 	x=[]
@@ -143,6 +147,7 @@ def item_details(request,pk):
 		'user_purchased':item.get_no_of_users_buy(),
 		'avrage_rating':round(sum(x)/(len(x) or 1),2),
 		'avrage_rating_percentage':  round(((sum(x)/ (len(x) or 1))/5)*100,2),
+		'list_count_month':list_count_month
 
 
 

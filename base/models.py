@@ -80,6 +80,7 @@ class Item(models.Model):
                 if order_item.item == self:
                     total_quantity+= order_item.qauntity
         return total_quantity
+        
 
     def get_no_of_users_buy(self):
         user_list=[]
