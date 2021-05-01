@@ -186,15 +186,16 @@
 
           <div class="col-lg-3 col-md-12">
 
-
-            <!-- Panel -->
             <div class="card text-center mb-4 pt-4 pb-3 red accent-2 white-text">
               <i class="fas fa-bell fa-3x mb-3"></i>
               <h4 class="h4-responsive">{{required_items}} More Required </h4>
             </div>
-            <!-- Panel -->
+                     <div class="card text-center mb-4 pt-4 pb-3 black accent-2 white-text">
+                      <a href="{% url 'easylife_admin:itemupdateview' item.id %}">
+              <i class="fas fa-pencil-alt fa-3x mb-3"></i></a>
+              <h4 class="h4-responsive">Edit The Item </h4>
+            </div>
 
-            <!-- Grid row -->
             <div class="row">
 
               <!-- Grid column -->
@@ -309,4 +310,131 @@ var myChart = new Chart(ctx, {
 });
 </script>
 
+        <!-- Central Modal Fluid Success -->
+        <div class="modal fade" id="centralModalFluidSuccessDemo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+          aria-hidden="true">
+          <div class="modal-dialog modal-fluid modal-notify modal-primary" role="document">
+            <!-- Content -->
+            <div class="modal-content">
+              <!-- Header -->
+              <div class="modal-header">
+                <p class="heading lead">{{item.title}} View</p>
+
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true" class="white-text">&times;</span>
+                </button>
+              </div>
+
+              <!-- Body -->
+              <div class="modal-body">
+                    <div class="container dark-grey-text mt-5">
+
+      <!--Grid row-->
+      <div class="row wow fadeIn">
+
+
+
+          <div class="col-md-6 mb-4">
+
+
+
+              <img src="{{ item.image.url }}" 
+              alt="Lightbox image 1" class="img-fluid w-100" id='product_image' height="225" width="225">
+
+              <nav>
+                <p></p>
+              <ul class="pagination pg-blue">
+
+                <!-- Numbers -->
+                {% for  image_url in  images_list %}
+
+                <li id='image{{forloop.counter}}' class="page-item {% if  forloop.counter == 1%}active{% endif %}" data='{{image_url}}'><a class="page-link waves-effect waves-effect" >{{forloop.counter }}</a></li>
+                {% endfor %}
+   
+
+        
+   
+              </ul>
+            </nav>
+
+        
+
+
+        </div>
+        <!--Grid column-->
+
+        <!--Grid column-->
+        <div class="col-md-6 mb-4">
+
+          <!--Content-->
+          <div class="p-4">
+
+            <div class="mb-3">
+              <a href="">
+                <span class="badge purple mr-1">{{ item.get_category_display }}</span>
+              </a>
+            </div>
+
+
+         <p class="lead">
+         {% if item.discount_price %}
+              <span class="mr-1">
+                <del>₹{{item.price}}</del>
+              </span>
+                  
+            <span>₹{{item.discount_price }}</span>     
+          {% else %} 
+            <span>₹{{ item.price }}</span>
+          {% endif %}     
+            </p>
+
+
+
+            <p class="lead font-weight-bold">{{item.title}}</p>
+                              <a href="{{ item.get_add_to_cart_url }}" class="btn btn-primary btn-md my-0 p " >Add to cart
+                <i class="fas fa-shopping-cart ml-1"></i>
+              </a>
+      
+              <p></p>
+              <a href="{{ item.get_remove_to_cart_url }}" class="btn btn-danger btn-md my-0 p  " >Remove from Cart
+              </a>
+              </div>
+
+            </div>
+
+              
+            <div class="jumbotron btn-light col-md-12 ">
+            <h1 class="display-5">Description</h1>
+            <hr>
+            <br>
+          {% autoescape off %}
+              
+
+
+              {{ item.description|linebreaks }}
+            {% endautoescape %} 
+            
+            </div>
+
+        </div>
+        <!--Grid column-->
+
+      </div>
+              </div>
+
+              <!-- Footer -->
+              <div class="modal-footer">
+                <a type="button" class="btn btn-danger btn-block waves-effect" data-dismiss="modal" style="font-size:200%">Close</a>
+              </div>
+            </div>
+            <!-- Content -->
+          </div>
+        </div>
+        <!-- Central Modal Fluid Success -->
+
+
+
+             <button type="button" class="btn btn-primary mb-3" data-toggle="modal" data-target="#centralModalFluidSuccessDemo">Fluid
+              </button>
 {% endblock content %}
+

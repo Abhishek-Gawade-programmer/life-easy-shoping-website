@@ -104,6 +104,8 @@ def itemupdateview(request,pk):
 	if form.is_valid(): #send form
 		cd=form.cleaned_data
 		form.save()
+		messages.info(request,f'The {obj.title} this Updated Successfully')
+		return redirect("easylife_admin:itemdetailsview",pk=obj.id)  
 
 	else:
 		return render(request,'easylife_admin/item_update.html',{'form':form,'object':obj})	
@@ -126,9 +128,6 @@ def item_details(request,pk):
 		earn_from_item=item.get_no_of_items()*item.price
 
 	list_count_month=[34,56,12,65,23,45,35,78,34,34,23]
-
-
-
 
 
 	messages_item=Comment.objects.filter(product=item)[::-1]
@@ -161,12 +160,11 @@ def item_details(request,pk):
 
 def order_review(request,order_id,shipping_id,user_id):
 	user=get_object_or_404(User,pk=user_id)
-	print('hhhhhhhhh',user.username)
 	order_by_user=get_object_or_404(Order,id=order_id,user=user)
 	new_shipping_by_user=get_object_or_404(ShippmentOrder,id=shipping_id,order=order_by_user,user=user)
-	return render(request,'invoice.html',{'order':order_by_user,'shipping':new_shipping_by_user})
 
-	# return render(request,'easylife_admin/item_update.html',)	
+	return render(request,'easylife_admin/order_review.html',{'order':order_by_user,'shipping':new_shipping_by_user})
+
 
 
 
