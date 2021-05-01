@@ -3,12 +3,265 @@
 {% block content %}
  
 
-           <h1 class="text-center my-5 h1 red-text">Order Review  </h1>
+           <h1 class="text-center  h1 red-text">Order Review  </h1>
+           <hr class="green title-hr">
+   
 
-        <div class="col-md-12">       
+    <div class="container-fluid">
 
+      <!-- Section: Heading -->
+      <section class="mb-4">
+
+        <div class="card">
+          <div class="card-body d-flex justify-content-between">
+            <h4 class="h4-responsive mt-3 blue-text">Order Number : #{{order.id}}</h4>
+
+            <div>
+            	<h4 class="h4-responsive mt-3 blue-text"> Shippment Number : #{{shipping.id}}</h4>
+              
+            </div>
+
+          </div>
         </div>
-        <!-- Gird column -->
+
+      </section>
+      <!-- Section: Heading -->
+
+
+
+
+            <!-- Section: Heading -->
+     <section class="mb-4">
+
+        <div class="card">
+                      <div class="card-header white-text danger-color">
+                <h5 class="font-weight-500 my-1">User Details</h5>
+              </div>
+
+                <div class="card-body px-4 mb-3">
+                <div class="list-group list-panel">
+
+                  <span  class="list-group-item d-flex justify-content-between dark-grey-text">
+                    <span class="float-left" style="font-weight: bold">Name :</span>{{user.get_full_name}}
+                  </span>
+
+                  <span  class="list-group-item d-flex justify-content-between dark-grey-text">
+                    <span class="float-left" style="font-weight: bold">Contact Number:</span>+91 {{shipping.order.billing_address.phone_number}}
+                  </span>
+
+                  <span  class="list-group-item d-flex justify-content-between dark-grey-text">
+                    <span class="float-left" style="font-weight: bold">Email:</span>{{user.email}}
+                  </span>
+
+                  <span  class="list-group-item d-flex justify-content-between dark-grey-text">
+                    <span class="float-left" style="font-weight: bold">Payment Method :</span>{{shipping.order.billing_address.get_payment_option_display}}
+                  </span>
+
+                  <span  class="list-group-item d-flex justify-content-between dark-grey-text">
+                    <span class="float-left" style="font-weight: bold">Address - 1 :</span>{{shipping.order.billing_address.street_address}}
+                  </span>         
+
+                  <span  class="list-group-item d-flex justify-content-between dark-grey-text">
+                    <span class="float-left" style="font-weight: bold">Address - 2 :</span>{{shipping.order.billing_address.apartment_address}}
+                  </span>
+
+
+                  <span  class="list-group-item d-flex justify-content-between dark-grey-text">
+                    <span class="float-left" style="font-weight: bold">PIN CODE :</span>{{shipping.order.billing_address.pin_code}}
+                  </span>
+
+                           <span  class="list-group-item d-flex justify-content-between dark-grey-text">
+                    <span class="float-left" style="font-weight: bold">CITY :</span>{{shipping.order.billing_address.city}}
+                  </span>
+
+                </div>
+              </div>
+
+
+      </section>
+
+                  <!-- Section: Heading -->
+
+     <section class="mb-4">
+
+        <div class="card">
+                      <div class="card-header white-text success-color">
+                <h5 class="font-weight-500 my-1">Order Details</h5>
+              </div>
+
+                <div class="card-body text-center px-4 mb-3">
+                <div class="list-group list-panel">
+                	              <div class="px-4">
+
+                <div class="table-responsive">
+
+                  <!--Table-->
+                  <table class="table table-hover mb-0">
+
+                    <!-- Table head -->
+                    <thead class="mdb-color darken-3">
+                      <tr class="text-white">
+                        <th class="th-lg"># Sr No.</th>
+                        <th class="th-lg"># Item Title</th>
+                        <th class="th-lg">
+                         Price </th>
+                        <th class="th-lg">Quantity</th>
+                        <th class="th-lg">Total Item Price</th>
+                        <th class="th-lg">Item Availablity</th>
+                      </tr>
+                    </thead>
+                    <!-- Table head -->
+
+                    <!-- Table body -->
+                    <tbody>
+                      {% for order_item in shipping.order.items.all %}
+                
+                      <tr>
+
+
+                        <td>
+                        	{{forloop.counter }}
+
+                      	</td>
+
+
+
+                        <td>
+                        	{{ order_item.item.title}}                        
+
+                      </td>
+
+
+	                    <td>
+	                    	₹ &nbsp; {% if  order_item.item.discount_price %}{{order_item.item.discount_price}} {% else %} {{order_item.item.price }} {% endif %}
+
+
+
+	                    </td>
+
+
+                       <td>
+                        	{{ order_item.qauntity }}
+
+         
+
+                      </td>
+
+                        <td>
+                        	 {% if order_item.item.discount_price %}
+
+                                      ₹&nbsp;{{ order_item.get_total_discount_price }}
+
+                             {% else %}
+
+                                      ₹{{ order_item.get_total_item_price }}
+
+                             {% endif %}
+
+                        </td>
+                        <td>
+                        	                         {% if  order_item.item.category == 'A'  %}
+                                  <button type="button" class="btn btn-success btn-sm px-3">
+                                      <i class="far fa-check-circle fa-2x"></i>
+                                  
+                                {% else %}
+                                    <button type="button" class="btn btn-danger btn-sm px-3">
+                                      <i class="far fa-times-circle fa-2x"></i>
+                                  
+                                {% endif %}
+                        </td>
+                      </tr>
+
+
+
+                      {% endfor %}
+ 
+                    </tbody>
+                    <!-- Table body -->
+
+                  </table>
+                  <!-- Table -->
+
+            <ul class="list-unstyled text-left">
+              <li><strong>GRAND TOTAL ( INR ):</strong><span class="ml-3 red-text">₹ &nbsp;{{ order.get_total }}</span></li>
+            </ul>
+
+
+                </div>
+
+                <hr class="my-0">
+
+              </div>
+
+
+
+                </div>
+              </div>
+
+
+      </section>
+
+
+
+
+      <!-- Section: Invoice table -->
+      <section class="mb-5">
+
+        <div class="card">
+            <div class="card-header white-text primary-color">
+                <h5 class="font-weight-500 my-1">Administrator Actions For Order Fulfulliment</h5>
+              </div>
+          <div class="card-body" >
+          	          <div class="row">
+
+            <!-- Grid column -->
+            <div class="col-lg-4 col-md-12 mb-4">
+
+              <fieldset class="form-check">
+                <input class="form-check-input" type="checkbox" id="checkbox1" >
+                <label class="form-check-label" for="checkbox1">Verification</label>
+              </fieldset>
+
+            </div>
+            <!-- Grid column -->
+
+            <!-- Grid column -->
+            <div class="col-lg-4 col-md-6 mb-4">
+
+
+              <fieldset class="form-check">
+                <input class="form-check-input" type="checkbox" id="checkbox2" >
+                <label class="form-check-label" for="checkbox2">Delivered</label>
+              </fieldset>
+
+            </div>
+            <!-- Grid column -->
+
+            <!-- Grid column -->
+            <div class="col-lg-4 col-md-6 mb-4">
+
+
+              <fieldset class="form-check">
+                <input class="form-check-input" type="checkbox" id="checkbox3" >
+                <label class="form-check-label" for="checkbox3">Payment</label>
+              </fieldset>
+
+            </div>
+            <!-- Grid column -->
+
+          </div>
+
+
+
+          </div>
+        </div>
+
+      </section>
+      <!-- Section: Invoice table -->
+
+    </div>
+
+
 
 
 

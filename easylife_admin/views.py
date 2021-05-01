@@ -90,7 +90,7 @@ def user_details(request,pk):
 		item_purchased+=shippment_order.order.items.count()
 
 	return render(request,'easylife_admin/user_detail_view.html',{
-		'shippment_order_user':shippment_order_user,
+		'shippment_order_user':shippment_order_user[::-1],
 		'user':user,'earn_money':earn_money,'item_purchased':item_purchased,'no_verified':no_verified,'last_order':shippment_order_user.last()})
 
 
@@ -163,7 +163,7 @@ def order_review(request,order_id,shipping_id,user_id):
 	order_by_user=get_object_or_404(Order,id=order_id,user=user)
 	new_shipping_by_user=get_object_or_404(ShippmentOrder,id=shipping_id,order=order_by_user,user=user)
 
-	return render(request,'easylife_admin/order_review.html',{'order':order_by_user,'shipping':new_shipping_by_user})
+	return render(request,'easylife_admin/order_review.html',{'order':order_by_user,'shipping':new_shipping_by_user,'user':user})
 
 
 

@@ -172,16 +172,17 @@
                         <td>
 
 
-                                               {% if  row.delivered %}
-                          <button type="button" class="btn btn-success btn-sm px-3">
-                              <i class="far fa-check-circle fa-2x"></i>
-                            
-                          {% else %}
-                                <button type="button" class="btn btn-danger btn-sm px-3">
-                             <i class="far fa-times-circle fa-2x"></i>
-                            
-                          {% endif %}
-</td>
+                                {% if  row.delivered %}
+                                  <button type="button" class="btn btn-success btn-sm px-3">
+                                      <i class="far fa-check-circle fa-2x"></i>
+                                  
+                                {% else %}
+                                    <button type="button" class="btn btn-danger btn-sm px-3">
+                                      <i class="far fa-times-circle fa-2x"></i>
+                                  
+                                {% endif %}
+
+                        </td>
                         <td>
 
                           {% if  row.verify_order %}

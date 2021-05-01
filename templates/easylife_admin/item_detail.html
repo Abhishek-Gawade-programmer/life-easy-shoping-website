@@ -126,7 +126,7 @@
                 <h3 class="font-weight-500 my-1">
                   
                   
-                  <i class="far fa-comments"></i>  Comments Section (23) </h3>
+                  <i class="far fa-comments"></i>  Reviews Section ({{messages_item|length}}) </h3>
               </div>
 
               <div class="card-body">
@@ -191,9 +191,21 @@
               <h4 class="h4-responsive">{{required_items}} More Required </h4>
             </div>
                      <div class="card text-center mb-4 pt-4 pb-3 black accent-2 white-text">
+
                       <a href="{% url 'easylife_admin:itemupdateview' item.id %}">
               <i class="fas fa-pencil-alt fa-3x mb-3"></i></a>
-              <h4 class="h4-responsive">Edit The Item </h4>
+              <h4 class="h4-responsive"><b>Edit The Item </b></h4>
+            </div>
+
+              <div class="card text-center mb-4 pt-4 pb-3 orange accent-2 red-text">
+
+             <button type="button" class="btn mb-3" data-toggle="modal" data-target="#centralModalFluidSuccessDemo">
+             
+
+
+
+              <i class="fas fa-eye fa-3x mb-3"></i> </button>
+              <h4 class="h4-responsive"><b>View  Item </b></h4>
             </div>
 
             <div class="row">
@@ -430,11 +442,6 @@ var myChart = new Chart(ctx, {
             <!-- Content -->
           </div>
         </div>
-        <!-- Central Modal Fluid Success -->
 
-
-
-             <button type="button" class="btn btn-primary mb-3" data-toggle="modal" data-target="#centralModalFluidSuccessDemo">Fluid
-              </button>
 {% endblock content %}
 
