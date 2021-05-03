@@ -183,8 +183,14 @@ def order_review(request,order_id,shipping_id,user_id):
 	user=get_object_or_404(User,pk=user_id)
 	order_by_user=get_object_or_404(Order,id=order_id,user=user)
 	new_shipping_by_user=get_object_or_404(ShippmentOrder,id=shipping_id,order=order_by_user,user=user)
+	item_available=False
+	for order_item in new_shipping_by_user.order.items.all():
+		if  order_item.item.category == 'A':
+			item_available=True
 
-	return render(request,'easylife_admin/order_review.html',{'order':order_by_user,'shipping':new_shipping_by_user,'user':user})
+	print("uidsifn",item_available)
+
+	return render(request,'easylife_admin/order_review.html',{'order':order_by_user,'shipping':new_shipping_by_user,'user':user,'item_available':item_available})
 
 
 
