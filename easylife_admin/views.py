@@ -165,8 +165,6 @@ def item_details(request,pk):
 
 
 
-
-
 	return render(request,'easylife_admin/item_detail.html',
 		{'item':item,'earn_from_item':earn_from_item,
 		'percentage': round(earn_from_item/total_money*100,2),
