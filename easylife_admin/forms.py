@@ -60,6 +60,13 @@ class ItemUpdateFrom(forms.ModelForm):
         model = Item
         fields = "__all__"
 
+class OrderVerificationForm(forms.Form):
+    verify_order =forms.BooleanField(widget=forms.CheckboxInput(),required=False)
+    delivered_started =forms.BooleanField(widget=forms.CheckboxInput(),required=False)
+    payment_done =forms.BooleanField(widget=forms.CheckboxInput(),required=False)
+
+
+
 
 
 

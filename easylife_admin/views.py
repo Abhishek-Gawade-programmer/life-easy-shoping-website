@@ -115,7 +115,7 @@ def user_details(request,pk):
 
 
 
-def itemupdateview(request,pk):
+def itemupdateview(request,pk,order_id=None,shipping_id=None,user_id=None):
 	obj = get_object_or_404(Item, id = pk)
 	#using ItemUpdateFrom form for updating the item
 	form = ItemUpdateFrom(request.POST or None,instance=obj)
@@ -125,7 +125,11 @@ def itemupdateview(request,pk):
 		form.save()
 		#messages
 		messages.info(request,f'The {obj.title} this Updated Successfully')
-		return redirect("easylife_admin:itemdetailsview",pk=obj.id)  
+		if not user_id:
+			return redirect("easylife_admin:itemdetailsview",pk=obj.id)  
+		else:
+			return redirect("easylife_admin:order-review",order_id=order_id,shipping_id=shipping_id,user_id=user_id)  
+
 
 	else:
 		return render(request,'easylife_admin/item_update.html',{'form':form,'object':obj})	

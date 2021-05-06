@@ -166,7 +166,7 @@
                                   <button type="button"  class="btn btn-success btn-sm px-3">
                                       <i class="far fa-check-circle fa-2x"></i>
                                 {% else %}
-                                <a href="{% url "easylife_admin:itemupdateview" order_item.item.pk %}">
+                                <a href="{% url "easylife_admin:itemupdateview-redirect"  order.id shipping.id user.id order_item.item.pk %}">
                                     <button type="button" class="btn btn-danger btn-sm px-3">
                                       <i class="far fa-times-circle fa-2x"></i></a>
                                   
