@@ -1,5 +1,5 @@
 from django import forms
-from base.models import Item
+from base.models import Item,ShippmentOrder
 
 
 CATEGORY_CHOICES=(
@@ -60,10 +60,19 @@ class ItemUpdateFrom(forms.ModelForm):
         model = Item
         fields = "__all__"
 
-class OrderVerificationForm(forms.Form):
-    verify_order =forms.BooleanField(widget=forms.CheckboxInput(),required=False)
-    delivered_started =forms.BooleanField(widget=forms.CheckboxInput(),required=False)
-    payment_done =forms.BooleanField(widget=forms.CheckboxInput(),required=False)
+class OrderVerificationForm(forms.ModelForm):
+    class Meta:
+        model=ShippmentOrder
+        fields =('verify_order','delivered','payment_done')
+        widgets = {
+
+            'verify_order': forms.CheckboxInput(attrs={'class':"form-check-input", 'type':"checkbox", 'id':"checkbox1"}),
+            'delivered': forms.CheckboxInput(attrs={'class':"form-check-input", 'type':"checkbox", 'id':"checkbox2"}),
+            'payment_done': forms.CheckboxInput(attrs={'class':"form-check-input", 'type':"checkbox", 'id':"checkbox3"}),
+
+
+
+        }
 
 
 

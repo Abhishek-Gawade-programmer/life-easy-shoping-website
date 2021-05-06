@@ -7,7 +7,7 @@ from django.views.generic import ListView,DetailView,View,CreateView,UpdateView
 from base.models import Item,Order,OrderItem,BillingAddress,Comment,ShippmentOrder
 
 
-from .forms import CreateNewItemForm,ItemUpdateFrom
+from .forms import CreateNewItemForm,ItemUpdateFrom,OrderVerificationForm
 
 from django.contrib.auth.models import User
 
@@ -186,13 +186,31 @@ def order_review(request,order_id,shipping_id,user_id):
 	order_by_user=get_object_or_404(Order,id=order_id,user=user)
 	new_shipping_by_user=get_object_or_404(ShippmentOrder,id=shipping_id,order=order_by_user,user=user)
 	item_available=False
+
 	for order_item in new_shipping_by_user.order.items.all():
 		if  order_item.item.category == 'A':
 			item_available=True
 
-	print("uidsifn",item_available)
 
-	return render(request,'easylife_admin/order_review.html',{'order':order_by_user,'shipping':new_shipping_by_user,'user':user,'item_available':item_available})
+	form = OrderVerificationForm(request.POST or None,instance=new_shipping_by_user)
+	print('dfdhgdfg',form)
+	if request.method == 'POST':
+		if form.is_valid(): #check form
+			cd=form.cleaned_data
+			print('geted the data form form',cd)
+
+
+
+
+
+
+
+
+
+
+	return render(request,'easylife_admin/order_review.html',{'order':order_by_user,'shipping':new_shipping_by_user,
+																'user':user,'item_available':item_available,
+																'order_verification_form':form})
 
 
 
