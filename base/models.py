@@ -198,6 +198,9 @@ class ShippmentOrder(models.Model):
     delivered_done_date= models.DateTimeField(blank=True,null=True)
     payment_done=models.BooleanField(default=False,blank=True)
     payment_done_date= models.DateTimeField(blank=True,null=True)
+    report_spam=models.BooleanField(default=False,blank=True)
+    description=models.TextField(max_length=250,blank=True)
+
 
     class Meta:
         verbose_name = "ShippmentOrder"
