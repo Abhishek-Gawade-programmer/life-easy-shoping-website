@@ -13,6 +13,9 @@ from django.contrib.auth.models import User
 
 from .tasks import sleepy
 
+#CELERY TASKS
+from base.tasks import send_email
+
 class All_product_list(ListView):
 	#taking all products
     model = Item
@@ -26,7 +29,6 @@ class All_product_list(ListView):
 
 def ItemCreateView(request):
 	#form sumbitted by user
-	sleepy.delay(2)
 	if request.method == 'POST':
 		#putting the values in form and checking if form is valid
 		form=CreateNewItemForm(request.POST , request.FILES)

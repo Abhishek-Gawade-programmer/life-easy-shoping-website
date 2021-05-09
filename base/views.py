@@ -27,13 +27,13 @@ from django.contrib.staticfiles import finders
 
 
 #SENDING EMAIL 
-from django.core.mail import send_mail
 from django.conf import settings 
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 
 
-
+#CELERY TASKS
+from .tasks import send_email
 
 
 
@@ -370,14 +370,13 @@ def SuccessView(request,pk):
 def invoice_generate(request,order_id,shipping_id):
     order_by_user=get_object_or_404(Order,id=order_id,user=request.user)
     new_shipping_by_user=get_object_or_404(ShippmentOrder,id=shipping_id,order=order_by_user,user=request.user)
+    
     subject= f"(Easylife) Successfully Order is Record Please See You invoice"
     html_message = render_to_string('invoice_email_template.html', {'order':order_by_user,'shipping':new_shipping_by_user,'request':request})
     plain_message = strip_tags(html_message)
     from_email = settings.EMAIL_HOST_USER
     to = [request.user.email,'abhishekgawadeprogrammer@gmail.com']
-
-    t=send_mail(subject, plain_message, from_email,to,html_message=html_message)
-
+    send_email.delay(subject,html_message,plain_message,from_email,to)
     messages.success(request, f"Your invoice is also Sended to you email")
 
 
