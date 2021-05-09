@@ -11,7 +11,7 @@ from .forms import CreateNewItemForm,ItemUpdateFrom,OrderVerificationForm
 
 from django.contrib.auth.models import User
 
-
+from .tasks import sleepy
 
 class All_product_list(ListView):
 	#taking all products
@@ -26,6 +26,7 @@ class All_product_list(ListView):
 
 def ItemCreateView(request):
 	#form sumbitted by user
+	sleepy.delay(2)
 	if request.method == 'POST':
 		#putting the values in form and checking if form is valid
 		form=CreateNewItemForm(request.POST , request.FILES)
