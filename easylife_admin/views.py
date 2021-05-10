@@ -11,7 +11,7 @@ from .forms import CreateNewItemForm,ItemUpdateFrom,OrderVerificationForm
 
 from django.contrib.auth.models import User
 
-from .tasks import sleepy
+# from .tasks import sleepy
 
 #CELERY TASKS
 from base.tasks import send_email
@@ -196,19 +196,13 @@ def order_review(request,order_id,shipping_id,user_id):
 
 
 	form = OrderVerificationForm(request.POST or None,instance=new_shipping_by_user)
-	print('dfdhgdfg',form)
 	if request.method == 'POST':
 		if form.is_valid(): #check form
 			cd=form.cleaned_data
 			print('geted the data form form',cd)
-
-
-
-
-
-
-
-
+			form.save()
+		else:
+			print('error'*30,form.errors)
 
 
 	return render(request,'easylife_admin/order_review.html',{'order':order_by_user,'shipping':new_shipping_by_user,

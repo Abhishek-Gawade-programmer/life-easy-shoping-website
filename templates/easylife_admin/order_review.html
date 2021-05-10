@@ -2,7 +2,6 @@
 {% load cart_template_tags %}
 {% load static %}
 {% block content %}
- 
 
            <h1 class="text-center  h1 red-text">Order Review  </h1>
            <hr class="green title-hr">
@@ -213,9 +212,30 @@
                 <h5 class="font-weight-500 my-1">Administrator Actions For Order Fulfulliment</h5>
               </div>
           <div class="card-body" >
+                         {% for field in order_verification_form %}
+
+              {% if field.errors %}
+                   <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                
+                  {{ field.errors }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+
+                  </div>
+                
+              {% endif %}
+
+            {% endfor %}
+
+
             {% if item_available %}
 
-                	<form>
+                	<form method="post" action="">
+                      {% csrf_token %}
+        
+                      
+                    
 
                 	          <div class="row">
 
