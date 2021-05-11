@@ -67,20 +67,12 @@ class OrderVerificationForm(forms.ModelForm):
         widgets = {
 
             'verify_order': forms.CheckboxInput(attrs={'class':"form-check-input", 'type':"checkbox", 'id':"checkbox1"}),
-            'delivered': forms.CheckboxInput(attrs={'class':"form-check-input", 'type':"checkbox", 'id':"checkbox2"}),
+            'delivered': forms.CheckboxInput(attrs={'class':"form-check-input", 'type':"checkbox", 'id':"checkbox2",}),
             'payment_done': forms.CheckboxInput(attrs={'class':"form-check-input", 'type':"checkbox", 'id':"checkbox3"}),
 
 
 
         }
-    def clean_verify_order(self,*args,**kwargs):
-        is_delivered=self.cleaned_data.get('delivered')
-        is_payment_done=self.cleaned_data.get('payment_done')
-        print(is_delivered,is_payment_done,self.cleaned_data.get('verify_order'))
-
-        if (is_delivered) or  (is_payment_done):
-            raise forms.ValidationError('Invalid Input')
-        return self.cleaned_data.get('verify_order')
 
 
 
