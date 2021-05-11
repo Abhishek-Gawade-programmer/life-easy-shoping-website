@@ -8,7 +8,6 @@
    
 
     <div class="container-fluid">
-
       <!-- Section: Heading -->
       <section class="mb-4">
 
@@ -266,8 +265,19 @@
       		            </div>
 
       		          </div>
+                    {% if shipping.verify_order and shipping.delivered and shipping.payment_done %}
+                    <center>
+                    <h2>
+                      <span class="badge green">Order is Completed</span></h2></center>
+                      
+                    {% else %}
+      		            <button class="btn btn-purple btn-rounded waves-effect waves-light float-right " id='checkout-button' type="submit">Save Changes <i class="fas fa-pen-fancy"></i></button>
+                      
+                    {% endif %}
 
-      		          <button class="btn btn-purple btn-rounded waves-effect waves-light float-right " id='checkout-button' type="submit">Save Changes <i class="fas fa-pen-fancy"></i></button>
+
+
+
       		</form> 
               
             {% else %}

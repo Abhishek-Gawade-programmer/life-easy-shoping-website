@@ -196,11 +196,11 @@ def order_review(request,order_id,shipping_id,user_id):
 	user=get_object_or_404(User,pk=user_id)
 	order_by_user=get_object_or_404(Order,id=order_id,user=user)
 	new_shipping_by_user=get_object_or_404(ShippmentOrder,id=shipping_id,order=order_by_user,user=user)
-	item_available=False
+	item_available=True
 
 	for order_item in new_shipping_by_user.order.items.all():
-		if  order_item.item.category == 'A':
-			item_available=True
+		if  order_item.item.category == 'NA':
+			item_available=False
 
 
 	form = OrderVerificationForm(request.POST or None,instance=new_shipping_by_user)
@@ -236,16 +236,10 @@ def order_review(request,order_id,shipping_id,user_id):
 				from_email = settings.EMAIL_HOST_USER
 				to = [user.email,'abhishekgawadeprogrammer@gmail.com']
 				send_email.delay(subject,html_message,plain_message,from_email,to)
-				messages.success(request, f"Order no {order_by_user.id} ORDER PAYMENTS IS DONEand email is successfully send to user")
+				messages.success(request, f"Order no {order_by_user.id} ORDER PAYMENTS IS DONE and email is successfully send to user")
 
-				
-
-
-			# print('DATA IS ',cd)
 			form.save()
 			return redirect("easylife_admin:order-review",order_id=order_id, shipping_id=shipping_id,user_id=user_id)
-		else:
-			print('error'*30,form.errors)
 
 
 	return render(request,'easylife_admin/order_review.html',{'order':order_by_user,'shipping':new_shipping_by_user,
