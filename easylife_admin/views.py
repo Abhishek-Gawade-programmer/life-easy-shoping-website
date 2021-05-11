@@ -199,8 +199,9 @@ def order_review(request,order_id,shipping_id,user_id):
 	if request.method == 'POST':
 		if form.is_valid(): #check form
 			cd=form.cleaned_data
+			print('DATA IS ',cd)
 			form.save()
-			return redirect("easylife_admin:order-review",order_id=order_id, shipping_id=shipping_id,user_id=user_id)
+			# return redirect("easylife_admin:order-review",order_id=order_id, shipping_id=shipping_id,user_id=user_id)
 		else:
 			print('error'*30,form.errors)
 
