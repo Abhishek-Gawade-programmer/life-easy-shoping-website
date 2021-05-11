@@ -229,6 +229,15 @@ def order_review(request,order_id,shipping_id,user_id):
 				send_email.delay(subject,html_message,plain_message,from_email,to)
 				messages.success(request, f"Order no {order_by_user.id} DELIVERY STARTED  AND EMAIL IS SEND TO USER WAITING FOR STARTING PAYMENT DONE")
 
+			elif (cd['verify_order'] and cd['delivered'])  and  cd['payment_done']:
+				subject= f"(Easylife) Your Order Payment is Done So Enjoy Your Product Thanks"
+				html_message = render_to_string('email_for_order_payment_done.html', {'order':order_by_user,'shipping':new_shipping_by_user,'request':request})
+				plain_message = strip_tags(html_message)
+				from_email = settings.EMAIL_HOST_USER
+				to = [user.email,'abhishekgawadeprogrammer@gmail.com']
+				send_email.delay(subject,html_message,plain_message,from_email,to)
+				messages.success(request, f"Order no {order_by_user.id} ORDER PAYMENTS IS DONEand email is successfully send to user")
+
 				
 
 
