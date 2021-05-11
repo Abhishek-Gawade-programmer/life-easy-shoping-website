@@ -11,10 +11,18 @@ from .forms import CreateNewItemForm,ItemUpdateFrom,OrderVerificationForm
 
 from django.contrib.auth.models import User
 
-# from .tasks import sleepy
 
 #CELERY TASKS
 from base.tasks import send_email
+
+
+#SENDING EMAIL 
+from django.conf import settings 
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
+
+
+
 
 class All_product_list(ListView):
 	#taking all products
@@ -199,9 +207,25 @@ def order_review(request,order_id,shipping_id,user_id):
 	if request.method == 'POST':
 		if form.is_valid(): #check form
 			cd=form.cleaned_data
+
+
+			if (cd['verify_order'] ) and  not (cd['delivered']  or  cd['payment_done']):
+				
+				subject= f"(Easylife) Your Order is Been Verified Successfully !!"
+				html_message = render_to_string('email_for_order_verification_complatete.html', {'order':order_by_user,'shipping':new_shipping_by_user,'request':request})
+				plain_message = strip_tags(html_message)
+				from_email = settings.EMAIL_HOST_USER
+				to = [user.email,'abhishekgawadeprogrammer@gmail.com']
+				send_email.delay(subject,html_message,plain_message,from_email,to)
+				messages.success(request, f"Order no {order_by_user.id} VERIFICATION IS DONE AND EMAIL IS SEND TO USER WAITING FOR STARTING DELIVERY")
+
+			if (cd['verify_order'] and cd['delivered'])  and  not ( cd['payment_done']):
+				
+
+
 			print('DATA IS ',cd)
 			form.save()
-			# return redirect("easylife_admin:order-review",order_id=order_id, shipping_id=shipping_id,user_id=user_id)
+			return redirect("easylife_admin:order-review",order_id=order_id, shipping_id=shipping_id,user_id=user_id)
 		else:
 			print('error'*30,form.errors)
 
