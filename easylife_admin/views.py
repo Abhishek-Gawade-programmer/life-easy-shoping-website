@@ -42,15 +42,26 @@ def admin_dashboard(request):
 	count_user =User.objects.count()-1
 	
 	total_sales=0
+	verification_left=0
+	payment_left=0
 	for shipment in all_shipments:
 		if shipment.get_order_complete():
 			 total_sales+=shipment.order.get_total()
+		if not shipment.verify_order:
+			verification_left+=1
+
+		if not payment_left.delivered:
+			payment_left+=1
+
+
 
 
 
 	return render(request,'easylife_admin/main_admin_dashboard.html',{
 			'all_shipments':all_shipments,
-			'total_sales':total_sales,'count_user':count_user})
+			'total_sales':total_sales,'count_user':count_user,
+			'verification_left':verification_left,
+			'payment_left':payment_left})
 
 
 
