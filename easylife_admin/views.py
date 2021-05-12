@@ -27,7 +27,7 @@ from django.utils import timezone
 
 from base.models import Order
 
-
+from datetime import datetime, timedelta
 
 
 
@@ -39,6 +39,7 @@ def admin_dashboard(request):
 	all_shipments = ShippmentOrder.objects.all()
 	last_month = timezone.now() - timedelta(days=30)
 	# filter(my_date__gte=last_month)
+	count_user =User.objects.count()-1
 	
 	total_sales=0
 	for shipment in all_shipments:
@@ -49,7 +50,7 @@ def admin_dashboard(request):
 
 	return render(request,'easylife_admin/main_admin_dashboard.html',{
 			'all_shipments':all_shipments,
-			'total_sales':total_sales})
+			'total_sales':total_sales,'count_user':count_user})
 
 
 
