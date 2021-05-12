@@ -22,17 +22,20 @@ from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 
 
+from base.models import Order
+
 
 
 
 
 def admin_dashboard(request):
 	#showing all user in table
-	all_user =User.objects.all()
-	for i in all_user:
-		i.pending_orders=Order.objects.filter(user=i,ordered=True).count()
+	all_shipments = ShippmentOrder.objects.all()
 
-	return render(request,'easylife_admin/main_admin_dashboard.html',{'all_user':all_user})
+	# for i in all_user:
+	# 	i.pending_orders=Order.objects.filter(user=i,ordered=True).count()
+
+	return render(request,'easylife_admin/main_admin_dashboard.html',{'all_shipments':all_shipments})
 
 
 

@@ -206,6 +206,13 @@ class ShippmentOrder(models.Model):
         verbose_name = "ShippmentOrder"
         verbose_name_plural = "ShippmentOrders"
 
+    def get_order_complete(self):
+        order_complete=False
+        if self.verify_order and self.delivered and self.payment_done:
+            order_complete=True
+
+        return order_complete
+
 
         
 

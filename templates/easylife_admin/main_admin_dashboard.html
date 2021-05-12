@@ -11,7 +11,7 @@
 
       <!-- Section: Basic examples -->
            <h1 class="text-center my-5 h1 m-0">Admin Dashboard</h1>
-                 <section class="mt-md-4 pt-md-2 mb-5">
+  <section class="mt-md-4 pt-md-2 mb-5">
 
         <!-- First row -->
         <div class="row">
@@ -200,6 +200,9 @@
         <!-- First row -->
 
       </section>
+                 <h3 class="text-center red-text my-5 h3 m-0">Order Table</h3>
+                  <hr class="green title-hr">
+
 
         <!-- Gird column -->
         <div class="col-md-12">       
@@ -209,21 +212,21 @@
               <table id="dtMaterialDesignExample" class="table table-striped " cellspacing="0" width="100%">
                 <thead class="table-dark">
                   <tr>
-                    <th>ID
+                    <th>ORDER ID
                     </th>
-                    <th>Name
+                    <th>VERIFICATION
                     </th>
-                    <th>Email
+                    <th>DELIVERED
                     </th>
-                    <th>No. Order Placed
+                    <th>PAYMENTS
                     </th>
-                    <th>Join Date
+                    <th>ORDER COMPLETED
                     </th>
                   </tr>
                 </thead>
                <tbody class="table table-hover">
 
-                {% for user in all_user %}
+                {% for order in all_shipments %}
                   
 
                   <tr>
@@ -232,16 +235,63 @@
 
                       <a href='{% url 'easylife_admin:user_details' user.pk %}' style="color:white">
                             <button type="button" class="btn btn-danger btn-sm px-3">
-                              <b style="font-size:170%">{{ user.id }}</b>
+                              <b style="font-size:170%">#{{ order.id }}</b>
                             </button>
                       </a>
 
 
                     </td>
-                    <td>{{ user.get_full_name }}</td>
-                    <td>{{ user.email }}</td>
-                    <td>{{user.pending_orders}}</td>
-                    <td>{{ user.date_joined|date:"d/m/y" }}</td>
+                    <td>
+
+                                {% if  order.verify_order %}
+                                  <button type="button" class="btn btn-success btn-sm px-3">
+                                      <i class="far fa-check-circle fa-2x"></i>
+                                      </button> 
+                                {% else %}
+                                    <button type="button" class="btn btn-danger btn-sm px-3">
+                                      <i class="far fa-times-circle fa-2x"></i>
+                                    </button> 
+                                {% endif %}
+
+
+                  </td>
+                    <td>
+                                  {% if  order.delivered %}
+                                  <button type="button" class="btn btn-success btn-sm px-3">
+                                      <i class="far fa-check-circle fa-2x"></i>
+                                      </button> 
+                                {% else %}
+                                    <button type="button" class="btn btn-danger btn-sm px-3">
+                                      <i class="far fa-times-circle fa-2x"></i>
+                                    </button> 
+                                {% endif %}
+
+                    </td>
+
+                    <td>
+                                {% if  order.payment_done %}
+                                  <button type="button" class="btn btn-success btn-sm px-3">
+                                      <i class="far fa-check-circle fa-2x"></i>
+                                      </button> 
+                                {% else %}
+                                    <button type="button" class="btn btn-danger btn-sm px-3">
+                                      <i class="far fa-times-circle fa-2x"></i>
+                                    </button> 
+                                {% endif %}
+
+                    </td>
+
+                    <td>        {% if  order.get_order_complete %}
+                                  <button type="button" class="btn btn-success btn-sm px-3">
+                                      <i class="far fa-check-circle fa-2x"></i>
+                                      </button> 
+                                {% else %}
+                                    <button type="button" class="btn btn-danger btn-sm px-3">
+                                      <i class="far fa-times-circle fa-2x"></i>
+                                    </button> 
+                                {% endif %}
+
+                      </td>
                   </tr>
                 {% endfor %}
                 </tbody>
