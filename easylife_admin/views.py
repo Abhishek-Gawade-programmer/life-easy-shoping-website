@@ -44,14 +44,19 @@ def admin_dashboard(request):
 	total_sales=0
 	verification_left=0
 	payment_left=0
+	delivery_left=0
+	succesfully_orders=0
 	for shipment in all_shipments:
 		if shipment.get_order_complete():
 			 total_sales+=shipment.order.get_total()
+			 succesfully_orders+=1
 		if not shipment.verify_order:
 			verification_left+=1
 
 		if not shipment.payment_done:
 			payment_left+=1
+		if not shipment.delivered:
+			delivery_left+=1
 
 
 
@@ -61,7 +66,7 @@ def admin_dashboard(request):
 			'all_shipments':all_shipments,
 			'total_sales':total_sales,'count_user':count_user,
 			'verification_left':verification_left,
-			'payment_left':payment_left})
+			'payment_left':payment_left,'delivery_left':delivery_left})
 
 
 
