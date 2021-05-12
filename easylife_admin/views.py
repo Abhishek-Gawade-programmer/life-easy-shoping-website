@@ -50,7 +50,7 @@ def admin_dashboard(request):
 		if not shipment.verify_order:
 			verification_left+=1
 
-		if not payment_left.delivered:
+		if not shipment.payment_done:
 			payment_left+=1
 
 
