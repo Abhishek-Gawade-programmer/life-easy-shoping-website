@@ -24,6 +24,24 @@ from django.utils.html import strip_tags
 
 
 
+
+
+def admin_dashboard(request):
+	#showing all user in table
+	all_user =User.objects.all()
+	for i in all_user:
+		i.pending_orders=Order.objects.filter(user=i,ordered=True).count()
+
+	return render(request,'easylife_admin/main_admin_dashboard.html',{'all_user':all_user})
+
+
+
+
+
+
+
+
+
 class All_product_list(ListView):
 	#taking all products
     model = Item

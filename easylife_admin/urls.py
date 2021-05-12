@@ -4,7 +4,7 @@ from django.conf import settings
 from .views import (
                 All_product_list,ItemCreateView,all_user_details,
                 user_details,itemupdateview,
-                item_details,order_review
+                item_details,order_review,admin_dashboard
 
                     )
 
@@ -21,5 +21,6 @@ urlpatterns = [
 	 path('add-items/', ItemCreateView, name='add_items'),
 	 path('all-items/', All_product_list.as_view(), name='all_items'),
 
+	path('', admin_dashboard, name='admin_dashboard'),
 ]
 urlpatterns+=static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
