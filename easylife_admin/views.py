@@ -22,6 +22,9 @@ from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 
 
+#TIME
+from django.utils import timezone
+
 from base.models import Order
 
 
@@ -29,13 +32,24 @@ from base.models import Order
 
 
 def admin_dashboard(request):
+
+
+	# TODO: OF LAST MONTH DUE TO DAY ISSUE
 	#showing all user in table
 	all_shipments = ShippmentOrder.objects.all()
+	last_month = timezone.now() - timedelta(days=30)
+	# filter(my_date__gte=last_month)
+	
+	total_sales=0
+	for shipment in all_shipments:
+		if shipment.get_order_complete():
+			 total_sales+=shipment.order.get_total()
 
-	# for i in all_user:
-	# 	i.pending_orders=Order.objects.filter(user=i,ordered=True).count()
 
-	return render(request,'easylife_admin/main_admin_dashboard.html',{'all_shipments':all_shipments})
+
+	return render(request,'easylife_admin/main_admin_dashboard.html',{
+			'all_shipments':all_shipments,
+			'total_sales':total_sales})
 
 
 
