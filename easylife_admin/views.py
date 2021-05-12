@@ -46,6 +46,7 @@ def admin_dashboard(request):
 	payment_left=0
 	delivery_left=0
 	succesfully_orders=0
+
 	for shipment in all_shipments:
 		if shipment.get_order_complete():
 			 total_sales+=shipment.order.get_total()
@@ -65,7 +66,7 @@ def admin_dashboard(request):
 	return render(request,'easylife_admin/main_admin_dashboard.html',{
 			'all_shipments':all_shipments,
 			'total_sales':total_sales,'count_user':count_user,
-			'verification_left':verification_left,
+			'verification_left':verification_left,'succesfully_orders':succesfully_orders,
 			'payment_left':payment_left,'delivery_left':delivery_left})
 
 
