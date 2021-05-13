@@ -263,7 +263,7 @@ def order_review(request,order_id,shipping_id,user_id):
 
 
 			if (cd['verify_order'] ) and  not (cd['delivered']  or  cd['payment_done']):
-
+				new_shipping_by_user.verify_done_date=timezone.now()
 				
 				subject= f"(Easylife) Your Order is Been Verified Successfully !!"
 				html_message = render_to_string('email_for_order_verification_complatete.html', {'order':order_by_user,'shipping':new_shipping_by_user,'request':request})
@@ -274,6 +274,7 @@ def order_review(request,order_id,shipping_id,user_id):
 				messages.success(request, f"Order no {order_by_user.id} VERIFICATION IS DONE AND EMAIL IS SEND TO USER WAITING FOR STARTING DELIVERY")
 
 			elif (cd['verify_order'] and cd['delivered'])  and  not ( cd['payment_done']):
+				new_shipping_by_user.delivered_done_date=timezone.now()
 				subject= f"(Easylife) Your Order delivery ha been started Your product will delivered Soon !!"
 				html_message = render_to_string('email_for_order_dealivary_done.html', {'order':order_by_user,'shipping':new_shipping_by_user,'request':request})
 				plain_message = strip_tags(html_message)
@@ -283,6 +284,7 @@ def order_review(request,order_id,shipping_id,user_id):
 				messages.success(request, f"Order no {order_by_user.id} DELIVERY STARTED  AND EMAIL IS SEND TO USER WAITING FOR STARTING PAYMENT DONE")
 
 			elif (cd['verify_order'] and cd['delivered'])  and  cd['payment_done']:
+				new_shipping_by_user.payment_done_date=timezone.now()				
 				subject= f"(Easylife) Your Order Payment is Done So Enjoy Your Product Thanks"
 				html_message = render_to_string('email_for_order_payment_done.html', {'order':order_by_user,'shipping':new_shipping_by_user,'request':request})
 				plain_message = strip_tags(html_message)
@@ -290,7 +292,7 @@ def order_review(request,order_id,shipping_id,user_id):
 				to = [user.email,'abhishekgawadeprogrammer@gmail.com']
 				send_email.delay(subject,html_message,plain_message,from_email,to)
 				messages.success(request, f"Order no {order_by_user.id} ORDER PAYMENTS IS DONE and email is successfully send to user")
-
+			new_shipping_by_user.save()
 			form.save()
 			return redirect("easylife_admin:order-review",order_id=order_id, shipping_id=shipping_id,user_id=user_id)
 

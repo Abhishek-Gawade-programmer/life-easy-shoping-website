@@ -136,7 +136,7 @@
                         <th class="th-lg">Order Delivered </th>
                         <th class="th-lg">Verification Status</th>
                         <th class="th-lg">Payment Done</th>
-                        <th class="th-lg">Payment Date</th>
+                        <th class="th-lg">Order Complete</th>
                       </tr>
                     </thead>
                     <!-- Table head -->
@@ -207,11 +207,29 @@
                           {% else %}
                                 <button type="button" class="btn btn-danger btn-sm px-3">
                              <i class="far fa-times-circle fa-2x"></i>
-                            
+                            </button>  
                           {% endif %}
 
                         </td>
-                        <td>{{row.payment_done_date}}</td>
+                        <td>{% if  row.payment_done_date %}
+                          <button type="button" class="btn btn-success btn-sm px-3">
+                              <i class="far fa-check-circle fa-2x"></i>
+                            
+                          {% else %}
+                                <button type="button" class="btn btn-danger btn-sm px-3">
+                             <i class="far fa-times-circle fa-2x"></i>
+                          </button>  
+                          {% endif %}
+                            
+
+
+
+
+
+
+
+
+                        </td>
                       </tr>
 
 

@@ -14,7 +14,6 @@ from django.views.decorators.csrf import csrf_exempt
 import json
 import stripe
 
-from django.utils import timezone
 
 
 
