@@ -264,6 +264,7 @@ def order_review(request,order_id,shipping_id,user_id):
 
 			if (cd['verify_order'] ) and  not (cd['delivered']  or  cd['payment_done']):
 				new_shipping_by_user.verify_done_date=timezone.now()
+				new_shipping_by_user.save()
 				
 				subject= f"(Easylife) Your Order is Been Verified Successfully !!"
 				html_message = render_to_string('email_for_order_verification_complatete.html', {'order':order_by_user,'shipping':new_shipping_by_user,'request':request})
@@ -292,7 +293,8 @@ def order_review(request,order_id,shipping_id,user_id):
 				to = [user.email,'abhishekgawadeprogrammer@gmail.com']
 				send_email.delay(subject,html_message,plain_message,from_email,to)
 				messages.success(request, f"Order no {order_by_user.id} ORDER PAYMENTS IS DONE and email is successfully send to user")
-			new_shipping_by_user.save()
+
+			
 			form.save()
 			return redirect("easylife_admin:order-review",order_id=order_id, shipping_id=shipping_id,user_id=user_id)
 

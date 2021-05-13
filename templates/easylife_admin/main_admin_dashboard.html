@@ -244,6 +244,7 @@
                     <td>
 
                                 {% if  order.verify_order %}
+                                <p  class="fs-6 text-muted" style="font-size:80%;margin-bottom:0;">{{order.delivered_done_date}}</p>
                                   <button type="button" class="btn btn-success btn-sm px-3">
                                       <i class="far fa-check-circle fa-2x"></i>
                                       </button> 
@@ -257,6 +258,7 @@
                   </td>
                     <td>
                                   {% if  order.delivered %}
+                                  <p  class="fs-6 text-muted" style="font-size:80%;margin-bottom:0;">{{order.verify_done_date}}</p>
                                   <button type="button" class="btn btn-success btn-sm px-3">
                                       <i class="far fa-check-circle fa-2x"></i>
                                       </button> 
@@ -270,6 +272,7 @@
 
                     <td>
                                 {% if  order.payment_done %}
+                                <p  class="fs-6 text-muted" style="font-size:80%;margin-bottom:0;">{{order.payment_done_date}}</p>
                                   <button type="button" class="btn btn-success btn-sm px-3">
                                       <i class="far fa-check-circle fa-2x"></i>
                                       </button> 

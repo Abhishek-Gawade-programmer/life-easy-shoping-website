@@ -144,6 +144,7 @@
                     <!-- Table body -->
                     <tbody>
                       {% for row in shippment_order_user %}
+                      
                 
                       <tr>
                         <td>
@@ -171,8 +172,8 @@
                       </td>
                         <td>
 
-
                                 {% if  row.delivered %}
+                                <p  class="fs-6 text-muted" style="font-size:80%;margin-bottom:0;">{{row.delivered_done_date}}</p>
                                   <button type="button" class="btn btn-success btn-sm px-3">
                                       <i class="far fa-check-circle fa-2x"></i>
                                       </button> 
@@ -180,12 +181,16 @@
                                     <button type="button" class="btn btn-danger btn-sm px-3">
                                       <i class="far fa-times-circle fa-2x"></i>
                                     </button> 
+                                
+
                                 {% endif %}
+
 
                         </td>
                         <td>
 
                           {% if  row.verify_order %}
+                          <p  class="fs-6 text-muted" style="font-size:80%;margin-bottom:0;">{{row.verify_done_date}}</p>
                           <button type="button" class="btn btn-success btn-sm px-3">
                               <i class="far fa-check-circle fa-2x"></i>
                             </button>  
@@ -200,7 +205,8 @@
 
                       </td>
                         <td>
-                                               {% if  row.payment_done %}
+                         {% if  row.payment_done %}
+                         <p  class="fs-6 text-muted" style="font-size:80%;margin-bottom:0;">{{row.payment_done_date}}</p>
                           <button type="button" class="btn btn-success btn-sm px-3">
                               <i class="far fa-check-circle fa-2x"></i>
                             
