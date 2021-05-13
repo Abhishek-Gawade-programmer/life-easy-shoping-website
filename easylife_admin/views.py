@@ -38,14 +38,25 @@ def admin_dashboard(request):
 	#showing all user in table
 	all_shipments = ShippmentOrder.objects.all()
 	last_month = timezone.now() - timedelta(days=30)
-	# filter(my_date__gte=last_month)
+	number_of_order=all_shipments.count()
+
+
+
 	count_user =User.objects.count()-1
-	
+
+
 	total_sales=0
 	verification_left=0
 	payment_left=0
 	delivery_left=0
 	succesfully_orders=0
+
+	last_month_sales=0
+	for shipment_last_month in all_shipments.filter(payment_done_date__gte=last_month):
+		if shipment_last_month.get_order_complete():
+			last_month_sales+=shipment_last_month.order.get_total()
+
+
 
 	for shipment in all_shipments:
 		if shipment.get_order_complete():
@@ -60,14 +71,29 @@ def admin_dashboard(request):
 			delivery_left+=1
 
 
-
-
-
 	return render(request,'easylife_admin/main_admin_dashboard.html',{
 			'all_shipments':all_shipments,
 			'total_sales':total_sales,'count_user':count_user,
 			'verification_left':verification_left,'succesfully_orders':succesfully_orders,
-			'payment_left':payment_left,'delivery_left':delivery_left})
+			'payment_left':payment_left,'delivery_left':delivery_left,
+
+			'last_month_sales':last_month_sales,
+			'last_month_sales_percentage':last_month_sales//total_sales*100,
+			'number_of_order':number_of_order,
+			'verification_pecentage':int((verification_left/number_of_order)*100),
+			'verified_order':number_of_order-verification_left,
+			'payment_done':number_of_order-verification_left,
+			'payment_pecentage':int((payment_left/number_of_order)*100),
+			'delivery_compelted':number_of_order-delivery_left,
+
+			
+
+
+			
+
+
+
+			})
 
 
 
