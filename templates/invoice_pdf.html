@@ -73,6 +73,7 @@
                 <h4 class="h4-responsive"><small>Invoice No.</small><br /><strong><span class="blue-text">#{{order.id}}</span></strong></h4>
 
                 <p><small>To:</small></p>
+                <p>District : {{ order.billing_address.get_city_display}} </p>
                 <p><strong>{{ request.user.get_full_name }}</strong></p>
                 <p>{{ order.billing_address.street_address }}</p>
                 <p>{{ order.billing_address.apartment_address }}</p>

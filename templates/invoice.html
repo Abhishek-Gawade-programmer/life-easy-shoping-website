@@ -87,6 +87,7 @@
 
                 <p><small>To:</small></p>
                 <p><strong>{{ request.user.get_full_name }}</strong></p>
+                <p>District : {{ order.billing_address.get_city_display}} </p>
                 <p>{{ order.billing_address.street_address }} </p>
                 <p>{{ order.billing_address.apartment_address }}</p>
                 <p><strong>Pin Code: {{ order.billing_address.pin_code }}</strong></p>
