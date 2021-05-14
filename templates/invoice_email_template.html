@@ -692,6 +692,7 @@ a[x-apple-data-detectors='true'] {
 
              {{ order.billing_address.street_address }} 
                {{ order.billing_address.apartment_address }}
+               District : {{ order.billing_address.get_city_display}}
                <br>
                <strong>Pin Code: {{ order.billing_address.pin_code }}</strong>
                
