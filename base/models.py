@@ -26,17 +26,17 @@ PAYMENTS_CHOICES =(
 )
 
 MAHARASHTRA_DISTRICTS=(
- "Ahmednagar","Akola","Amravati",
- "Aurangabad","Beed","Bhandara",
- "Buldhana","Chandrapur","Dhule",
- "Gadchiroli","Gondia","Hingoli",
- "Jalgaon","Jalna","Kolhapur",
- "Latur","Mumbai","Nagpur",
- "Nanded","Nandurbar","Nashik",
-"Osmanabad","Parbhani","Pune",
-"Raigad","Ratnagiri","Sangli",
-"Satara","Sindhudurg","Solapur",
-"Thane","Washim","Yavatmal"
+    ('Ah', 'Ahmednagar'), ('Ak', 'Akola'), ('Am', 'Amravati'),
+     ('Au', 'Aurangabad'), ('Be', 'Beed'), ('Bh', 'Bhandara'), 
+     ('Bu', 'Buldhana'), ('Ch', 'Chandrapur'), ('Dh', 'Dhule'),
+      ('Ga', 'Gadchiroli'), ('Go', 'Gondia'), ('Hi', 'Hingoli'),
+       ('Ja', 'Jalgaon'), ('Ja', 'Jalna'), ('Ko', 'Kolhapur'),
+        ('La', 'Latur'), ('Mu', 'Mumbai'), ('Ng', 'Nagpur'),
+         ('Na', 'Nanded'), ('Na', 'Nandurbar'), ('Ns', 'Nashik'), 
+         ('Os', 'Osmanabad'), ('Pa', 'Parbhani'), ('Pu', 'Pune'), 
+         ('Ra', 'Raigad'), ('Rt', 'Ratnagiri'), ('Sa', 'Sangli'),
+          ('St', 'Satara'), ('Si', 'Sindhudurg'), ('So', 'Solapur'), 
+          ('Th', 'Thane'), ('Wa', 'Washim'), ('Ya', 'Yavatmal')
 )
 
 
@@ -173,7 +173,7 @@ class Order(models.Model):
 
 class BillingAddress(models.Model):
     user=models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
-    city=models.CharField(max_length=20)
+    city=models.CharField(choices=MAHARASHTRA_DISTRICTS,max_length=2,default='Mu')
     phone_number=models.CharField(max_length=20)
     street_address=models.CharField(max_length=250)
     apartment_address=models.CharField(max_length=250)
