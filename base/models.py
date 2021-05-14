@@ -25,6 +25,21 @@ PAYMENTS_CHOICES =(
 
 )
 
+MAHARASHTRA_DISTRICTS=(
+ "Ahmednagar","Akola","Amravati",
+ "Aurangabad","Beed","Bhandara",
+ "Buldhana","Chandrapur","Dhule",
+ "Gadchiroli","Gondia","Hingoli",
+ "Jalgaon","Jalna","Kolhapur",
+ "Latur","Mumbai","Nagpur",
+ "Nanded","Nandurbar","Nashik",
+"Osmanabad","Parbhani","Pune",
+"Raigad","Ratnagiri","Sangli",
+"Satara","Sindhudurg","Solapur",
+"Thane","Washim","Yavatmal"
+)
+
+
 
 
 class Item(models.Model):
