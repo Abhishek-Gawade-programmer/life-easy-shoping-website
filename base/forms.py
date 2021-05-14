@@ -11,7 +11,6 @@ PAYMENTS_CHOICES =(
 
 )
 from .models import MAHARASHTRA_DISTRICTS
-print(MAHARASHTRA_DISTRICTS)
 
 class CheckoutForm(forms.Form):
     city = forms.CharField(initial='Mu',max_length=20,widget=forms.Select(choices=MAHARASHTRA_DISTRICTS,attrs={'id':"email",'class':"form-control",'placeholder':"City or District Near"}))

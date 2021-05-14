@@ -69,6 +69,8 @@ def admin_dashboard(request):
 			payment_left+=1
 		if not shipment.delivered:
 			delivery_left+=1
+		
+	total_sales=total_sales or 1
 
 
 	return render(request,'easylife_admin/main_admin_dashboard.html',{

@@ -233,7 +233,9 @@
 
                     <td>
 
-                      <a href='{% url 'easylife_admin:user_details' user.pk %}' style="color:white">
+      
+
+                      <a href='{% url 'easylife_admin:order-review' order.order.id order.id user.id %}' style="color:white">
                             <button type="button" class="btn btn-purple btn-sm px-3">
                               <b style="font-size:170%">#{{ order.id }}</b>
                             </button>
