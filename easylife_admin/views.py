@@ -85,6 +85,9 @@ def admin_dashboard(request):
 			'payment_done':number_of_order-verification_left,
 			'payment_pecentage':int((payment_left/number_of_order)*100),
 			'delivery_compelted':number_of_order-delivery_left,
+			'delivery_compelted_percentage':((number_of_order-delivery_left)/number_of_order)*100,
+			'orders_left': number_of_order- succesfully_orders,
+			'orders_left_percentage':((number_of_order- succesfully_orders)/number_of_order)*100,
 
 			
 

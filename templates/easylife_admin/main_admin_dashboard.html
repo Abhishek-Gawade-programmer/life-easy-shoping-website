@@ -155,7 +155,7 @@
               <!-- Card content -->
               <div class="card-body card-body-cascade">
                 <div class="progress mb-3">
-                  <div class="progress-bar bg-primary" role="progressbar" style="width: 25%" aria-valuenow="25"
+                  <div class="progress-bar bg-primary" role="progressbar" style="width: {{delivery_compelted_percentage}}%" aria-valuenow="{{delivery_compelted_percentage}}"
                     aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
                 <p class="card-text">Completed Order {{delivery_compelted}}</p>
@@ -184,10 +184,10 @@
               <!-- Card content -->
               <div class="card-body card-body-cascade">
                 <div class="progress mb-3">
-                  <div class="progress-bar bg-primary" role="progressbar" style="width: 25%" aria-valuenow="25"
+                  <div class="progress-bar bg-primary" role="progressbar" style="width: {{orders_left_percentage}}%" aria-valuenow="{{orders_left_percentage}}"
                     aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
-                <p class="card-text">Better than last week (25%)</p>
+                <p class="card-text">Orders Left ({{orders_left}})</p>
               </div>
 
             </div>
@@ -234,7 +234,7 @@
                     <td>
 
                       <a href='{% url 'easylife_admin:user_details' user.pk %}' style="color:white">
-                            <button type="button" class="btn btn-danger btn-sm px-3">
+                            <button type="button" class="btn btn-purple btn-sm px-3">
                               <b style="font-size:170%">#{{ order.id }}</b>
                             </button>
                       </a>
