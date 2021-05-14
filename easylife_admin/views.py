@@ -25,7 +25,7 @@ from django.utils.html import strip_tags
 #TIME
 from django.utils import timezone
 
-from base.models import Order
+from base.models import Order,MAHARASHTRA_DISTRICTS
 
 from datetime import datetime, timedelta
 
@@ -41,6 +41,10 @@ def admin_dashboard(request):
 	number_of_order=all_shipments.count()
 
 
+	orders_by_district = []
+
+	for short_district_name in MAHARASHTRA_DISTRICTS:
+		orders_by_district.append(all_shipments.filter(order__billing_address__city=short_district_name[0]).count())
 
 	count_user =User.objects.count()-1
 
@@ -90,6 +94,7 @@ def admin_dashboard(request):
 			'delivery_compelted_percentage':((number_of_order-delivery_left)/number_of_order)*100,
 			'orders_left': number_of_order- succesfully_orders,
 			'orders_left_percentage':((number_of_order- succesfully_orders)/number_of_order)*100,
+			'orders_by_district':orders_by_district
 
 			
 

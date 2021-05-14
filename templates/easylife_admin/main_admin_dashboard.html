@@ -329,7 +329,7 @@
 
           <div class="card">
                                   <div class="card-header white-text purple">
-                <h5 class="font-weight-500 my-1">Other Taxes Details</h5>
+                <h5 class="font-weight-500 my-1">Numbers of Orders Placed With Wespect To District</h5>
               </div>
 
 
@@ -360,7 +360,7 @@ var myChart = new Chart(ctx, {
         labels: ['Ahmednagar','Akola','Amravati','Aurangabad','Beed','Bhandara','Buldhana','Chandrapur','Dhule','Gadchiroli','Gondia','Hingoli','Jalgaon','Jalna','Kolhapur','Latur','Mumbai','Nagpur','Nanded','Nandurbar','Nashik','Osmanabad','Parbhani','Pune','Raigad','Ratnagiri','Sangli','Satara','Sindhudurg','Solapur','Thane','Washim'],
         datasets: [{
             label: '# of Quantity Sold',
-            data: [43,2,0,0,0],
+            data: {{orders_by_district}},
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
                 'rgba(54, 162, 235, 0.2)',
