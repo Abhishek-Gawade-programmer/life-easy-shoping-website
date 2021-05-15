@@ -28,4 +28,3 @@ virtualenv life_easy_env && source life_easy_env/bin/activate && python manage.p
 
 '''
 
-
