@@ -38,9 +38,34 @@ def admin_dashboard(request):
 	#showing all user in table
 	all_shipments = ShippmentOrder.objects.all()
 	last_month = timezone.now() - timedelta(days=30)
+	now_date=timezone.now()
+
+	list_months=[i for i in range(1,13)]
+
+	this_year_sale=[]
+	last_year_sale=[]
+	for month_number in list_months:
+		this_year_sale.append(
+						all_shipments.filter(
+							payment_done_date__month=month_number,
+							payment_done_date__year=now_date.year,
+
+				).count())
+
+		last_year_sale.append(
+						all_shipments.filter(
+							payment_done_date__month=month_number,
+							payment_done_date__year=now_date.year-1,
+
+				).count())
+		
+		
+
+
+	print(this_year_sale,last_year_sale)
+
+
 	number_of_order=all_shipments.count()
-
-
 	orders_by_district = []
 
 	for short_district_name in MAHARASHTRA_DISTRICTS:
@@ -94,7 +119,8 @@ def admin_dashboard(request):
 			'delivery_compelted_percentage':((number_of_order-delivery_left)/number_of_order)*100,
 			'orders_left': number_of_order- succesfully_orders,
 			'orders_left_percentage':((number_of_order- succesfully_orders)/number_of_order)*100,
-			'orders_by_district':orders_by_district
+			'orders_by_district':orders_by_district,
+			'this_year_sale':this_year_sale,'last_year_sale':last_year_sale
 
 			
 
