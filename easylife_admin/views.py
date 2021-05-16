@@ -21,7 +21,6 @@ from django.conf import settings
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 
-
 #TIME
 from django.utils import timezone
 
@@ -29,7 +28,8 @@ from base.models import Order,MAHARASHTRA_DISTRICTS
 
 from datetime import datetime, timedelta
 
-
+#EMAIL SETINGS
+from_email = settings.EMAIL_HOST_USER
 
 def admin_dashboard(request):
 
@@ -203,6 +203,45 @@ def ItemCreateView(request):
 
 			#saving the item and redirecting to deatil page
 			new_item.save()
+			
+			subject= f"(Easylife) New Product is Released Buy It Now !!!"
+			html_message = render_to_string('email_for_new_products.html', {'new_item':new_item})
+			plain_message = strip_tags(html_message)
+			to = [ user.email for user in User.objects.all()]
+			
+			send_email.delay(subject,html_message,plain_message,from_email,to)
+			messages.error(request, f"To All Users is send For New Product Released !!!!")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 			return redirect("easylife_admin:itemdetailsview",pk=new_item.id) 
 		else:
 			return render(request,'easylife_admin/create_new_item.html',{'form':form})
@@ -341,7 +380,7 @@ def order_review(request,order_id,shipping_id,user_id):
 				subject= f"(Easylife) Your Order is Been Verified Successfully !!"
 				html_message = render_to_string('email_for_order_verification_complatete.html', {'order':order_by_user,'shipping':new_shipping_by_user,'request':request})
 				plain_message = strip_tags(html_message)
-				from_email = settings.EMAIL_HOST_USER
+				
 				to = [user.email,'abhishekgawadeprogrammer@gmail.com']
 				send_email.delay(subject,html_message,plain_message,from_email,to)
 				messages.success(request, f"Order no {order_by_user.id} VERIFICATION IS DONE AND EMAIL IS SEND TO USER WAITING FOR STARTING DELIVERY")
@@ -351,7 +390,7 @@ def order_review(request,order_id,shipping_id,user_id):
 				subject= f"(Easylife) Your Order delivery ha been started Your product will delivered Soon !!"
 				html_message = render_to_string('email_for_order_dealivary_done.html', {'order':order_by_user,'shipping':new_shipping_by_user,'request':request})
 				plain_message = strip_tags(html_message)
-				from_email = settings.EMAIL_HOST_USER
+
 				to = [user.email,'abhishekgawadeprogrammer@gmail.com']
 				send_email.delay(subject,html_message,plain_message,from_email,to)
 				messages.success(request, f"Order no {order_by_user.id} DELIVERY STARTED  AND EMAIL IS SEND TO USER WAITING FOR STARTING PAYMENT DONE")
@@ -361,7 +400,6 @@ def order_review(request,order_id,shipping_id,user_id):
 				subject= f"(Easylife) Your Order Payment is Done So Enjoy Your Product Thanks"
 				html_message = render_to_string('email_for_order_payment_done.html', {'order':order_by_user,'shipping':new_shipping_by_user,'request':request})
 				plain_message = strip_tags(html_message)
-				from_email = settings.EMAIL_HOST_USER
 				to = [user.email,'abhishekgawadeprogrammer@gmail.com']
 				send_email.delay(subject,html_message,plain_message,from_email,to)
 				messages.success(request, f"Order no {order_by_user.id} ORDER PAYMENTS IS DONE and email is successfully send to user")
