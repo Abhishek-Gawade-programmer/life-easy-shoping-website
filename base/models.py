@@ -90,7 +90,8 @@ class Item(models.Model):
 
     def get_no_of_items(self):
         total_quantity =0
-        for order in  Order.objects.filter(ordered=True):
+        for order in  ShippmentOrder.objects.filter(payment_done=True):
+            order=order.order
             for order_item in order.items.all():
                 if order_item.item == self:
                     total_quantity+= order_item.qauntity

@@ -62,7 +62,6 @@ def admin_dashboard(request):
 		
 
 
-	print(this_year_sale,last_year_sale)
 
 
 	number_of_order=all_shipments.count()
@@ -72,6 +71,16 @@ def admin_dashboard(request):
 		orders_by_district.append(all_shipments.filter(order__billing_address__city=short_district_name[0]).count())
 
 	count_user =User.objects.count()-1
+
+
+	#item ordered
+	all_item=Item.objects.all()
+	name_items=[]
+	items_quantity=[]
+	for item in all_item:
+		if item.get_no_of_items() != 0 :
+			name_items.append(item.title[:10]+f'({item.id})')
+			items_quantity.append(item.get_no_of_items())
 
 
 	total_sales=0
@@ -120,7 +129,8 @@ def admin_dashboard(request):
 			'orders_left': number_of_order- succesfully_orders,
 			'orders_left_percentage':((number_of_order- succesfully_orders)/number_of_order)*100,
 			'orders_by_district':orders_by_district,
-			'this_year_sale':this_year_sale,'last_year_sale':last_year_sale
+			'this_year_sale':this_year_sale,'last_year_sale':last_year_sale, 
+			'name_items':name_items, 'items_quantity':items_quantity
 
 			
 
