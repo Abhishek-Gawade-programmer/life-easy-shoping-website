@@ -96,6 +96,15 @@ class Item(models.Model):
                 if order_item.item == self:
                     total_quantity+= order_item.qauntity
         return total_quantity
+
+    def get_no_of_items_of_that_month(self,month,year):
+        total_quantity =0
+        for order in  ShippmentOrder.objects.filter(payment_done=True,payment_done_date__month=month,payment_done_date__year=year):
+            order=order.order
+            for order_item in order.items.all():
+                if order_item.item == self:
+                    total_quantity+= order_item.qauntity
+        return total_quantity
         
 
     def get_no_of_users_buy(self):
@@ -135,18 +144,6 @@ class OrderItem(models.Model):
         if self.item.discount_price:
             return self.get_total_discount_price()
         return self.get_total_item_price()
-
-
-    
-
-
-
-    def get_final_price(self):
-        if self.item.discount_price:
-            return self.get_total_discount_price()
-        return self.get_total_item_price()
-
-
 
 
 class Order(models.Model):

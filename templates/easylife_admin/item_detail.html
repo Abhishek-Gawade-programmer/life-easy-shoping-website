@@ -170,8 +170,13 @@
 
           <div class="card mb-lg-0 mb-2">
 
-              <div class="card-header white-text secondary-color">
-                <h5 class="font-weight-500 my-1">Quantity Sold</h5>
+              <div class="card-header white-text purple">
+                <h5 class="font-weight-500 my-1">Quantity Sold
+                           <div class="btn-group float-right">
+                            <a  class="btn  btn-sm btn-success active" onclick="data_of_this_year()">2021</a>
+                            <a  class="btn btn-sm btn-success" onclick="data_of_last_year()">2020</a>
+                      </div
+                </h5>
               </div>
 
               <div class="card-body">
@@ -258,7 +263,7 @@ var myChart = new Chart(ctx, {
         labels: ['Jan', 'Feb', 'Mar', 'April', 'June', 'Juily','Aug','Sept','Oct','Nov','Dec'],
         datasets: [{
             label: '# of Quantity Sold',
-            data: {{list_count_month}},
+            data: {{this_year_item_sale|safe}},
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
                 'rgba(54, 162, 235, 0.2)',
@@ -320,6 +325,33 @@ var myChart = new Chart(ctx, {
         }
     }
 });
+
+
+function data_of_this_year() {
+  myChart.data.datasets[0].data={{this_year_item_sale|safe}};
+  myChart.update();
+
+};
+
+function data_of_last_year() {
+  myChart.data.datasets[0].data={{last_year_item_sale|safe}};
+  myChart.update();
+
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </script>
 
         <!-- Central Modal Fluid Success -->

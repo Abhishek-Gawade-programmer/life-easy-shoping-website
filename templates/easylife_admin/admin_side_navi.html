@@ -13,32 +13,26 @@
         <!-- Search Form -->
         <!-- Side navigation links -->
         <li>
-          <ul class="collapsible collapsible-accordion">
+          <ul class="collapsible collapsible-accordion"  >
 
 
             <!-- Simple link -->
             <li>
-              <a href="{% url "easylife_admin:all_items" %}" class="collapsible-header waves-effect"><i
-                  class="w-fa far fa-bell"></i>All Items</a>
+              <a href="../calendar/calendar.html" class="collapsible-header waves-effect"><i class="fas fa-home"></i>Home</a>
             </li>
             <li>
-              <a href="{% url "easylife_admin:add_items" %}" class="collapsible-header waves-effect"><i
-                  class="w-fa fas fa-bolt"></i>Add item</a>
+              <a href="{% url "easylife_admin:all_items" %}" class="collapsible-header waves-effect"><i class="fas fa-align-justify"></i>All Items</a>
             </li>
             <li>
-              <a href="{% url "easylife_admin:all_user_details" %}" class="collapsible-header waves-effect"><i
-                  class="w-fa fas fa-chart-pie"></i>All Users</a>
+              <a href="{% url "easylife_admin:add_items" %}" class="collapsible-header waves-effect">
+              <i class="fas fa-plus"></i>Add item</a>
             </li>
             <li>
-              <a href="../calendar/calendar.html" class="collapsible-header waves-effect"><i
-                  class="w-fa far fa-calendar-check"></i>Calendar</a>
-            </li>
-            <li>
-              <a href="../sections/sections.html" class="collapsible-header waves-effect"><i
-                  class="w-fa fas fa-th-large"></i>Sections</a>
+              <a href="{% url "easylife_admin:all_user_details" %}" class="collapsible-header waves-effect"><i class="fas fa-user"></i>All Users</a>
             </li>
 
           </ul>
+
         </li>
         <!-- Side navigation links -->
 

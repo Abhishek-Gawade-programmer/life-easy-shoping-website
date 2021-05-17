@@ -44,6 +44,7 @@ def admin_dashboard(request):
 
 	this_year_sale=[]
 	last_year_sale=[]
+
 	for month_number in list_months:
 		this_year_sale.append(
 						all_shipments.filter(
@@ -78,10 +79,10 @@ def admin_dashboard(request):
 	name_items=[]
 	items_quantity=[]
 	for item in all_item:
+
 		if item.get_no_of_items() != 0 :
 			name_items.append(item.title[:10]+f'({item.id})')
 			items_quantity.append(item.get_no_of_items())
-
 
 	total_sales=0
 	verification_left=0
@@ -213,35 +214,6 @@ def ItemCreateView(request):
 			messages.error(request, f"To All Users is send For New Product Released !!!!")
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 			return redirect("easylife_admin:itemdetailsview",pk=new_item.id) 
 		else:
 			return render(request,'easylife_admin/create_new_item.html',{'form':form})
@@ -315,6 +287,20 @@ def item_details(request,pk):
 	item=get_object_or_404(Item,pk=pk)
 	all_orders=Order.objects.filter(ordered=True)
 	total_money=0
+	now_date=timezone.now()
+	list_months=[i for i in range(1,13)]
+
+
+	this_year_item_sale=[]
+	last_year_item_sale=[]
+	for month_number in list_months: 
+		this_year_item_sale.append(
+				item.get_no_of_items_of_that_month(month_number,now_date.year))
+
+		last_year_item_sale.append(
+				item.get_no_of_items_of_that_month(month_number,now_date.year-1)
+				)
+
 
 	for order in  all_orders:
 		total_money+=order.get_total()
@@ -327,7 +313,6 @@ def item_details(request,pk):
 	else:
 		earn_from_item=item.get_no_of_items()*item.price
 
-	list_count_month=[34,56,12,65,23,45,35,78,34,34,23]
 
 
 	messages_item=Comment.objects.filter(product=item)[::-1]
@@ -351,8 +336,9 @@ def item_details(request,pk):
 		'user_purchased':item.get_no_of_users_buy(),
 		'avrage_rating':round(sum(rate_list)/(len(rate_list) or 1),2),
 		'avrage_rating_percentage':  round(((sum(rate_list)/ (len(rate_list) or 1))/5)*100,2),
-		'list_count_month':list_count_month,
-		'required_items':required_items
+		'required_items':required_items,
+		'this_year_item_sale':this_year_item_sale, 
+		'last_year_item_sale':last_year_item_sale
 
 		})
 
@@ -411,8 +397,8 @@ def order_review(request,order_id,shipping_id,user_id):
 
 	return render(request,'easylife_admin/order_review.html',{'order':order_by_user,'shipping':new_shipping_by_user,
 																'user':user,'item_available':item_available,
-																'order_verification_form':form})
-
+																'order_verification_form':form,
+																})
 
 
 

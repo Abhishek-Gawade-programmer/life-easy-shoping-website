@@ -38,7 +38,7 @@
 
                   <h5 class="font-weight-bold blue-text">₹{% if item.discount_price %} {{item.discount_price }} {% else %} {{item.price}}{% endif %}</h5>
 
-                  <p class="card-text">{{ item.description|truncatechars:100 }}
+                  <p class="card-text">{{ item.description|striptags|safe|truncatechars:100 }}
                   </p>
 
        
