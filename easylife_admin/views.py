@@ -28,9 +28,41 @@ from base.models import Order,MAHARASHTRA_DISTRICTS
 
 from datetime import datetime, timedelta
 
+#LOGIN VIEWS
+
+
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+
+
+
+
+
 #EMAIL SETINGS
 from_email = settings.EMAIL_HOST_USER
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@login_required
 def admin_dashboard(request):
 
 
@@ -133,24 +165,11 @@ def admin_dashboard(request):
 			'this_year_sale':this_year_sale,'last_year_sale':last_year_sale, 
 			'name_items':name_items, 'items_quantity':items_quantity
 
-			
-
-
-			
-
-
 
 			})
 
 
-
-
-
-
-
-
-
-class All_product_list(ListView):
+class All_product_list(LoginRequiredMixin,ListView):
 	#taking all products
     model = Item
     context_object_name = 'items'
@@ -160,7 +179,7 @@ class All_product_list(ListView):
 
 
 
-
+@login_required
 def ItemCreateView(request):
 	#form sumbitted by user
 	if request.method == 'POST':
@@ -223,7 +242,7 @@ def ItemCreateView(request):
 		form=CreateNewItemForm()
 		return render(request,'easylife_admin/create_new_item.html',{'form':form})
 
-
+@login_required
 def all_user_details(request):
 	#showing all user in table
 	all_user =User.objects.all()
@@ -233,7 +252,7 @@ def all_user_details(request):
 	return render(request,'easylife_admin/all_user_list.html',{'all_user':all_user})
 
 
-
+@login_required
 def user_details(request,pk):
 	#user deatils view
 
@@ -261,7 +280,7 @@ def user_details(request,pk):
 
 
 
-
+@login_required
 def itemupdateview(request,pk,order_id=None,shipping_id=None,user_id=None):
 	obj = get_object_or_404(Item, id = pk)
 	#using ItemUpdateFrom form for updating the item
@@ -281,7 +300,7 @@ def itemupdateview(request,pk,order_id=None,shipping_id=None,user_id=None):
 	else:
 		return render(request,'easylife_admin/item_update.html',{'form':form,'object':obj})	
 
-
+@login_required
 def item_details(request,pk):
 	
 	item=get_object_or_404(Item,pk=pk)
@@ -341,7 +360,7 @@ def item_details(request,pk):
 		'last_year_item_sale':last_year_item_sale
 
 		})
-
+@login_required
 def order_review(request,order_id,shipping_id,user_id):
 	user=get_object_or_404(User,pk=user_id)
 	order_by_user=get_object_or_404(Order,id=order_id,user=user)

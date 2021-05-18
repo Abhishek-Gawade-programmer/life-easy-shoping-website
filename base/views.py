@@ -52,10 +52,15 @@ from .forms import CheckoutForm
 
 
 
-class HomeNameList(ListView):
-    model = Item
-    context_object_name = 'items'
-    template_name='home.html'
+def HomeNameList(request):
+    items=Item.objects.all()
+    if request.user.is_authenticated:
+        if request.user.groups.filter(name='admin').exists():
+            return redirect("easylife_admin:admin_dashboard")
+
+        return render(request,'home.html',{'items':items})
+
+    return render(request,'home.html',{'items':items})
 
 
 class OrderSummaryView(LoginRequiredMixin,View):
@@ -72,7 +77,7 @@ class OrderSummaryView(LoginRequiredMixin,View):
 
 
             messages.error(self.request,f" { self.request.user.username } Don't have Any Item in The Cart")
-            return redirect("/")
+            return redirect("base:item-list")
 
 
 

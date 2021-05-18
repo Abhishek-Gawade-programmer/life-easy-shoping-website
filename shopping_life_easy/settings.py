@@ -189,7 +189,7 @@ ACCOUNT_FORMS = {
 SITE_ID = 1
 DEFAULT_AUTO_FIELD='django.db.models.AutoField' 
 
-LOGIN_REDIRECT_URL="/"
+LOGIN_REDIRECT_URL="base:item-list"
 
 
 #REDIS SERVER SETING

@@ -38,7 +38,7 @@ urlpatterns = [
 
     
     # path('payment/<payment_option>/',PaymentView.as_view(),name ='payment'),
-    path('',HomeNameList.as_view(),name ='item-list'),
+    path('',HomeNameList,name ='item-list'),
     
 
     
