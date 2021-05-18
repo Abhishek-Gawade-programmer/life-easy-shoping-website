@@ -11,7 +11,7 @@ from .forms import CreateNewItemForm,ItemUpdateFrom,OrderVerificationForm
 
 from django.contrib.auth.models import User
 
-
+from django.http import HttpResponse
 #CELERY TASKS
 from base.tasks import send_email
 
@@ -42,20 +42,15 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from_email = settings.EMAIL_HOST_USER
 
 
+def not_allow_coustomer(view_func):
+	def wrapper_func(request,*args, **kwargs):
+		if request.user.is_authenticated:
+		    if request.user.groups.filter(name='admin').exists():
+		        return view_func(request,*args, **kwargs)
+		    else:
+		    	return HttpResponse('You are not admin ')
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+	return wrapper_func
 
 
 
@@ -63,6 +58,7 @@ from_email = settings.EMAIL_HOST_USER
 
 
 @login_required
+@not_allow_coustomer
 def admin_dashboard(request):
 
 
@@ -180,6 +176,7 @@ class All_product_list(LoginRequiredMixin,ListView):
 
 
 @login_required
+@not_allow_coustomer
 def ItemCreateView(request):
 	#form sumbitted by user
 	if request.method == 'POST':
@@ -243,6 +240,7 @@ def ItemCreateView(request):
 		return render(request,'easylife_admin/create_new_item.html',{'form':form})
 
 @login_required
+@not_allow_coustomer
 def all_user_details(request):
 	#showing all user in table
 	all_user =User.objects.all()
@@ -253,6 +251,7 @@ def all_user_details(request):
 
 
 @login_required
+@not_allow_coustomer
 def user_details(request,pk):
 	#user deatils view
 
@@ -281,6 +280,7 @@ def user_details(request,pk):
 
 
 @login_required
+@not_allow_coustomer
 def itemupdateview(request,pk,order_id=None,shipping_id=None,user_id=None):
 	obj = get_object_or_404(Item, id = pk)
 	#using ItemUpdateFrom form for updating the item
@@ -301,6 +301,7 @@ def itemupdateview(request,pk,order_id=None,shipping_id=None,user_id=None):
 		return render(request,'easylife_admin/item_update.html',{'form':form,'object':obj})	
 
 @login_required
+@not_allow_coustomer
 def item_details(request,pk):
 	
 	item=get_object_or_404(Item,pk=pk)
@@ -361,6 +362,7 @@ def item_details(request,pk):
 
 		})
 @login_required
+@not_allow_coustomer
 def order_review(request,order_id,shipping_id,user_id):
 	user=get_object_or_404(User,pk=user_id)
 	order_by_user=get_object_or_404(Order,id=order_id,user=user)
