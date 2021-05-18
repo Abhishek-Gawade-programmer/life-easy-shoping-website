@@ -54,9 +54,6 @@ def not_allow_coustomer(view_func):
 
 
 
-
-
-
 @login_required
 @not_allow_coustomer
 def admin_dashboard(request):
@@ -165,11 +162,12 @@ def admin_dashboard(request):
 			})
 
 
-class All_product_list(LoginRequiredMixin,ListView):
+@login_required
+@not_allow_coustomer
+def All_product_list(request):
 	#taking all products
-    model = Item
-    context_object_name = 'items'
-    template_name='easylife_admin/all_items.html'
+    items=Item.objects.all()
+    return render(request,'easylife_admin/all_items.html',{'items':items})
 
 
 

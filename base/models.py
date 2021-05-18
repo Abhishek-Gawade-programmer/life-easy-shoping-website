@@ -3,6 +3,16 @@ from django.conf import settings
 from  django.shortcuts import reverse
 from django.core.validators import MaxValueValidator,MinValueValidator
 from django.utils.text import slugify
+from allauth.account.signals import user_signed_up
+from django.contrib.auth import get_user_model
+
+#User Groups
+from django.contrib.auth.models import Group
+
+def add_user_to_group(request, user,**kwargs):
+    user.groups.add(Group.objects.get(name='customers'))
+    
+user_signed_up.connect(add_user_to_group,sender=get_user_model())
 
 
 CATEGORY_CHOICES=(
