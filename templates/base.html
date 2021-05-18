@@ -7,7 +7,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <title>Easy Lif || {% block head_title %}{% endblock %}</title>
+  <title>EasLife.com  || {% block head_title %}{% endblock %}</title>
     {% block extra_head %}
     {% endblock %}
   <!-- Font Awesome -->
@@ -56,6 +56,24 @@
   </style>
 </head>
 <body >
+
+  <!-- Initializations -->
+  <script type="text/javascript">
+    // Animations initialization
+    new WOW().init();
+
+  </script>
+
+    {% include "navi.html" %}
+    <div>
+        {% block content  %}
+      {% endblock content %}
+    </div>
+
+    {% include "footer.html" %}
+
+    
+
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
@@ -69,27 +87,6 @@
   <!-- MDB core JavaScript -->
   <script type="text/javascript" src="{% static 'js/mdb.min.js' %}"></script>
   
-  <!-- Initializations -->
-  <script type="text/javascript">
-    // Animations initialization
-    new WOW().init();
-
-  </script>
-
-    {% include "navi.html" %}
-    <div class="">
-        {% block content  %}
-      {% endblock content %}
-    </div>
-
-    {% include "footer.html" %}
-
-    
-
-
-  <!-- SCRIPTS -->
-  <!-- JQuery -->
-
 
 
 

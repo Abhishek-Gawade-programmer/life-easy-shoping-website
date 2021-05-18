@@ -1,17 +1,13 @@
 {% load static %}
 {% load cart_template_tags %}
 
-  <!-- Navbar -->
+
   <nav class="navbar fixed-top navbar-expand-lg navbar-light white scrolling-navbar">
     <div class="container">
 
-      <!-- Brand -->
-      
-
-
-      <a class="navbar-brand waves-effect" href="/" >
+       <a class="navbar-brand waves-effect" href="{% url "base:item-list" %}" >
         <img src="{% static 'logo.png' %}" width="50" height="50">
-        <strong class="blue-text" style='font-family: "Kaushan Script", cursive !important;'>EaseLife</strong>
+        <strong class="blue-text" style='font-family: "Kaushan Script", cursive !important;'> EaseLife</strong>
       </a>
 
       <!-- Collapse -->
@@ -25,83 +21,70 @@
 
         <!-- Left -->
         <ul class="navbar-nav mr-auto">
-                              <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle waves-effect" href="#" id="userDropdown" data-toggle="dropdown"
-              aria-haspopup="true" aria-expanded="false">
-              <i class="fas fa-user"></i> <span class="clearfix d-none d-sm-inline-block">Profile</span>
+          <li class="nav-item">
+            <a class="nav-link waves-effect red-text" href="{% url "base:item-list" %}"><b>Home</b>
+              <span class="sr-only">(current)</span>
             </a>
-            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-              <a class="dropdown-item" href="#">Log Out</a>
-              <a class="dropdown-item" href="#">My account</a>
-            </div>
           </li>
-
+          <li class="nav-item">
+            <a class="nav-link waves-effect purple-text" href="{% url "base:item-list" %}" >
+              <b>
+            Contact Us</b></a>
+          </li>
         </ul>
 
         <!-- Right -->
-
-
-
-        {% if request.user.is_authenticated %}
         <ul class="navbar-nav nav-flex-icons">
-          <li class="nav-item">
-            <a class="nav-link waves-effect" href="{% url 'base:order-summary'  %}">
-              <span class="badge red z-depth-1 mr-1"> {{ request.user|cart_item_count }} </span>
-              <i class="fas fa-shopping-cart"></i>
-              <span class="clearfix d-none d-sm-inline-block"> Cart </span>
-            </a>
-          </li>
-          </ul>
-          
 
-          <ul class="navbar-nav nav-flex-icons">
-                    <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle waves-effect" href="#" id="userDropdown" data-toggle="dropdown"
-              aria-haspopup="true" aria-expanded="false">
-              <i class="fas fa-user"></i> <span class="clearfix d-none d-sm-inline-block">Profile</span>
-            </a>
-            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-              <a class="dropdown-item" href="#">Log Out</a>
-              <a class="dropdown-item" href="#">My account</a>
-            </div>
-          </li>
-            <li class="nav-item">
-            <a class="nav-link waves-effect" href="{% url 'account_logout' %}">
-              <span class="clearfix d-none d-sm-inline-block"> LogOut </span>
-            </a>
-          </li>
-          </ul>
+          {% if request.user.is_authenticated %}
 
-        {% else %}
-          <ul class="navbar-nav nav-flex-icons">
-          <li class="nav-item">
-            <a class="nav-link waves-effect" href="{% url 'account_login' %}">
-              <span class="clearfix d-none d-sm-inline-block"> Login </span>
-            </a>
-          </li>
-          </ul>
-
-        <ul class="navbar-nav nav-flex-icons">
-          <li class="nav-item">
-            <a class="nav-link waves-effect" href="{% url 'account_signup' %}">
-              <span class="clearfix d-none d-sm-inline-block"> Signup </span>
-            </a>
-          </li>
-          </ul>
-          {% endif %}
+                  <li class="nav-item">
+                    <a class="nav-link waves-effect" href="{% url 'base:order-summary'  %}">
+                      <span class="badge red z-depth-1 mr-1"> {{ request.user|cart_item_count }} </span>
+                      <i class="fas fa-shopping-cart"></i>
+                      <span class="clearfix d-none d-sm-inline-block"> Cart </span>
+                    </a>
+                  </li>
+                   <li class="nav-item">
+                    <a href="{% url 'account_logout' %}" class="nav-link waves-effect btn btn-danger btn-sm white-text">
+                      <i class="fas fa-sign-out-alt"></i>
+                      <b>LogOut</b>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="{% url 'account_logout' %}" class="nav-link waves-effect btn btn-info btn-sm white-text">
+                      <i class="fas fa-file-invoice"></i>
+                      <b>Invoices</b>
+                    </a>
+                  </li>
 
 
+            {% else %}
+                 <li class="nav-item">
+                    <a href="{% url 'account_signup' %}" class="nav-link waves-effect btn btn-danger btn-sm white-text">
+                      <i class="fas fa-user-plus"></i>
+                      <b>Signup</b>
+                    </a>
+                  </li>
 
-        
+                  <li class="nav-item">
+                    <a href="{% url 'account_login' %}" class="nav-link waves-effect btn btn-success btn-sm white-text">
+                      <i class="fas fa-sign-in-alt"></i>
+                      <b>Login</b>
+                    </a>
+                 
+
+
+            {% endif %}
+
+
+        </ul>
 
       </div>
 
     </div>
   </nav>
 
-
-    </div>
-  </nav>
 
     <div style='margin-top:100px'>
     {% if messages %}

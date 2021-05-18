@@ -85,7 +85,7 @@ class OrderSummaryView(LoginRequiredMixin,View):
 
 
 def item_detail_view(request,slug):
-    item=Item.objects.get(slug=slug)
+    item=get_object_or_404(Item,slug=slug)
     messages_item=Comment.objects.filter(product=item)[::-1]
 
     #add some different logic
@@ -239,7 +239,7 @@ class check_out(LoginRequiredMixin,View):
                 return redirect("base:success",pk=order.id)
 
             #error in validation of from
-            messages.warning(self.request,f'⚠️  Failed to checkout')
+            messages.warning(self.request,f'⚠️  Failed to checkout {form.errors}')
             
             return redirect("base:check-out")
 
