@@ -7,7 +7,15 @@
 
        <a class="navbar-brand waves-effect" href="{% url "base:item-list" %}" >
         <img src="{% static 'logo.png' %}" width="50" height="50">
-        <strong class="blue-text" style='font-family: "Kaushan Script", cursive !important;'> EaseLife</strong>
+        <strong class="blue-text" style='font-family: "Kaushan Script", cursive !important;'> EaseLife
+
+
+
+
+
+
+
+        </strong>
       </a>
 
       <!-- Collapse -->
@@ -20,23 +28,37 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
         <!-- Left -->
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item">
-            <a class="nav-link waves-effect red-text" href="{% url "base:item-list" %}"><b>Home</b>
-              <span class="sr-only">(current)</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link waves-effect purple-text" href="{% url "base:item-list" %}" >
-              <b>
-            Contact Us</b></a>
-          </li>
-        </ul>
+         {% if request.user.groups.all.0.name != "admin" %}
+              <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                  <a class="nav-link waves-effect red-text" href="{% url "base:item-list" %}"><b><i class="fas fa-house-damage"></i> Home</b>
+                    <span class="sr-only">(current)</span>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link waves-effect purple-text" data-toggle="modal" data-target="#exampleModalCenter">
+                    <b><i class="fas fa-phone-alt"></i>
+                   Contact Us</b></a>
+                </li>
+                   
+              </ul>
+
+    {% endif %}
 
         <!-- Right -->
         <ul class="navbar-nav nav-flex-icons">
 
           {% if request.user.is_authenticated %}
+                {% if request.user.groups.all.0.name == "admin" %}
+                                  <li class="nav-item">
+                    <a class="nav-link waves-effect" href="{% url 'base:order-summary'  %}">
+                      <span class="badge red z-depth-1 mr-1"> {{ request.user|cart_item_count }} </span>
+                      <i class="fas fa-shopping-cart"></i>
+                      <span class="clearfix d-none d-sm-inline-block"> Cart </span>
+                    </a>
+                  </li>
+
+                {% else %}
 
                   <li class="nav-item">
                     <a class="nav-link waves-effect" href="{% url 'base:order-summary'  %}">
@@ -58,6 +80,7 @@
                     </a>
                   </li>
 
+                {% endif %}
 
             {% else %}
                  <li class="nav-item">
@@ -108,3 +131,26 @@
   </div> 
     
  
+
+{# CONTACT US INFO #}
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle"> <b><i class="fas fa-phone-alt"></i>
+                   Contact Us</b></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
