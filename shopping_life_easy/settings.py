@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'crispy_forms',
-    'django_celery_results',
+    # 'django_celery_results',
 
     #apps
     'base',
