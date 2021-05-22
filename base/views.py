@@ -76,7 +76,7 @@ class OrderSummaryView(LoginRequiredMixin,View):
             # try to geting order summary even if order does not exist
 
 
-            messages.error(self.request,f" { self.request.user.username } Don't have Any Item in The Cart")
+            messages.error(self.request,f" { self.request.user.get_full_name() } Don't have Any Item in The Cart")
             return redirect("base:item-list")
 
 
@@ -239,7 +239,8 @@ class check_out(LoginRequiredMixin,View):
                 return redirect("base:success",pk=order.id)
 
             #error in validation of from
-            messages.warning(self.request,f'⚠️  Failed to checkout {form.errors}')
+            messages.warning(self.request,f'⚠️  Failed to checkout')
+
             
             return redirect("base:check-out")
 
@@ -247,7 +248,7 @@ class check_out(LoginRequiredMixin,View):
 
         except ObjectDoesNotExist:
             #if order does not exist
-            messages.error(self.request,f" { self.request.user.username } Don't have Any Item in The Cart")
+            messages.error(self.request,f" { self.request.user.get_full_name() } Don't have Any Item in The Cart")
             return redirect("base:order-summary")
 
 
@@ -476,7 +477,12 @@ def render_pdf_view(request,order_id,shipping_id):
 
 
 
+@login_required
+def all_invoice_view(request):
 
+    all_invoice=ShippmentOrder.objects.filter(user=request.user)
+
+    return render(request,'all_invoice_view.html',{'all_invoice':all_invoice})
 
 
 

@@ -29,7 +29,22 @@
         
 
           <!--Card-->
-          <div class="card">
+          <div class="card">      
+            {% for field in form %}
+
+              {% if field.errors %}
+                   <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                
+                  {{ field.errors }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+
+                  </div>
+                
+              {% endif %}
+
+            {% endfor %}
 
             <!--Card content-->
             <form class="card-body" method="post" action=''>
@@ -41,14 +56,12 @@
                   <span class="input-group-text" id="basic-addon1">+91 🇮🇳️ </span>
                 </div>
                 {{ form.phone_number }}
-                {% comment %} <input type="text" class="form-control py-0" placeholder="Phone Number" aria-describedby="basic-addon1"> {% endcomment %}
               </div>
 
               <!--email-->
               <div class="md-form mb-5">
                 City or District Near to you 
                 {{ form.city }}
-                {% comment %} <input type="text" id="email" class="form-control" placeholder="youremail@example.com"> {% endcomment %}
               </div>
 
 
@@ -56,7 +69,6 @@
               <div class="md-form mb-5">
                 <label for="address" class="">Address</label>
               {{ form.street_address}}
-                {% comment %} <input type="text" id="address" class="form-control" placeholder="1234 Main St"> {% endcomment %}
               </div>
 
               <!--address-2-->
@@ -64,7 +76,6 @@
                 <label for="address-2" class="">Address 2</label>
               {{ form.apartment_address}}
 
-                {% comment %} <input type="text" id="address-2" class="form-control" placeholder="Apartment or suite"> {% endcomment %}
               </div>
 
               <!--Grid row-->
@@ -78,7 +89,6 @@
 
 
                 {{ form.pin_code}}
-                  {% comment %} <input type="text" class="form-control" id="zip" placeholder="Mumbai Pin Code" > {% endcomment %}
         
 
                 </div>

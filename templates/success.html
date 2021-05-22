@@ -40,11 +40,11 @@
 
 
   <div class="container text-white">
-    <h1 class="display-4">Congratulation {{request.user.get_full_name}} !!</h1>
+    <h1 class="display-4">Congratulations {{request.user.get_full_name}} !!</h1>
     <p class="lead">You have been successfully Ordered your Item your <b>Order No is {{order.id}} </b></p>
     <hr class="my-4">
     <p>Click Button to Download your receipt</p>
-    <a class="btn btn-primary btn-lg" href="{% url 'base:invoice-generate' order.id shipping.id %}" role="button">View Invoice</a>
+    <a class="btn btn-secondary btn-rounded btn-lg" href="{% url 'base:invoice-generate' order.id shipping.id %}" role="button"><i class="fas fa-arrow-down"></i> View Invoice</a>
 
   </div>
   <!-- /.container -->
