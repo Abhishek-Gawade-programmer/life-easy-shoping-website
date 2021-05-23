@@ -73,7 +73,26 @@
                 <p>UNIT. NO.110. JAY Chamundheswari industrials  complex </p>
                 <p>( Bld. No. 03 ). . Dhuri Estate.  Naik pada . Waliv . Vasai (East ). Palghar.  Pin no. 401208  </p>
                 <p><strong>Invoice date :</strong>  {{order.ordered_date}} </p>
-                <p><strong>Verified :</strong> {% if  shipping.verify_order %} YES{% else %}NO ( you will receive the notification when it verified
+                <p><strong>Verified :</strong>
+
+
+
+                 {% if  shipping.verify_order %} YES{% else %}NO ( you will receive the notification when it verified
+
+                  by adminster){% endif %}</p>
+
+                          <p><strong>Delivary started :</strong>
+
+
+
+                 {% if  shipping.delivered %} YES{% else %}NO ( you will receive the notification when it verified
+
+                  by adminster){% endif %}</p>
+                          <p><strong>Payment Done : :</strong>
+
+
+
+                 {% if  shipping.payment_done %} YES{% else %}NO ( you will receive the notification when it verified
 
                   by adminster){% endif %}</p>
 

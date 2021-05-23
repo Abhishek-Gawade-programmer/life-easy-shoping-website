@@ -68,10 +68,16 @@
                                 {% endif %}
                       </td>
                         <td>
-                                  <button type="button" class="btn btn-info btn-sm px-3" data-toggle="modal" data-target="#exampleModalLong">
+
+
+
+
+
+                    <a class="btn btn-info btn-sm px-3" href="{% url 'base:invoice-generate' invoice.order.id invoice.id %}" role="button">
+
                                     View 
                                      
-                                      </button> 
+                                     </a>
                  
 
 
@@ -89,33 +95,6 @@
 
 </div>
 </div><!-- Button trigger modal -->
-
-
-<!-- Modal -->
-<div class="modal " id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <iframe href="http://localhost:8000/invoice-generate/66/63/">
-
-
-
-          
-        </iframe>
-
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-danger btn-block" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>>
 
 
 
