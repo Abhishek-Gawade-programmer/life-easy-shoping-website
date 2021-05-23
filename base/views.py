@@ -381,7 +381,7 @@ def invoice_generate(request,order_id,shipping_id):
     plain_message = strip_tags(html_message)
     from_email = settings.EMAIL_HOST_USER
     to = [request.user.email,'abhishekgawadeprogrammer@gmail.com']
-    send_email.delay(subject,html_message,plain_message,from_email,to)
+    # send_email.delay(subject,html_message,plain_message,from_email,to)
     messages.success(request, f"Your invoice is also Sended to you email")
 
 
