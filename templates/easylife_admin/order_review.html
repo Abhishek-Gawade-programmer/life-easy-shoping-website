@@ -1,5 +1,6 @@
 {% extends "easylife_admin/admin_base.html" %}
 {% load cart_template_tags %}
+{% load crispy_forms_tags %}
 {% load static %}
 {% block content %}
 
@@ -38,7 +39,7 @@
               </div>
 
                 <div class="card-body px-4 mb-3">
-                <div class="list-group list-panel">
+                <div class="list-group list-panel" style="overflow-y: auto;">
 
                   <span  class="list-group-item d-flex justify-content-between dark-grey-text">
                     <span class="float-left" style="font-weight: bold">Name :</span>{{user.get_full_name}}
@@ -292,7 +293,42 @@
         </div>
 
       </section>
-      <!-- Section: Invoice table -->
+{% if shipping.verify_order or shipping.delivered or shipping.payment_done %}
+
+{% else %}
+        <section class="mb-5">
+
+          <div class="card">
+              <div class="card-header white-text danger-color">
+                  <h5 class="font-weight-500 my-1">REPORT THIS ORDER AS A SPAM</h5>
+                </div>
+            <div class="card-body" >
+
+                    <form method="post" action="">
+                        {% csrf_token %}
+                        {{form_report_spam|crispy}}
+          
+
+                        
+
+                        <button class="btn btn-primary btn-rounded waves-effect waves-light float-right " id='checkout-button' type="submit">
+                          REPORT SPAM
+                          <i class="fas fa-exclamation-circle"></i></button>
+                        
+
+
+
+
+
+            </form> 
+                
+
+
+            </div>
+          </div>
+
+    </section>
+           {% endif %}
 
     </div>
 

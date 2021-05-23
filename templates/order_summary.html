@@ -2,8 +2,9 @@
 {% load static %}
   {% block content %}
   <div class='container'>
+        <br>
+    <h2 class='display-5 text-center'>Order Summary</h2>
   <div class="table-responsive text-nowrap">
-    <h4 class='display-5'>Order Summary</h4>
 
         <table class="table">
             <thead  class="table-dark">
@@ -12,7 +13,9 @@
                 <th scope="col">Item Title</th>
                 <th scope="col">Price </th>
                 <th scope="col">Quantity</th>
+
                 <th scope="col">Total Item Price</th>
+                <th scope="col"></th>
             </tr>
             </thead>
             <tbody>
@@ -41,9 +44,9 @@
                         {% else %}
                             ₹{{ order_item.get_total_item_price }}
                         {% endif %}
-                            <a style='color:red' href="{% url 'base:remove-from-cart'  order_item.item.slug %}">
+                            <td><a style='color:red' href="{% url 'base:remove-from-cart'  order_item.item.slug %}">
                                 <i class="far fa-trash-alt float-right"></i>
-                            </a>
+                            </a></td>
 
                         
                         </td>

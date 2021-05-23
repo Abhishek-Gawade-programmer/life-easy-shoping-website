@@ -69,7 +69,7 @@ class ItemUpdateFrom(forms.ModelForm):
 class OrderVerificationForm(forms.ModelForm):
     class Meta:
         model=ShippmentOrder
-        fields =('verify_order','delivered','payment_done')
+        fields =('verify_order','delivered','payment_done',)
         widgets = {
 
             'verify_order': forms.CheckboxInput(attrs={'class':"form-check-input", 'type':"checkbox", 'id':"checkbox1"}),
@@ -77,6 +77,15 @@ class OrderVerificationForm(forms.ModelForm):
             'payment_done': forms.CheckboxInput(attrs={'class':"form-check-input", 'type':"checkbox", 'id':"checkbox3"}),
 
 
+
+        }
+
+class OrderReportSpamForm(forms.ModelForm):
+    class Meta:
+        model=ShippmentOrder
+        fields =('description',)
+        widgets = {
+            'description': forms.Textarea(attrs={'required':'required'}),
 
         }
 

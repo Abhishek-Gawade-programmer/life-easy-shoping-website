@@ -29,9 +29,8 @@ LABEL_CHOICES=(
 
 PAYMENTS_CHOICES =(
 
-    ('S','Stripe'),
+    ('S','Online Payment'),
     ('C','Cash On Delivier '),
-     ('P','PayPal'),
 
 )
 
@@ -106,6 +105,15 @@ class Item(models.Model):
                 if order_item.item == self:
                     total_quantity+= order_item.qauntity
         return total_quantity
+
+    def get_average_rating(self):
+        all_messages=Comment.objects.filter(product=self)
+        rate_list=[]
+        for message in all_messages:
+            if message.rating !=0:
+                rate_list.append(message.rating)
+        return int(round(sum(rate_list)/(len(rate_list) or 1),1))
+
 
     def get_no_of_items_of_that_month(self,month,year):
         total_quantity =0
@@ -222,7 +230,7 @@ class ShippmentOrder(models.Model):
     payment_done=models.BooleanField(default=False,blank=True)
     payment_done_date= models.DateTimeField(blank=True,null=True)
     report_spam=models.BooleanField(default=False,blank=True)
-    description=models.TextField(max_length=250,blank=True)
+    description=models.TextField(max_length=250,blank=True,verbose_name='Some Reason Why You Want To Spam This Order')
 
 
     class Meta:

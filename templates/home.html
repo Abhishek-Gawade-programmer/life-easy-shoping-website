@@ -139,7 +139,7 @@
       <section class="text-center mb-4">
 
         <!--Grid row-->
-        <div class="row wow fadeIn">
+        <div class="row wow ">
         {% for item in items %}
 
           <!--Grid column-->
@@ -160,22 +160,29 @@
               <!--Card content-->
               <div class="card-body text-center">
                 <!--Category & Title-->
-                <a href="" class="grey-text">
                      <h5>
 
                       {% if item.get_category_display == 'Available' %}
-                          <span class="badge rounded-pill bg-success text-dark">Available </span>
+                          <span class="badge rounded-pill bg-success text-dark float-left">Available </span>
 
                       {% else %}
-                          <span class="badge rounded-pill bg-danger">Not Available </span>
+                          <span class="badge rounded-pill bg-danger float-left">Not Available </span>
                       {% endif %}
 
 
 
 
+
+
+
+                      {% if item.get_average_rating  %}
+                            <span class="red-text">
+                            <span class="fas fa-star fa-lg float-right">  {{item.get_average_rating}}</span></span>
+                    {% endif %}
+                        
+
                    </h5>
                    <br>
-                </a>
                   <h5>
                     <strong>
                       <a href="{{ item.get_absolute_url }}" class="dark-grey-text">{{item.title}}

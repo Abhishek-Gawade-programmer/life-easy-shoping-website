@@ -7,7 +7,7 @@ from django.views.generic import ListView,DetailView,View,CreateView,UpdateView
 from base.models import Item,Order,OrderItem,BillingAddress,Comment,ShippmentOrder
 
 
-from .forms import CreateNewItemForm,ItemUpdateFrom,OrderVerificationForm
+from .forms import CreateNewItemForm,ItemUpdateFrom,OrderVerificationForm,OrderReportSpamForm
 
 from django.contrib.auth.models import User
 
@@ -373,8 +373,25 @@ def order_review(request,order_id,shipping_id,user_id):
 
 
 	form = OrderVerificationForm(request.POST or None,instance=new_shipping_by_user)
+	form_report_spam=OrderReportSpamForm(request.POST or None,instance=new_shipping_by_user)
 	if request.method == 'POST':
-		if form.is_valid(): #check form
+		if form_report_spam.is_valid():
+			
+			subject= f"(Easylife) Your Order{new_shipping_by_user.id} REPORTED SPAM AND DELETED!!"
+			html_message = render_to_string('report_order_spam_email.html', {'order':order_by_user,'shipping':new_shipping_by_user,'request':request})
+			plain_message = strip_tags(html_message)
+			report_order_spam_email.html
+			to = [user.email,'abhishekgawadeprogrammer@gmail.com']
+			form_report_spam.save()
+			new_shipping_by_user.delete()
+			new_shipping_by_user.save()
+
+			order_by_user.delete()
+			order_by_user.save()
+			send_email.delay(subject,html_message,plain_message,from_email,to)
+			messages.error(request, f"Order no {new_shipping_by_user.id} HAS BEEN REPORTED SPAM AND DELETED. EMAIL IS SEND TO USER")
+			return redirect("easylife_admin:admin_dashboard")
+		elif form.is_valid(): #check form
 			cd=form.cleaned_data
 
 
@@ -414,9 +431,11 @@ def order_review(request,order_id,shipping_id,user_id):
 			return redirect("easylife_admin:order-review",order_id=order_id, shipping_id=shipping_id,user_id=user_id)
 
 
+
 	return render(request,'easylife_admin/order_review.html',{'order':order_by_user,'shipping':new_shipping_by_user,
 																'user':user,'item_available':item_available,
 																'order_verification_form':form,
+																'form_report_spam':form_report_spam,
 																})
 
 

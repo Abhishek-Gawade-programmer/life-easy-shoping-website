@@ -6,7 +6,6 @@ PAYMENTS_CHOICES =(
 
     ('S','Stripe'),
     ('C','Cash On Delivier '),
-     ('P','PayPal'),
 
 
 )
