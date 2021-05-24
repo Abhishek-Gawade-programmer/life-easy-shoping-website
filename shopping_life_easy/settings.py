@@ -192,9 +192,10 @@ DEFAULT_AUTO_FIELD='django.db.models.AutoField'
 LOGIN_REDIRECT_URL="base:item-list"
 
 
-#REDIS SERVER SETING
-CELERY_BROKER_URL = 'redis://localhost:6379'
-CELERY_RESULT_BACKEND = 'redis://localhost:6379'
+#REDIS SERVER SETINGredis://localhost:6379
+
+CELERY_BROKER_URL = os.environ.get('REDIS_URL')
+CELERY_RESULT_BACKEND = os.environ.get('REDIS_URL')
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'

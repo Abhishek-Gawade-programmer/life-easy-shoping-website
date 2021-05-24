@@ -24,7 +24,8 @@ if __name__ == '__main__':
 
 '''
 
-virtualenv life_easy_env && source life_easy_env/bin/activate && python manage.py runserver
 
+virtualenv life_easy_env && source life_easy_env/bin/activate && python manage.py runserver
+celery -A shopping_life_easy worker -l INFO
 '''
 
