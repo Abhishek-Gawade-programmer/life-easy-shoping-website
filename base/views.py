@@ -455,13 +455,14 @@ def render_pdf_view(request,order_id,shipping_id):
 
     order_by_user=get_object_or_404(Order,id=order_id,user=request.user)
     new_shipping_by_user=get_object_or_404(ShippmentOrder,id=shipping_id,order=order_by_user,user=request.user)
-
+    from django.utils import timezone
+    now_date=timezone.now()
 
     template_path = 'invoice_pdf.html'
-    context = {'order':order_by_user,'shipping':new_shipping_by_user,'request':request}
+    context = {'order':order_by_user,'shipping':new_shipping_by_user,'request':request,'now_date':now_date}
     # Create a Django response object, and specify content_type as pdf
     response = HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = f'filename="{request.user.get_full_name()}_invioce_number_{order_id}.pdf"'
+    response['Content-Disposition'] = f'attachment; filename="{request.user.get_full_name()}_invioce_number_{order_id}.pdf"'
     # find the template and render it.
     template = get_template(template_path)
     html = template.render(context)

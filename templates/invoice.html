@@ -100,9 +100,10 @@
               <!-- Grid column -->
 
               <!-- Grid column -->
-              <div class="col-md-6 text-right">
+              <div class="col-md-6 text-right ">
 
-                <h4 class="h4-responsive"><small>Invoice No.</small><br /><strong><span class="blue-text">#{{order.id}}</span></strong></h4>
+                <h4 class="h4-responsive"><small>Invoice No  ::</small><strong><span class="blue-text">#{{order.id}}</span></strong></h4>
+                <h4 class="h4-responsive"><br><span class="green-text">{{order.ordered_date}}</span></h4>
 
                 <p><small>To:</small></p>
                 <p><strong>{{ request.user.get_full_name }}</strong></p>

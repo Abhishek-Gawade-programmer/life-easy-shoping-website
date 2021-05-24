@@ -29,7 +29,7 @@ class CreateNewItemForm(forms.Form):
     label =forms.ChoiceField(choices=LABEL_CHOICES,widget=forms.Select(attrs={'class':"form-control"}))
 
     
-    description = forms.CharField(max_length=1500,widget=forms.Textarea(attrs={'name':"description",'id':"post_content"}),required=False)
+    description = forms.CharField(max_length=4500,widget=forms.Textarea(attrs={'name':"description",'id':"post_content"}),required=False)
     image = forms.ImageField(widget=forms.FileInput(),required=True)
     image2 = forms.ImageField(widget=forms.FileInput(),required=False)
     image3 = forms.ImageField(widget=forms.FileInput(),required=False)
@@ -54,10 +54,12 @@ class CreateNewItemForm(forms.Form):
         return self.cleaned_data.get('description')
 
     def clean_discount_price(self,*args,**kwargs):
-        if  int(self.cleaned_data.get('discount_price')) > int(self.cleaned_data.get('price')) :
-            raise forms.ValidationError('Check The discount price and orginal price')
+        if self.cleaned_data.get('discount_price'):
+            if  int(self.cleaned_data.get('discount_price')) > int(self.cleaned_data.get('price')) :
+                raise forms.ValidationError('Check The discount price and orginal price')
 
-        return self.cleaned_data.get('discount_price')
+            return self.cleaned_data.get('discount_price')
+        return 0
 
 
   

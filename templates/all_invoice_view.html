@@ -78,16 +78,15 @@
                                     View 
                                      
                                      </a>
-                 
-
-
-
-
 
                         </td>
 
 
-            
+            {% empty %}
+                <td colspan="5"> No yet Orders 
+                    <a  class='btn btn-success ml-2' href='/'>Contiune Shoping </a>
+                      </td>
+
             {% endfor %}
             </tbody>
         </table>

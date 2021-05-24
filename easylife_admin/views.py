@@ -146,14 +146,14 @@ def admin_dashboard(request):
 			'last_month_sales':last_month_sales,
 			'last_month_sales_percentage':last_month_sales//total_sales*100,
 			'number_of_order':number_of_order,
-			'verification_pecentage':int((verification_left/number_of_order)*100),
+			'verification_pecentage':int((verification_left/(number_of_order or 1 ) )*100),
 			'verified_order':number_of_order-verification_left,
 			'payment_done':number_of_order-verification_left,
-			'payment_pecentage':int((payment_left/number_of_order)*100),
+			'payment_pecentage':int((payment_left/(number_of_order or 1))*100),
 			'delivery_compelted':number_of_order-delivery_left,
-			'delivery_compelted_percentage':((number_of_order-delivery_left)/number_of_order)*100,
+			'delivery_compelted_percentage':((number_of_order-delivery_left)/(number_of_order or 1))*100,
 			'orders_left': number_of_order- succesfully_orders,
-			'orders_left_percentage':((number_of_order- succesfully_orders)/number_of_order)*100,
+			'orders_left_percentage':((number_of_order- succesfully_orders)/(number_of_order or 1 ) )*100,
 			'orders_by_district':orders_by_district,
 			'this_year_sale':this_year_sale,'last_year_sale':last_year_sale, 
 			'name_items':name_items, 'items_quantity':items_quantity
@@ -225,7 +225,7 @@ def ItemCreateView(request):
 			to = [ user.email for user in User.objects.all()]
 			
 			send_email.delay(subject,html_message,plain_message,from_email,to)
-			messages.error(request, f"To All Users is send For New Product Released !!!!")
+			messages.success(request, f"To All Users is send For New Product Released !!!!")
 
 
 			return redirect("easylife_admin:itemdetailsview",pk=new_item.id) 
@@ -349,7 +349,7 @@ def item_details(request,pk):
 
 	return render(request,'easylife_admin/item_detail.html',
 		{'item':item,'earn_from_item':earn_from_item,
-		'percentage': round(earn_from_item/total_money*100,2),
+		'percentage': round(earn_from_item/(total_money*100 or 1),2),
 		'messages_item':messages_item,
 		'user_purchased':item.get_no_of_users_buy(),
 		'avrage_rating':round(sum(rate_list)/(len(rate_list) or 1),2),
@@ -413,6 +413,11 @@ def order_review(request,order_id,shipping_id,user_id):
 				to = [user.email,'abhishekgawadeprogrammer@gmail.com']
 				send_email.delay(subject,html_message,plain_message,from_email,to)
 				messages.success(request, f"Order no {order_by_user.id} ORDER PAYMENTS IS DONE and email is successfully send to user")
+			new_shipping_by_user.save()
+			form.save()
+			return redirect("easylife_admin:order-review",order_id=order_id, shipping_id=shipping_id,user_id=user_id)
+
+
 
 
 
@@ -432,11 +437,7 @@ def order_review(request,order_id,shipping_id,user_id):
 			messages.error(request, f"Order no {new_shipping_by_user.id} HAS BEEN REPORTED SPAM AND DELETED. EMAIL IS SEND TO USER")
 			return redirect("easylife_admin:admin_dashboard")
 
-			
-			form.save()
-			return redirect("easylife_admin:order-review",order_id=order_id, shipping_id=shipping_id,user_id=user_id)
-
-
+	
 
 	return render(request,'easylife_admin/order_review.html',{'order':order_by_user,'shipping':new_shipping_by_user,
 																'user':user,'item_available':item_available,
