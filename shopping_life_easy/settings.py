@@ -40,12 +40,14 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'django.contrib.sites',
+    #ALLAUTH APPS
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-    'crispy_forms',
+    'allauth.socialaccount.providers.google',
     # 'django_celery_results',
 
+    'crispy_forms',
     #apps
     'base',
     'easylife_admin'
@@ -147,6 +149,9 @@ AUTHENTICATION_BACKENDS = [
     # `allauth` specific authentication methods, such as login by e-mail
     'allauth.account.auth_backends.AuthenticationBackend'
 ]
+
+
+
 from django.contrib.messages import constants as messages
 MESSAGE_TAGS = {
         messages.DEBUG: 'secondary',
@@ -186,12 +191,34 @@ ACCOUNT_FORMS = {
 'signup': 'base.forms.CustomSignupForm',
 }
 
-SITE_ID = 1
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        }
+    }
+}
+
+
+
+
+
+
+
+
+SITE_ID = 3
 DEFAULT_AUTO_FIELD='django.db.models.AutoField' 
 
 LOGIN_REDIRECT_URL="base:item-list"
 
-
+SOCIALACCOUNT_QUERY_EMAIL = True
+ACCOUNT_LOGOUT_ON_GET= True
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_EMAIL_REQUIRED = True
 #REDIS SERVER SETINGredis://localhost:6379
 
 CELERY_BROKER_URL = os.environ.get('REDIS_URL')

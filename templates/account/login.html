@@ -10,29 +10,29 @@
     <div class="container">
       <section class="mb-4">
         <div class="row wow fadeIn">
-          <div class='col-6 offset-3'>
+          <div class='container'>
           <h1>{% trans "Sign In" %}</h1>
 
           {% get_providers as socialaccount_providers %}
 
           {% if socialaccount_providers %}
-          <p>{% blocktrans with site.name as site_name %}Please sign fg in saasfsdwith one
-          of your existing third party accounts. Or, <a href="{{ signup_url }}">sign up</a>
-          for a {{ site_name }} account and sign in below:{% endblocktrans %}</p>
+    
 
-          <div class="socialaccount_ballot">
+                    <div class="socialaccount_ballot">
 
-            <ul class="socialaccount_providers">
-              {% include "socialaccount/snippets/provider_list.html" with process="login" %}
-            </ul>
+                      <ul class="socialaccount_providers">
 
-            <div class="login-or">{% trans 'or' %}</div>
+                    <center>
+                        <a href="{% provider_login_url 'google' %}">
+                          <button type="button" class="btn btn-danger"><i class="fab fa-google fa-lg"></i> Login with Google</button>
+                       
+                      </a></center>
+                      </ul>
 
-          </div>
 
-          {% include "socialaccount/snippets/login_extra.html" %}
+                  <div class="login-or text-center dark-text display-4">{% trans 'or' %}</div>
 
-          {% else %}
+                </div>
           <p>{% blocktrans %}If you have not created an account yet, then please
           <a href="{{ signup_url }}">sign up</a> first.{% endblocktrans %}</p>
           {% endif %}
