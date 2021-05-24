@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load date_tag %}
 {% load static %}
-
+{% block head_title %}{{object.title}} {% endblock %}
 {% block content %}
   <style type="text/css">
     .checked {
