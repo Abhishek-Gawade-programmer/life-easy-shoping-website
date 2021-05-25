@@ -20,19 +20,19 @@ class CheckoutForm(forms.Form):
     payment_option =forms.ChoiceField(widget=forms.RadioSelect,choices=PAYMENTS_CHOICES)
 
 
-    def clean_pin_code(self,*args,**kwargs):
-        if  len(self.cleaned_data.get('pin_code'))!=6:
-            raise forms.ValidationError('Pin code Must be Of 6 digits')
+    # def clean_pin_code(self,*args,**kwargs):
+    #     if  len(self.cleaned_data.get('pin_code'))!=6:
+    #         raise forms.ValidationError('Pin code Must be Of 6 digits')
 
-        return self.cleaned_data.get('pin_code')
+    #     return self.cleaned_data.get('pin_code')
 
 
-    def clean_phone_number(self,*args,**kwargs):
+    # def clean_phone_number(self,*args,**kwargs):
 
-        if  len(self.cleaned_data.get('phone_number'))!=10:
-            raise forms.ValidationError('Phone Number Must be Of 10 digits')
+    #     if  len(self.cleaned_data.get('phone_number'))!=10:
+    #         raise forms.ValidationError('Phone Number Must be Of 10 digits')
 
-        return self.cleaned_data.get('phone_number')
+    #     return self.cleaned_data.get('phone_number')
 
 
 

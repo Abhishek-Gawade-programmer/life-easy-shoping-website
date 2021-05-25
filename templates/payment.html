@@ -1,55 +1,39 @@
-{% extends 'base.html' %}
-{% load  crispy_forms_tags %}
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?version=3.52.1&features=fetch"></script>
+    <script src="https://js.stripe.com/v3/"></script>
+     {% csrf_token %}
+  <script type="text/javascript">
+    // Create an instance of the Stripe object with your publishable API key
+    var stripe = Stripe("{{ STRIPE_PUBLIC_KEY }}");
+    const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+                        fetch("{% url 'base:create-checkout-session' order.id %}", {
+                          method: "POST",
+
+                          headers:{
+                            'X-CSRFToken':csrftoken
+                          }
+                        })
+                          .then(function (response) {
+                            return response.json();
+                          })
+                          .then(function (session) {
+                            return stripe.redirectToCheckout({ sessionId: session.id });
+                          })
+                          .then(function (result) {
+                            // If redirectToCheckout fails due to a browser or network
+                            // error, you should display the localized error message to your
+                            // customer using error.message.
+                            if (result.error) {
+                              alert(result.error.message);
+                            }
+                          })
+                          .catch(function (error) {
+                            console.error("Error:", error);
+                          });
+             
+
+        
 
 
-
-
-
-{% block content %}
-
-  <!--Main layout-->
-
-  <!--Main layout-->
-  <main class="mt-5 pt-4">
-    <div class="container wow fadeIn">
-
-      <!-- Heading -->
-      <h2 class="my-5 h2 text-center">Payment</h2>
-
-      <!--Grid row-->
-      <div class="row">
-
-        <!--Grid column-->
-        <div class="col-md-12 mb-4">
-
-          <!--Card-->
-          <div class="card">
-
-          {% comment %} <form class="card-body" method='post'>
-          {% csrf_token %}
-
-          {{form|crispy}}
-          <hr class="mb-4">
-            <button class="btn btn-success btn-lg btn-block"  type="submit">Submit</button>
-
-          </form> {% endcomment %}
-
-   
-
-
-          </div>
-          <!--/.Card-->
-
-        </div>
-        <!--Grid column-->
-
-
-
-      </div>
-      <!--Grid row-->
-
-    </div>
-  </main>
-
-  <!--Main layout-->
-{% endblock content %}
+  </script>

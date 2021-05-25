@@ -32,6 +32,7 @@ urlpatterns = [
     path('success/<pk>/', SuccessView, name='success'),
     path('invoice-generate/<int:order_id>/<int:shipping_id>/', invoice_generate, name='invoice-generate'),
     path('all-invoice-view/', all_invoice_view, name='all_invoice_view'),
+
     
 
     path('invoice-pdf-view/<int:order_id>/<int:shipping_id>/', render_pdf_view   , name='invoice-pdf-view'),

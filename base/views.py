@@ -35,6 +35,7 @@ from django.utils.html import strip_tags
 from .tasks import send_email
 
 
+from django.utils import timezone
 
 
 
@@ -44,7 +45,6 @@ from .tasks import send_email
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
 from .forms import CheckoutForm
-
 
 
 
@@ -224,8 +224,9 @@ class check_out(LoginRequiredMixin,View):
 
                 order.ordered=True
 
+                order.save()
                 if billing_address.payment_option=='S':
-                    return redirect("base:create-checkout-session",pk=order.id)   
+                     return render(self.request,'payment.html',{'order':order,"STRIPE_PUBLIC_KEY": settings.STRIPE_PUBLIC_KEY}) 
                     
 
 
@@ -234,7 +235,6 @@ class check_out(LoginRequiredMixin,View):
 
 
 
-                order.save()
                 messages.success(self.request,f' Sucessfully Checkout !!')
                 return redirect("base:success",pk=order.id)
 
@@ -250,6 +250,18 @@ class check_out(LoginRequiredMixin,View):
             #if order does not exist
             messages.error(self.request,f" { self.request.user.get_full_name() } Don't have Any Item in The Cart")
             return redirect("base:order-summary")
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -320,7 +332,7 @@ def remove_from_cart(request,slug):
 
 
 
-class CreateCheckoutSessionView(LoginRequiredMixin,View):
+class CreateCheckoutSessionView(View):
     def post(self, request, *args, **kwargs):
         order=Order.objects.get(pk=self.kwargs['pk'])
 
@@ -349,7 +361,7 @@ class CreateCheckoutSessionView(LoginRequiredMixin,View):
 
             line_items=all_product_info,
             mode='payment',
-            success_url=YOUR_DOMAIN + '/success/',
+            success_url=YOUR_DOMAIN + '/success/'+f'{order.pk}/',
             cancel_url=YOUR_DOMAIN + '/cancel/',
         )
 
@@ -359,11 +371,19 @@ class CreateCheckoutSessionView(LoginRequiredMixin,View):
 
 @login_required
 def SuccessView(request,pk):
+
     order_by_user=get_object_or_404(Order,pk=pk,user=request.user,ordered=True)
+
     new_shipping_by_user=ShippmentOrder.objects.create(
             user=request.user,
             order=order_by_user,
     )
+    if order_by_user.billing_address.payment_option=='S':
+        new_shipping_by_user.payment_done=True
+        new_shipping_by_user.payment_done_date=now_date=timezone.now()
+
+
+
     new_shipping_by_user.save()
 
     return render(request,'success.html',{'order':order_by_user,'shipping':new_shipping_by_user})
