@@ -13,16 +13,16 @@ LINK: http://gymwebsite.pythonanywhere.com/
 ### - Installation
 ```python
 # Clone the repository
-git clone https://github.com/OmGDahale/business-website.git
+git clone https://github.com/Abhishek-Gawade-programmer/life-easy-shoping-website.git
 
 # Enter into the directory
-cd business-website/
+cd shopping_life_easy/
 
 # Create virtual environment 
-python3 -m venv .venv
+virtualenv life_easy_env
 
 # Activate virtual environment 
-source .venv/bin/activate
+ source life_easy_env/bin/activate
 
 # Install the dependencies
 pip install -r requirements.txt
@@ -97,10 +97,13 @@ celery -A shopping_life_easy worker -l INFO
 
 ### - For Administer  
  - All products info and details are displayed with graphs and statistic details  
- - All user is also with daetr
- - Celery  of Task and Queue
- - Redis server as a broker
- - Google Email API for sending Emails
+ - All costumers is also with details 
+ - our monthly Sales and yearly sales with graphs
+ - email and costumers details for shipment of their products
+ - email notification when admin creates a new product and verify.. etc the orders
+ - email to admin is user craete a new order 
+ - report the order as a spam so that admin can delete annotating order
+ - verification ans authentication of users by Django Allaulth
  ***
 
 
