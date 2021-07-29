@@ -1,7 +1,7 @@
-# EaseLife E-Commerce Website
+# PrimeMediCare E-Commerce Website
 Easelife is company which sells the medical products for customers
 
-LINK: http://gymwebsite.pythonanywhere.com/
+LINK : https://primemedicare.in/
 
 ## Getting started
 ###  - Requirements
